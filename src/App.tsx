@@ -1,13 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+const getGreeting = async function() {
+  const res = await fetch('/api/test');
+  return await res.json();
+}
+
 function App() {
   const [count, setCount] = useState(0)
+  const [greeting, setGreeting] = useState('');
+
+  useEffect(() => {
+    getGreeting().then((res) => setGreeting(res.greeting));
+  }, []);
 
   return (
     <>
+      <p>Server response: {greeting}</p>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
