@@ -1,4 +1,10 @@
-import { Pool } from 'pg';
+// COMMMONJS SYNTAX
+// import { Pool } from 'pg';
+
+// ESMODULE SYNTAX
+import pkg from 'pg';
+const { Pool } = pkg;
+
 import dotenv from 'dotenv';
 
 dotenv.config();
