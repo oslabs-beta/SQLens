@@ -4,6 +4,9 @@ app.get('/api/test', (_, res) =>
     res.json({ greeting: "Hello" }
 ))
 
+// app.get('/api/starwars', <middleware here>, (req, res) => {
+//   res.status(200).json(/* db data */)
+// })
 if (!process.env['VITE']) {
   console.log('inside vite conditional')
     const frontendFiles = process.cwd() + '/dist'
