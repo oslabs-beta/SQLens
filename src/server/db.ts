@@ -1,7 +1,10 @@
 import { Pool } from 'pg';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const pool = new Pool({
-    connectString: 'postgres://ibuiyrvi:6ZDtKSRYydWPE9n0qlVtVRG5PFfeA3AC@heffalump.db.elephantsql.com/ibuiyrvi',
+    connectionString: process.env.DATABASE_URI,
 });
 
 export default pool;
