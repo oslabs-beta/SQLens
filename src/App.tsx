@@ -8,12 +8,21 @@ const getGreeting = async function() {
   return await res.json();
 }
 
+const getTables = async function() {fetch('/api/tables')
+.then(response => response.json())
+.then(data => {
+  console.log(data)
+})
+}
+
 function App() {
   const [count, setCount] = useState(0)
   const [greeting, setGreeting] = useState('');
 
   useEffect(() => {
     getGreeting().then((res) => setGreeting(res.greeting));
+    getTables();
+
   }, []);
 
   return (
