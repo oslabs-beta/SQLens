@@ -54,6 +54,22 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+
+.react-flow__node-custom {
+  padding: 10px;
+  background-color: #556677;
+  color: white;
+  min-width: 10vw;
+  max-height: 30vh;
+  border-radius: 3px;
+}
+
+.tableName {
+  font-weight: bolder;
+  border-bottom: 1px solid;
+  margin-bottom: 1px;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
