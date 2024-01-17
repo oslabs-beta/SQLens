@@ -7,10 +7,6 @@ app.get('/api/test', (_, res) =>
     res.json({ greeting: "Hello" }
 ))
 
-// app.get('/api/starwars', <middleware here>, (req, res) => {
-//   res.status(200).json(/* db data */)
-// })
-
 
 app.get('/api/tables', dbController.getTableNames, (req, res) => {
   res.status(200).json(res.locals.dbData)
