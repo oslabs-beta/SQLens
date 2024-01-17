@@ -3,32 +3,39 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-const getGreeting = async function() {
-  const res = await fetch('/api/test');
-  return await res.json();
+// const getGreeting = async function() {
+//   const res = await fetch('/api/test');
+//   return await res.json();
+// }
+
+const getTables = async function() {
+  const res = await fetch('/api/tables');
+const final = await res.json();
+// console.log(final);
+return final;
 }
 
-const getTables = async function() {fetch('/api/tables')
-.then(response => response.json())
-.then(data => {
-  console.log(data)
-})
-}
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [greeting, setGreeting] = useState('');
+  // const [count, setCount] = useState(0);
+  // const [greeting, setGreeting] = useState('');
+  const [tables, setTables] = useState([]);
 
   useEffect(() => {
-    getGreeting().then((res) => setGreeting(res.greeting));
-    getTables();
-
+    // getGreeting().then((res) => setGreeting(res.greeting));
+    
+    getTables().then((res) => {
+      console.log(res);
+      // setTables(res);
+    })
+    
   }, []);
+
 
   return (
     <>
-      <p>Server response: {greeting}</p>
-      <div>
+      <p>Server response: {tables}</p>
+      {/* <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -47,7 +54,7 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
     </>
   )
 }
