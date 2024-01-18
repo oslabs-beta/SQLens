@@ -1,13 +1,12 @@
 /// <reference types="vite/client" />
 
-interface TableColumnsObject {
+export default interface TableColumnsObject {
     columns: string[];
     foreignKeys: foreignKeysObj[];
 }
 
-interface foreignKeysObj {
+export default interface foreignKeysObj {
     columnName: string;
     foreignTableName: string;
     foreignColumnName: string;
 }
-

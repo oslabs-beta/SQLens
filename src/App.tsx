@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import './index.css'
 import Flow from "./Flow";
-// import {TableColumnsObject} from './vite-env.d.ts';
+import TableColumnsObject from './vite-env';
+import Grid from '@mui/material/Unstable_Grid2';
 
 // const getGreeting = async function() {
 //   const res = await fetch('/api/test');
@@ -20,7 +21,7 @@ const getTables = async function() {
 function App() {
   // const [count, setCount] = useState(0);
   // const [greeting, setGreeting] = useState('');
-  const [tables, setTables] = useState([]);
+  const [tables, setTables] = useState<TableColumnsObject | []>([]);
 
   useEffect(() => {
     // getGreeting().then((res) => setGreeting(res.greeting));
