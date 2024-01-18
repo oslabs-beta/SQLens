@@ -34,7 +34,7 @@ const BasicFlow = ({ tables }) => {
     [setEdges]
   );
 
-  
+
   // Effect to update nodes when 'tables' prop changes
   useEffect(() => {
     // x and y variables for placement of nodes
@@ -44,15 +44,15 @@ const BasicFlow = ({ tables }) => {
     if (tables && typeof tables === 'object') {
       const newNodes = Object.keys(tables).map((tableName, index) => {
         // start new column of tables, once y approaches bottom of screen
-        if (y > 800) {
+        if (y > 600) {
           y = 0;
-          x += 400;
+          x += 350;
         }
-        // save y position 
+        // save y position
         const prevY = y;
         // calculate the y position for the next node based on current node's array length
         y += 150 + (tables[tableName].columns.length * 25)
-        // create node 
+        // create node
         return {
           id: index.toString(),
           type: 'custom',
@@ -74,6 +74,7 @@ const BasicFlow = ({ tables }) => {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         fitView
+        deleteKeyCode={null}
       >
         <Background />
       </ReactFlow>
