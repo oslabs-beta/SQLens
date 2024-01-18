@@ -10,12 +10,35 @@ import Flow from "./Flow";
 // }
 
 const getTables = async function() {
-  const res = await fetch('/api/tables');
-  const final = await res.json();
-// console.log(final);
-  return final;
-}
+  const response = await fetch('/api/graphql', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    // This query is used to get the table names and columns from the database
+    // This is a graphQL query, not a SQL query
+    body: JSON.stringify({
+      query: `
+        query {
+          getTableNames {
+            name
+            columns
+            foreignKeys {
+              columnName
+              foreignTableName
+              foreignColumnName
+            }
+          }
+        }
+      `,
+    }),
+  });
 
+  const final = await response.json();
+  if (final.errors) {
+    console.error(final.errors);
+    throw new Error('Error fetching tables');
+  }
+  return final.data.getTableNames;
+};
 
 function App() {
   // const [count, setCount] = useState(0);
