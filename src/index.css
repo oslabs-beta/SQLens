@@ -60,14 +60,17 @@ button:focus-visible {
   background-color: #556677;
   color: white;
   min-width: 10vw;
-  max-height: 30vh;
+  /* max-height: 30vh; */
   border-radius: 3px;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 10px;
 }
 
 .tableName {
   font-weight: bolder;
   border-bottom: 1px solid;
-  margin-bottom: 1px;
+  margin-bottom: 5px;
 }
 
 @media (prefers-color-scheme: light) {

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import ReactFlow, {
   Node,
   addEdge,
@@ -13,55 +13,56 @@ import TableColumnsNode from './TableColumnsNode.tsx';
 
 import 'reactflow/dist/style.css';
 
-//defines type for fakeData object
-type FakeDataType = {
-  [key: string]: string[];
-}
-//fake data object - this would be coming from back end instead
-const fakeData: FakeDataType = {
-  people: ['id', 'name', 'age'],
-  vessels: ['id', 'planet', 'pilot', 'engine'],
-  planets: ['id', 'name', 'size'],
-};
-
-//initial nodes array
-const initialNodes: Node[] = [];
-
-//initialize count to be used as id
-let count = 0;
-
-//for in loop to create note and push into initialNodes array
-for (const property in fakeData) {
-  const rows: string[] = fakeData[property];
-  initialNodes.push({
-    id: count.toString(),
-    type: 'custom',
-    data: { label: property, rows: rows },
-    //position of node is currentl hard coded, must be changed based on previous node height
-    position: { x: 0, y: count * 150 },
-  });
-  count++;
-}
-
 //not using edges currently
-const initialEdges: Edge[] = [
-  //   { id: "e1-2", source: "1", target: "2", animated: true },
-  //   { id: "e1-3", source: "1", target: "3" }
-];
+// const initialEdges: Edge[] = [
+//   //   { id: "e1-2", source: "1", target: "2", animated: true },
+//   //   { id: "e1-3", source: "1", target: "3" }
+// ];
 
-//c references custom node which is imported from CustomNode.tsx
+//references custom node which is imported from TableColumnsNode.tsx
 const nodeTypes = {
   custom: TableColumnsNode,
 };
 
-const BasicFlow = () => {
-  //boiler plate react flow with typescript
-  const [nodes, , onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+const BasicFlow = ({ tables }) => {
+  // Initialize states for nodes and edges
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
   const onConnect = useCallback(
     (params: Edge | Connection) => setEdges((els) => addEdge(params, els)),
     [setEdges]
   );
+
+
+  // Effect to update nodes when 'tables' prop changes
+  useEffect(() => {
+    // x and y variables for placement of nodes
+    let x = 0;
+    let y = 0;
+    // after table date is loaded, render nodes using map function
+    if (tables && typeof tables === 'object') {
+      const newNodes = Object.keys(tables).map((tableName, index) => {
+        // start new column of tables, once y approaches bottom of screen
+        if (y > 600) {
+          y = 0;
+          x += 350;
+        }
+        // save y position
+        const prevY = y;
+        // calculate the y position for the next node based on current node's array length
+        y += 150 + (tables[tableName].columns.length * 25)
+        // create node
+        return {
+          id: index.toString(),
+          type: 'custom',
+          data: { label: tableName, rows: tables[tableName].columns },
+          position: { x: x, y: prevY },
+        };
+      });
+      setNodes(newNodes);
+    }
+  }, [tables, setNodes]);
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
@@ -73,6 +74,7 @@ const BasicFlow = () => {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         fitView
+        deleteKeyCode={null}
       >
         <Background />
       </ReactFlow>

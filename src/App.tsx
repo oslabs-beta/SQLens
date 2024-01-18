@@ -10,9 +10,9 @@ import Flow from "./Flow";
 
 const getTables = async function() {
   const res = await fetch('/api/tables');
-const final = await res.json();
+  const final = await res.json();
 // console.log(final);
-return final;
+  return final;
 }
 
 
@@ -26,7 +26,7 @@ function App() {
 
     getTables().then((res) => {
       console.log(res);
-      // setTables(res);
+      setTables(res);
     })
 
   }, []);
@@ -34,10 +34,10 @@ function App() {
 
   return (
     <>
-      <p>Server response: {tables}</p>
-      <Flow />
+      {/* <p>Server response: {tables}</p> */}
+      <Flow tables={tables}/>
     </>
   )
 }
 
-export default App
+export default App;
