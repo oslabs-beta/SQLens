@@ -20,7 +20,7 @@ type FakeDataType = {
 //fake data object - this would be coming from back end instead
 const fakeData: FakeDataType = {
   people: ['id', 'name', 'age'],
-  ships: ['id', 'planet', 'pilot', 'engine'],
+  vessels: ['id', 'planet', 'pilot', 'engine'],
   planets: ['id', 'name', 'size'],
 };
 
