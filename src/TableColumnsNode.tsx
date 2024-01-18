@@ -1,41 +1,18 @@
-// import { memo } from 'react';
-import {
-    // Handle,
-    NodeProps,
-    // Position
-} from 'reactflow';
+import { memo } from 'react';
+import { NodeProps } from 'reactflow';
 
-const CustomNode = ({
-  data,
-  // isConnectable,
-}:
-//   targetPosition = Position.Left,
-//   sourcePosition = Position.Right
-NodeProps) => {
-  const rows = [];
-  for (let i = 0; i < data.rows.length; i++) {
-    rows.push(<div className='table row' key={i}>{data?.rows[i]}</div>);
-  }
-
+const CustomNode = ({ data }: NodeProps) => {
   return (
     <>
-      {/* <Handle
-        type="target"
-        position={targetPosition}
-        isConnectable={isConnectable}
-      /> */}
       <div className='tableName'>{data?.label}</div>
-      {rows}
-      {/* <Handle
-        type="source"
-        position={sourcePosition}
-        isConnectable={isConnectable}
-      /> */}
+      {/* Map through data and handle cases of it being undefined */}
+      {data?.rows?.map((row, index) => (
+        <div className='table row' key={index}>{row}</div>
+      ))}
     </>
   );
 };
 
 CustomNode.displayName = 'CustomNode';
 
-export default CustomNode;
-// export default memo(CustomNode);
+export default memo(CustomNode);

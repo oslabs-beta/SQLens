@@ -1,8 +1,19 @@
-import { Request, Response } from 'express';
 import pool from './db';
 
-export const dbController = {
-  getTableNames: async (req: Request, res: Response, next: Function): Promise<void> => {
+
+// The interface for data structure Jenny was talking about to make this valid TypeScript
+interface RowData {
+  columnName: string;
+  value: string | null;
+}
+
+interface TableData {
+  rowData: RowData[];
+}
+
+export const resolvers = {
+  Query: {
+  getTableNames: async () => {
     try {
       // Query to get all table names
       const tablesData = await pool.query(
@@ -63,13 +74,43 @@ export const dbController = {
         }
       });
 
-      res.locals.dbData = tablesWithColumns;
-      next();
+      // Convert tablesWithColumns object to array
+      // Expected structure is an array of objects, each object has a key of name, columns, and foreignKeys
+      const tablesArray = Object.keys(tablesWithColumns).map(tableName => {
+        return {
+          name: tableName,
+          columns: tablesWithColumns[tableName].columns,
+          foreignKeys: tablesWithColumns[tableName].foreignKeys
+        };
+      });
+
+      return tablesArray;
+
     } catch (err) {
-      console.error('Error in getTableNames middleware: ', err);
-      res.status(500).send('Server error');
+      console.error('Error in getTableNames resolver: ', err);
+        throw new Error('Server error');
     }
   },
+  getTableData: async (_: any, { tableName }: { tableName: string }): Promise<TableData[]> => {
+    console.log(tableName);
+    try {
+      const tableDataQuery = `SELECT * FROM ${tableName};`;
+      const tableDataResult = await pool.query(tableDataQuery);
+      console.log(tableDataResult.rows);
+
+      return tableDataResult.rows.map((row: Record<string, any>) => {
+        const rowData: RowData[] = [];
+        for (const [key, value] of Object.entries(row)) {
+          rowData.push({ columnName: key, value: value !== null ? value.toString() : null });
+        }
+        return { rowData };
+      });
+    } catch (err) {
+      console.error('Error in getTableData resolver: ', err);
+      throw new Error('Server error');
+    }
+  },
+},
 };
 
 
