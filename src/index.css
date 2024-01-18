@@ -60,7 +60,7 @@ button:focus-visible {
   background-color: #556677;
   color: white;
   min-width: 10vw;
-  max-height: 30vh;
+  /* max-height: 30vh; */
   border-radius: 3px;
 }
 

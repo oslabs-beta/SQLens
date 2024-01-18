@@ -26,7 +26,7 @@ function App() {
 
     getTables().then((res) => {
       console.log(res);
-      // setTables(res);
+      setTables(res);
     })
 
   }, []);
@@ -34,10 +34,10 @@ function App() {
 
   return (
     <>
-      <p>Server response: {tables}</p>
-      <Flow />
+      {/* <p>Server response: {tables}</p> */}
+      <Flow tables={tables}/>
     </>
   )
 }
 
-export default App
+export default App;
