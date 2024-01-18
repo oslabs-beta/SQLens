@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import './index.css'
 import Flow from "./Flow";
+// import {TableColumnsObject} from './vite-env.d.ts';
 
 // const getGreeting = async function() {
 //   const res = await fetch('/api/test');
