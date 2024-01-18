@@ -1,4 +1,4 @@
-import { memo } from 'react';
+// import { memo } from 'react';
 import {
     // Handle,
     NodeProps,
@@ -14,7 +14,7 @@ const CustomNode = ({
 NodeProps) => {
   const rows = [];
   for (let i = 0; i < data.rows.length; i++) {
-    rows.push(<div className='table row'>{data?.rows[i]}</div>);
+    rows.push(<div className='table row' key={i}>{data?.rows[i]}</div>);
   }
 
   return (
@@ -37,4 +37,5 @@ NodeProps) => {
 
 CustomNode.displayName = 'CustomNode';
 
-export default memo(CustomNode);
+export default CustomNode;
+// export default memo(CustomNode);

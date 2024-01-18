@@ -10,9 +10,9 @@ import Flow from "./Flow";
 
 const getTables = async function() {
   const res = await fetch('/api/tables');
-const final = await res.json();
+  const final = await res.json();
 // console.log(final);
-return final;
+  return final;
 }
 
 

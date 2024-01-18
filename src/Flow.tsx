@@ -13,43 +13,13 @@ import TableColumnsNode from './TableColumnsNode.tsx';
 
 import 'reactflow/dist/style.css';
 
-//defines type for fakeData object
-// type FakeDataType = {
-//   [key: string]: string[];
-// }
-//fake data object - this would be coming from back end instead
-// const fakeData: FakeDataType = {
-//   people: ['id', 'name', 'age'],
-//   ships: ['id', 'planet', 'pilot', 'engine'],
-//   planets: ['id', 'name', 'size'],
-// };
-
-//initial nodes array
-// const initialNodes: Node[] = [];
-
-//initialize count to be used as id
-// let count = 0;
-
-//for in loop to create note and push into initialNodes array
-// for (const property in fakeData) {
-//   const rows: string[] = fakeData[property];
-//   initialNodes.push({
-//     id: count.toString(),
-//     type: 'custom',
-//     data: { label: property, rows: rows },
-//     //position of node is currentl hard coded, must be changed based on previous node height
-//     position: { x: 0, y: count * 150 },
-//   });
-//   count++;
-// }
-
 //not using edges currently
 // const initialEdges: Edge[] = [
 //   //   { id: "e1-2", source: "1", target: "2", animated: true },
 //   //   { id: "e1-3", source: "1", target: "3" }
 // ];
 
-//c references custom node which is imported from CustomNode.tsx
+//references custom node which is imported from TableColumnsNode.tsx
 const nodeTypes = {
   custom: TableColumnsNode,
 };
@@ -64,18 +34,32 @@ const BasicFlow = ({ tables }) => {
     [setEdges]
   );
 
+  
   // Effect to update nodes when 'tables' prop changes
   useEffect(() => {
+    // x and y variables for placement of nodes
+    let x = 0;
+    let y = 0;
+    // after table date is loaded, render nodes using map function
     if (tables && typeof tables === 'object') {
-      let newNodes = Object.keys(tables).map((tableName, index) => {
+      const newNodes = Object.keys(tables).map((tableName, index) => {
+        // start new column of tables, once y approaches bottom of screen
+        if (y > 800) {
+          y = 0;
+          x += 400;
+        }
+        // save y position 
+        const prevY = y;
+        // calculate the y position for the next node based on current node's array length
+        y += 150 + (tables[tableName].columns.length * 25)
+        // create node 
         return {
           id: index.toString(),
           type: 'custom',
           data: { label: tableName, rows: tables[tableName].columns },
-          position: { x: 0, y: index * 150 },
+          position: { x: x, y: prevY },
         };
       });
-
       setNodes(newNodes);
     }
   }, [tables, setNodes]);
