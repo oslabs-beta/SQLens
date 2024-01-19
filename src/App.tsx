@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './index.css';
 import Flow from './Flow';
 import NavBar from './NavBar'
-import TableColumnsObject from './vite-env';
+import TableObj from './vite-env';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 // const getGreeting = async function() {
@@ -53,7 +53,7 @@ const getTables = async function () {
 function App() {
   // const [count, setCount] = useState(0);
   // const [greeting, setGreeting] = useState('');
-  const [tables, setTables] = useState<TableColumnsObject | []>([]);
+  const [tables, setTables] = useState< TableObj[]>([]);
 
   useEffect(() => {
     // getGreeting().then((res) => setGreeting(res.greeting));
