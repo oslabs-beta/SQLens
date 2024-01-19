@@ -12,6 +12,10 @@
   "dependencies": {
     "@apollo/server": "^4.10.0",
     "@apollo/utils.fetcher": "^3.1.0",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.5",
+    "@mui/material": "^5.15.5",
     "apollo-server-express": "^3.13.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",

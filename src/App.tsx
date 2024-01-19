@@ -1,16 +1,25 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-import './index.css'
-import Flow from "./Flow";
+import { useState, useEffect } from 'react';
+import './index.css';
+import Flow from './Flow';
+import NavBar from './NavBar'
 import TableColumnsObject from './vite-env';
-import Grid from '@mui/material/Unstable_Grid2';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 // const getGreeting = async function() {
 //   const res = await fetch('/api/test');
 //   return await res.json();
 // }
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#3f50b5',
+    },
+  },
+});
 
-const getTables = async function() {
+
+const getTables = async function () {
   const response = await fetch('/api/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -52,17 +61,18 @@ function App() {
     getTables().then((res) => {
       console.log(res);
       setTables(res);
-    })
-
+    });
   }, []);
-
 
   return (
     <>
-      {/* <p>Server response: {tables}</p> */}
-      <Flow tables={tables}/>
+      <ThemeProvider theme={theme}>
+        <NavBar />
+        {/* <p>Server response: {tables}</p> */}
+        <Flow tables={tables} />
+      </ThemeProvider>
     </>
-  )
+  );
 }
 
 export default App;
