@@ -1,16 +1,25 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-import './index.css'
-import Flow from "./Flow";
-import TableColumnsObject from './vite-env';
-import Grid from '@mui/material/Unstable_Grid2';
+import { useState, useEffect } from 'react';
+import './index.css';
+import Flow from './Flow';
+import NavBar from './NavBar'
+import TableObj from './vite-env';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 // const getGreeting = async function() {
 //   const res = await fetch('/api/test');
 //   return await res.json();
 // }
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#3f50b5',
+    },
+  },
+});
 
-const getTables = async function() {
+
+const getTables = async function () {
   const response = await fetch('/api/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -44,7 +53,7 @@ const getTables = async function() {
 function App() {
   // const [count, setCount] = useState(0);
   // const [greeting, setGreeting] = useState('');
-  const [tables, setTables] = useState<TableColumnsObject | []>([]);
+  const [tables, setTables] = useState< TableObj[]>([]);
 
   useEffect(() => {
     // getGreeting().then((res) => setGreeting(res.greeting));
@@ -52,17 +61,18 @@ function App() {
     getTables().then((res) => {
       console.log(res);
       setTables(res);
-    })
-
+    });
   }, []);
-
 
   return (
     <>
-      {/* <p>Server response: {tables}</p> */}
-      <Flow tables={tables}/>
+      <ThemeProvider theme={theme}>
+        <NavBar />
+        {/* <p>Server response: {tables}</p> */}
+        <Flow tables={tables} />
+      </ThemeProvider>
     </>
-  )
+  );
 }
 
 export default App;

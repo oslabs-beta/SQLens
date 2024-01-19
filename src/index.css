@@ -29,8 +29,8 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  /* min-width: 320px; */
+  /* min-height: 100vh; */
 }
 
 #root {
@@ -62,7 +62,12 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-
+.flow-container {
+  /* style={{ display: 'flex', width: '100vw', height: '90vh' }} */
+  display: flex;
+  width: 100vw;
+  height: calc(100vh - 64px);
+}
 .react-flow__node-custom {
   padding: 10px;
   background-color: #556677;

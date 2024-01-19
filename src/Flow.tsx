@@ -49,7 +49,7 @@ const BasicFlow = ({ tables }) => {
     }
   };
 
-  
+
   // Fetches column data from the database
   const fetchColumnData = async (tableName) => {
     const response = await fetch('/api/graphql', {
@@ -101,7 +101,7 @@ const BasicFlow = ({ tables }) => {
   }, [tables, setNodes]);
 
   return (
-    <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
+    <div className='flow-container'>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -113,7 +113,8 @@ const BasicFlow = ({ tables }) => {
         fitView
         deleteKeyCode={null}
       >
-        <Background />
+        {/* <Background /> */}
+
       </ReactFlow>
     </div>
   );
