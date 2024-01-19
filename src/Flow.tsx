@@ -7,7 +7,7 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
 } from 'reactflow';
-
+import TableColumnsObject from './vite-env';
 import TableColumnsNode from './TableColumnsNode.tsx';
 import 'reactflow/dist/style.css';
 
@@ -21,7 +21,7 @@ import 'reactflow/dist/style.css';
 const nodeTypes = {
   custom: TableColumnsNode,
 };
-
+type FlowProps = {table: TableColumnsObject}
 const BasicFlow = ({ tables }) => {
   // Initialize states for nodes and edges
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
