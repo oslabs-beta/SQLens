@@ -68,7 +68,6 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <NavBar />
-        {/* <p>Server response: {tables}</p> */}
         <Flow tables={tables} />
       </ThemeProvider>
     </>

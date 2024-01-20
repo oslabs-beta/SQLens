@@ -62,6 +62,10 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.react-flow__handle {
+  opacity: 0;
+}
+
 .flow-container {
   /* style={{ display: 'flex', width: '100vw', height: '90vh' }} */
   display: flex;
