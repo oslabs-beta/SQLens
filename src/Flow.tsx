@@ -3,11 +3,12 @@ import ReactFlow, {
   addEdge,
   Background,
   Edge,
+  Node,
   Connection,
   useNodesState,
   useEdgesState,
 } from 'reactflow';
-import TableColumnsObject from './vite-env';
+import TableObj from './vite-env';
 import TableColumnsNode from './TableColumnsNode.tsx';
 import 'reactflow/dist/style.css';
 
@@ -21,12 +22,12 @@ import 'reactflow/dist/style.css';
 const nodeTypes = {
   custom: TableColumnsNode,
 };
-type FlowProps = {table: TableColumnsObject}
-const BasicFlow = ({ tables }) => {
+type FlowProps = {tables: TableObj[]}
+const BasicFlow = ({ tables }: FlowProps) => {
   // Initialize states for nodes and edges
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  //
+  // useState to grab a selected Node (to display table rows)
   const [selectedNode, setSelectedNode] = useState(null);
 
   const onConnect = useCallback(
@@ -34,24 +35,90 @@ const BasicFlow = ({ tables }) => {
     [setEdges]
   );
 
+  const generateNodes = () => {
+    const nodes: Node[] = [];
+    let layoutX: number = 0;
+    let layoutY: number = 0;
+
+    tables.forEach((table: TableObj, tIndex: number):void => {
+      //layout calcs
+      if (layoutY > 600) {
+        layoutY = 0;
+        layoutX += 350;
+        }
+       
+      
+      const groupNode: Node = {
+        id: `table-${tIndex}`, //tables[index][name]
+        // type: 'group',
+        type: 'input',
+        data: { label: table.name },
+        className: 'light',
+        position: { x: layoutX, y: layoutY },
+        style: {
+          width: 250,
+          height: 60 + table.columns.length * 40,
+        },
+      }
+      nodes.push(groupNode);
+
+      //leave this here, please! I'd like to change the flow header
+      // const tableNameNode: Node = {
+      //   id: `tablename-${tIndex}`,
+      //   // type: 'custom',
+      //   data: { label: table.name },
+      //   position: { x: 15, y: 15 },
+      //   parentNode: `table-${tIndex}`,
+      //   draggable: false,
+      //   extent: 'parent',
+      // }
+      // nodes.push(tableNameNode)
+
+      //initialize column node position at 45px from top
+      let y = 45;
+      // iterate through columns array and create node for each column name
+      table.columns.forEach((column: string, cIndex: number):void => {
+        const columnNode: Node = {
+          // id: 'A-2',
+          id: `table-${tIndex}-column-${cIndex}`,
+          // type: 'custom',
+          data: { label: column },
+          position: { x: 15, y: y },
+          parentNode: `table-${tIndex}`,
+          draggable: false,
+          extent: 'parent',
+          style: {
+            width: 220,
+            height: 40,
+          }
+        }
+        nodes.push(columnNode);
+        y += 40;
+      })
+      layoutY += 150 + table.columns.length * 40;
+    });
+    return nodes;
+  };
+
   // have to add interface to make this valid TypeScript
 
-  const onNodeClick = async (event, node) => {
-    try {
+  const onNodeClick = async (event: React.MouseEvent, node: Node): Promise<void> => {
+    // try {
       console.log('node: ', node);
       console.log('table name: ', node.data.label);
       //node.data.label is the table name
       const columnData = await fetchColumnData(node.data.label);
+      console.log('columnData: ', columnData);
       // setSelectedNode is passing in the node and columnData, appending the columnData to the node
       setSelectedNode({ ...node, columnData });
-    } catch (error) {
-      console.error('Error fetching column data: ', error);
-    }
+    // } catch (error) {
+      // console.error('Error fetching column data: ', error);
+    // }
   };
 
 
   // Fetches column data from the database
-  const fetchColumnData = async (tableName) => {
+  const fetchColumnData = async (tableName: string) => {
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -72,34 +139,17 @@ const BasicFlow = ({ tables }) => {
       console.error(result.errors);
       throw new Error('Error fetching column data');
     }
-    return result.data.getTaData;
+    return result.data.getTableData;
   };
 
   // Effect to update nodes when 'tables' prop changes
   useEffect(() => {
-    // x and y variables for placement of nodes
-    let x = 0;
-    let y = 0;
-    // after table date is loaded, render nodes using map function
-    if (tables && typeof tables === 'object') {
-      const newNodes = tables.map((table, index) => {
-        if (y > 600) {
-          y = 0;
-          x += 350;
-        }
-        const prevY = y;
-        y += 150 + table.columns.length * 25;
-        return {
-          id: index.toString(),
-          type: 'custom',
-          data: { label: table.name, rows: table.columns },
-          position: { x: x, y: prevY },
-        };
-      });
+    if (tables.length>0) {
+      const newNodes = generateNodes();
       setNodes(newNodes);
     }
   }, [tables, setNodes]);
-
+  const proOptions = { hideAttribution: true };
   return (
     <div className='flow-container'>
       <ReactFlow
@@ -108,12 +158,18 @@ const BasicFlow = ({ tables }) => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        onNodeClick={onNodeClick}
+        // onNodeClick={onNodeClick} //implement show table data with button instead
         nodeTypes={nodeTypes}
         fitView
         deleteKeyCode={null}
+        proOptions={proOptions}
       >
         {/* <Background /> */}
+        <Background 
+        color='#B3D7FF'  // Color of the grid lines
+        gap={50}      // Spacing between grid lines
+        size={4}      // Thickness of grid lines
+    />
 
       </ReactFlow>
     </div>
