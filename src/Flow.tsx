@@ -10,6 +10,7 @@ import ReactFlow, {
 } from 'reactflow';
 import TableObj from './vite-env';
 import ColumnNameNode from './ColumnNameNode.tsx';
+import GroupNode from './GroupNode.tsx';
 import 'reactflow/dist/style.css';
 
 //not using edges currently
@@ -21,6 +22,7 @@ import 'reactflow/dist/style.css';
 // references custom node which is imported from TableColumnsNode.tsx
 const nodeTypes = {
   colNode: ColumnNameNode,
+  groupNode: GroupNode,
 };
 type FlowProps = {tables: TableObj[]}
 const BasicFlow = ({ tables }: FlowProps) => {
@@ -49,14 +51,17 @@ const BasicFlow = ({ tables }: FlowProps) => {
 
       const groupNode: Node = {
         id: `table-${tIndex}`, //tables[index][name]
-        // type: 'group',
-        type: 'input',
+        type: 'groupNode',
+        // type: 'input',
         data: { label: table.name },
         className: 'light',
         position: { x: layoutX, y: layoutY },
         style: {
           width: 250,
           height: 60 + table.columns.length * 40,
+          backgroundColor: 'rgba(245, 245, 245, 0.9)',
+          borderRadius: '4px',
+          boxShadow: '0px 2px 4px rgba(0,0,0,0.1)',
         },
       }
       nodes.push(groupNode);
