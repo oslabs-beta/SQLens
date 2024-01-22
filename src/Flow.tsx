@@ -81,7 +81,7 @@ const BasicFlow = ({ tables }: FlowProps) => {
           // id: 'A-2',
           id: `table-${tIndex}-column-${cIndex}`,
           // type: 'custom',
-          data: { label: column },
+          data: { label: column, parent: table.name},
           type: 'colNode',
           position: { x: 15, y: y },
           parentNode: `table-${tIndex}`,
