@@ -1,4 +1,4 @@
-import pool from './db';
+import { pool } from './index'
 
 
 // The interface for data structure Jenny was talking about to make this valid TypeScript
