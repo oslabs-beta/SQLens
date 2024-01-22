@@ -9,7 +9,7 @@ import ReactFlow, {
   useEdgesState,
 } from 'reactflow';
 import TableObj from './vite-env';
-import TableColumnsNode from './TableColumnsNode.tsx';
+import ColumnNameNode from './ColumnNameNode.tsx';
 import 'reactflow/dist/style.css';
 
 //not using edges currently
@@ -20,7 +20,7 @@ import 'reactflow/dist/style.css';
 
 // references custom node which is imported from TableColumnsNode.tsx
 const nodeTypes = {
-  custom: TableColumnsNode,
+  colNode: ColumnNameNode,
 };
 type FlowProps = {tables: TableObj[]}
 const BasicFlow = ({ tables }: FlowProps) => {
@@ -46,8 +46,7 @@ const BasicFlow = ({ tables }: FlowProps) => {
         layoutY = 0;
         layoutX += 350;
         }
-       
-      
+
       const groupNode: Node = {
         id: `table-${tIndex}`, //tables[index][name]
         // type: 'group',
@@ -83,6 +82,7 @@ const BasicFlow = ({ tables }: FlowProps) => {
           id: `table-${tIndex}-column-${cIndex}`,
           // type: 'custom',
           data: { label: column },
+          // type: 'colNode',
           position: { x: 15, y: y },
           parentNode: `table-${tIndex}`,
           draggable: false,
@@ -165,7 +165,7 @@ const BasicFlow = ({ tables }: FlowProps) => {
         proOptions={proOptions}
       >
         {/* <Background /> */}
-        <Background 
+        <Background
         color='#B3D7FF'  // Color of the grid lines
         gap={50}      // Spacing between grid lines
         size={4}      // Thickness of grid lines
