@@ -5,10 +5,6 @@ import NavBar from './NavBar'
 import TableObj from './vite-env';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-// const getGreeting = async function() {
-//   const res = await fetch('/api/test');
-//   return await res.json();
-// }
 const theme = createTheme({
   palette: {
     mode: 'dark',
@@ -51,13 +47,9 @@ const getTables = async function () {
 };
 
 function App() {
-  // const [count, setCount] = useState(0);
-  // const [greeting, setGreeting] = useState('');
   const [tables, setTables] = useState< TableObj[]>([]);
 
   useEffect(() => {
-    // getGreeting().then((res) => setGreeting(res.greeting));
-
     getTables().then((res) => {
       console.log(res);
       setTables(res);
