@@ -84,6 +84,13 @@ button:focus-visible {
   padding: 10px;
 }
 
+.column-name-node{
+  background-color:  #556677;
+  display: flex;
+  justify-content: space-between;
+  /* height: 25px; */
+}
+
 .tableName {
   font-weight: bolder;
   border-bottom: 1px solid;
