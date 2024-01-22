@@ -9,7 +9,7 @@ import ReactFlow, {
   useEdgesState,
 } from 'reactflow';
 import TableObj from './vite-env';
-import TableColumnsNode from './TableColumnsNode.tsx';
+import ColumnNameNode from './ColumnNameNode.tsx';
 import GroupNode from './GroupNode.tsx';
 import 'reactflow/dist/style.css';
 
@@ -21,7 +21,7 @@ import 'reactflow/dist/style.css';
 
 // references custom node which is imported from TableColumnsNode.tsx
 const nodeTypes = {
-  custom: TableColumnsNode,
+  colNode: ColumnNameNode,
   groupNode: GroupNode,
 };
 type FlowProps = {tables: TableObj[]}
@@ -48,8 +48,7 @@ const BasicFlow = ({ tables }: FlowProps) => {
         layoutY = 0;
         layoutX += 350;
         }
-       
-      
+
       const groupNode: Node = {
         id: `table-${tIndex}`, //tables[index][name]
         type: 'groupNode',
@@ -87,7 +86,8 @@ const BasicFlow = ({ tables }: FlowProps) => {
           // id: 'A-2',
           id: `table-${tIndex}-column-${cIndex}`,
           // type: 'custom',
-          data: { label: column },
+          data: { label: column, parent: table.name},
+          type: 'colNode',
           position: { x: 15, y: y },
           parentNode: `table-${tIndex}`,
           draggable: false,
@@ -169,10 +169,11 @@ const BasicFlow = ({ tables }: FlowProps) => {
         deleteKeyCode={null}
         proOptions={proOptions}
       >
-        <Background 
-        color='#B3D7FF'  
-        gap={50}      
-        size={4}      
+        {/* <Background /> */}
+        <Background
+        color='#B3D7FF'  // Color of the grid lines
+        gap={50}      // Spacing between grid lines
+        size={4}      // Thickness of grid lines
     />
 
       </ReactFlow>

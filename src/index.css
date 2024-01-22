@@ -84,11 +84,27 @@ button:focus-visible {
   padding: 10px;
 }
 
+.column-name-node {
+  /* background-color:  #556677; */
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+  align-items: center;
+  border: solid 1px #213547;
+  border-radius: 3px;
+}
+
+.column-label {
+  padding: 0px 8px;
+}
+
 .tableName {
   font-weight: bolder;
   border-bottom: 1px solid;
   margin-bottom: 5px;
 }
+
+
 
 @media (prefers-color-scheme: light) {
   :root {
