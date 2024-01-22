@@ -7,15 +7,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const { Pool } = pkg;
-export let pool = new Pool({
-  connectionString: process.env.DATABASE_URI,
-});
-
-import pkg from 'pg';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const { Pool } = pkg;
 export let pool = new Pool({
@@ -23,8 +14,6 @@ export let pool = new Pool({
 });
 
 export const app: Express = express();
-
-app.use(express.json());
 
 app.use(express.json());
 
@@ -50,8 +39,6 @@ app.post('/api/setDatabaseURI', (req, res) => {
   pool = new Pool({ connectionString: databaseURI });
 
   res.json({ message: 'Database connection updated successfully' });
-});
-  res.json({ greeting: 'Hello' });
 });
 
 app.post('/api/setDatabaseURI', (req, res) => {
