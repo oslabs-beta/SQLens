@@ -23,6 +23,13 @@ export const typeDefs = gql`
     getTableNames: [Table]
     getTableData(tableName: String!): [RowData]
   }
+
+  type Mutation {
+    addColumnToTable(tableName: String!, columnName: String!, dataType: String!): String
+    editTableName(oldName: String!, newName: String!): String
+    deleteTable(tableName: String!): String
+    deleteColumnFromTable(tableName: String!, columnName: String!): Table
+  }
 `;
 
 // If getTableNames is called, the resolver will return an array of objects, each object has a key of name, columns, and foreignKeys
