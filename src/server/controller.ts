@@ -141,7 +141,7 @@ export const resolvers = {
       // the :_ is a placeholder for the parent object which is a neccassary argument for the resolver with apollo server
       _: any,
       { oldName, newName }: { oldName: string; newName: string }
-    ): Promise<string> => {
+    ) => {
       try {
         // SQL to rename a table
         await pool.query(`ALTER TABLE ${oldName} RENAME TO ${newName};`);

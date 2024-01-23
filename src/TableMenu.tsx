@@ -4,16 +4,20 @@ import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MenuItem from '@mui/material/MenuItem';
 
-// export   const handleClose = () => {
-//   setAnchorEl(null);
-// };
-
-function TableMenu({ tableData, handleEditTableName, anchorEl, handleClick }) {
-
+export default function TableMenu({ tableData }) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
-  export const handleClose = () => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleEditTableName = () => {
+    console.log("Edit Table Name for:", tableData.label);
+    handleClose();
   };
 
   const handleAddColumn = () => {
@@ -31,9 +35,9 @@ function TableMenu({ tableData, handleEditTableName, anchorEl, handleClick }) {
 
   return (
     <div>
-      <IconButton aria-label="more" style={{color: 'black'}} onClick={handleClick}>
-        <MoreVertIcon />
-      </IconButton>
+            <IconButton aria-label="more" style={{color: 'black'}} onClick={handleClick}>
+            <MoreVertIcon />
+          </IconButton>
       <Popover
         id={id}
         open={open}
@@ -50,12 +54,10 @@ function TableMenu({ tableData, handleEditTableName, anchorEl, handleClick }) {
           }
         }}
       >
-        <MenuItem onClick={handleEditTableName} style={{color: 'black'}}>Edit Table Name</MenuItem>
+           <MenuItem onClick={handleEditTableName} style={{color: 'black'}}>Edit Table Name</MenuItem>
         <MenuItem onClick={handleAddColumn} style={{color: 'black'}}>Add Column</MenuItem>
         <MenuItem onClick={handleDeleteTable} style={{color: 'black'}}>Delete Table</MenuItem>
       </Popover>
     </div>
   );
 }
-
-export TableMenu
