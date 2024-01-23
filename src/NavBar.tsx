@@ -67,7 +67,6 @@ export default function PrimarySearchAppBar() {
   }
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
     try {
       const response = await fetch('/api/setDatabaseUri', {
         method: 'POST',
@@ -148,9 +147,6 @@ export default function PrimarySearchAppBar() {
           </Typography>
           <form onSubmit={handleSubmit}>
             <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Database URI..."
                 inputProps={{ 'aria-label': 'search' }}
