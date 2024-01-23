@@ -26,8 +26,10 @@ const generateEdges = (tables) => {
           source: `table-${tIndex}-column-${sourceColumnIndex}`,
           target: `table-${targetTableIndex}-column-${targetColumnIndex}`,
           type: 'smoothstep',
-          animated: true,
-          style: { stroke: '#ff006e' }, // Custom styling for foreign key edges
+          animated: false,
+          style: { 
+            stroke: '#ff006e',
+          }, // Custom styling for foreign key edges
         };
   
         edges.push(edge);
