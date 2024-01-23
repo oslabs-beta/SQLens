@@ -19,8 +19,8 @@ interface Edge {
   style: { stroke: string};
 }
 
-const generateEdges = (tables) => {
-    const edges = [];
+const generateEdges = (tables: Table[]): Edge[] => {
+    const edges: Edge[] = [];
   
     // Iterate over each table
     tables.forEach((table, tIndex) => {
