@@ -12,11 +12,12 @@ import TableObj from './vite-env';
 import ColumnNameNode from './ColumnNameNode.tsx';
 import GroupNode from './GroupNode.tsx';
 import 'reactflow/dist/style.css';
+import generateEdges from './GenerateEdges.tsx';
 
 //not using edges currently
 // const initialEdges: Edge[] = [
-//   //   { id: "e1-2", source: "1", target: "2", animated: true },
-//   //   { id: "e1-3", source: "1", target: "3" }
+//     { id: "e1-2", source: "1", target: "2", animated: true },
+//     { id: "e1-3", source: "1", target: "3" }
 // ];
 
 // custom nodes
@@ -138,9 +139,11 @@ const BasicFlow = ({ tables }: {tables: TableObj[]}) => {
   useEffect(() => {
     if (tables.length>0) {
       const newNodes = generateNodes();
+      const newEdges = generateEdges(tables)
       setNodes(newNodes);
+      setEdges(newEdges);
     }
-  }, [tables, setNodes]);
+  }, [tables, setNodes, setEdges]);
 
   const proOptions = { hideAttribution: true };
   return (
