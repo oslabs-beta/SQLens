@@ -19,13 +19,13 @@ import 'reactflow/dist/style.css';
 //   //   { id: "e1-3", source: "1", target: "3" }
 // ];
 
-// references custom node which is imported from TableColumnsNode.tsx
+// custom nodes
 const nodeTypes = {
   colNode: ColumnNameNode,
   groupNode: GroupNode,
 };
-type FlowProps = {tables: TableObj[]}
-const BasicFlow = ({ tables }: FlowProps) => {
+
+const BasicFlow = ({ tables }: {tables: TableObj[]}) => {
   // Initialize states for nodes and edges
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -37,6 +37,7 @@ const BasicFlow = ({ tables }: FlowProps) => {
     [setEdges]
   );
 
+  //generate all tables as group nodes with column nodes inside
   const generateNodes = () => {
     const nodes: Node[] = [];
     let layoutX: number = 0;
@@ -49,6 +50,7 @@ const BasicFlow = ({ tables }: FlowProps) => {
         layoutX += 350;
         }
 
+      //create group node for each table
       const groupNode: Node = {
         id: `table-${tIndex}`, //tables[index][name]
         type: 'groupNode',
@@ -65,18 +67,6 @@ const BasicFlow = ({ tables }: FlowProps) => {
         },
       }
       nodes.push(groupNode);
-
-      //leave this here, please! I'd like to change the flow header
-      // const tableNameNode: Node = {
-      //   id: `tablename-${tIndex}`,
-      //   // type: 'custom',
-      //   data: { label: table.name },
-      //   position: { x: 15, y: 15 },
-      //   parentNode: `table-${tIndex}`,
-      //   draggable: false,
-      //   extent: 'parent',
-      // }
-      // nodes.push(tableNameNode)
 
       //initialize column node position at 45px from top
       let y = 45;
@@ -105,8 +95,6 @@ const BasicFlow = ({ tables }: FlowProps) => {
     return nodes;
   };
 
-  // have to add interface to make this valid TypeScript
-
   const onNodeClick = async (event: React.MouseEvent, node: Node): Promise<void> => {
     // try {
       console.log('node: ', node);
@@ -120,7 +108,6 @@ const BasicFlow = ({ tables }: FlowProps) => {
       // console.error('Error fetching column data: ', error);
     // }
   };
-
 
   // Fetches column data from the database
   const fetchColumnData = async (tableName: string) => {
@@ -154,6 +141,7 @@ const BasicFlow = ({ tables }: FlowProps) => {
       setNodes(newNodes);
     }
   }, [tables, setNodes]);
+
   const proOptions = { hideAttribution: true };
   return (
     <div className='flow-container'>
