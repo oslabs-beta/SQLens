@@ -30,15 +30,6 @@ const DeleteColumnButton = ({ data }: {data: { label: string, parent: string }})
       }),
     });
 
-  //   query: `
-  //   query GetTableData($tableName: String!) {
-  //     getTableData(tableName: $tableName) {
-  //       columnData
-  //     }
-  //   }
-  // `,
-  // variables: { tableName },
-
     const final = await response.json();
     if (final.errors) {
       console.error(final.errors);

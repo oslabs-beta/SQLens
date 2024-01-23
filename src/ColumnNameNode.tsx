@@ -6,7 +6,10 @@ import DeleteColumnButton from './DeleteColumnButton';
 // import React from 'react';
 
 const ColumnNameNode = ({ data }: {data: { label: string, parent: string }}) => {
-  
+
+  const handleEditClick = () => {
+    console.log('editing column', data.label, ' in table ', data.parent);
+  }
 
   return (
     <div className="column-name-node">
@@ -14,7 +17,7 @@ const ColumnNameNode = ({ data }: {data: { label: string, parent: string }}) => 
       <Handle type='source' position={Position.Right} />
       <Typography className='column-label' noWrap>{data.label}</Typography>
       <Box sx={{ minWidth: 56}}>
-      <IconButton aria-label='edit' size='small'>
+      <IconButton aria-label='edit' size='small' onClick={handleEditClick}>
         <EditIcon fontSize='inherit' />
       </IconButton>
       <DeleteColumnButton data={data} />
