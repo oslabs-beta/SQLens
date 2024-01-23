@@ -17,7 +17,7 @@ const DeleteColumnButton = ({ data }: {data: { label: string, parent: string }})
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      // This query is used to get the table names and columns from the database
+      // This query is used to delete a column from a table
       // This is a graphQL query, not a SQL query
       body: JSON.stringify({
         query: `
@@ -26,7 +26,6 @@ const DeleteColumnButton = ({ data }: {data: { label: string, parent: string }})
           }
         `,
         variables: { columnName: data.label, tableName: data.parent },
-        //deleteColumnFromTable(tableName: ${data.parent}, columnName: ${data.label}): Table <-- if we want to get a string back instead of a table
       }),
     });
 
@@ -46,6 +45,7 @@ const DeleteColumnButton = ({ data }: {data: { label: string, parent: string }})
   const handleYesDelete = () => {
     console.log('deleting column', data.label, ' from table ', data.parent);
     deleteCol();
+    //need extra functionality to re render the node
     setAlertOpen(false);
   };
   const handleNoDelete = () => {
