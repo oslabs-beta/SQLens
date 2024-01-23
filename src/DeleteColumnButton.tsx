@@ -21,13 +21,23 @@ const DeleteColumnButton = ({ data }: {data: { label: string, parent: string }})
       // This is a graphQL query, not a SQL query
       body: JSON.stringify({
         query: `
-          Mutation {
-            deleteColumnFromTable(tableName: ${data.parent}, columnName: ${data.label}): Table
+          mutation deleteColumn($tableName: String!, $columnName: String!){
+            deleteColumn(tableName: $tableName, columnName: $columnName)
           }
         `,
-        //deleteColumnFromTable(tableName: ${data.parent}, columnName: ${data.label}): string <-- if we want to get a string back instead of a table
+        variables: { columnName: data.label, tableName: data.parent },
+        //deleteColumnFromTable(tableName: ${data.parent}, columnName: ${data.label}): Table <-- if we want to get a string back instead of a table
       }),
     });
+
+  //   query: `
+  //   query GetTableData($tableName: String!) {
+  //     getTableData(tableName: $tableName) {
+  //       columnData
+  //     }
+  //   }
+  // `,
+  // variables: { tableName },
 
     const final = await response.json();
     if (final.errors) {
@@ -43,7 +53,7 @@ const DeleteColumnButton = ({ data }: {data: { label: string, parent: string }})
   };
   const handleYesDelete = () => {
     console.log('deleting column', data.label, ' from table ', data.parent);
-    // deleteCol();
+    deleteCol();
     setAlertOpen(false);
   };
   const handleNoDelete = () => {

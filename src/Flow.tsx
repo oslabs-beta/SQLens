@@ -66,18 +66,6 @@ const BasicFlow = ({ tables }: FlowProps) => {
       }
       nodes.push(groupNode);
 
-      //leave this here, please! I'd like to change the flow header
-      // const tableNameNode: Node = {
-      //   id: `tablename-${tIndex}`,
-      //   // type: 'custom',
-      //   data: { label: table.name },
-      //   position: { x: 15, y: 15 },
-      //   parentNode: `table-${tIndex}`,
-      //   draggable: false,
-      //   extent: 'parent',
-      // }
-      // nodes.push(tableNameNode)
-
       //initialize column node position at 45px from top
       let y = 45;
       // iterate through columns array and create node for each column name

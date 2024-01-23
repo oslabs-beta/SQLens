@@ -162,5 +162,15 @@ export const resolvers = {
         throw new Error('Server error');
       }
     },
+    deleteColumn: async (_: any, { columnName, tableName }: { columnName: string, tableName: string }) => {
+      try {
+        // SQL to delete a table
+        await pool.query(`ALTER TABLE ${tableName} DROP COLUMN ${columnName};`);
+        return `Column ${columnName} deleted successfully from ${tableName}.`;
+      } catch (err) {
+        console.error('Error in deleteColumn resolver: ', err);
+        throw new Error('Server error');
+      }
+    }
   },
 };

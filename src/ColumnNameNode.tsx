@@ -6,6 +6,8 @@ import DeleteColumnButton from './DeleteColumnButton';
 // import React from 'react';
 
 const ColumnNameNode = ({ data }: {data: { label: string, parent: string }}) => {
+  
+
   return (
     <div className="column-name-node">
       <Handle type='target' position={Position.Left} />
