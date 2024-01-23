@@ -1,3 +1,24 @@
+interface ForeignKey {
+  columnName: string;
+  foreignTableName: string;
+  foreignColumnName: string;
+}
+
+interface Table {
+  name: string;
+  columns: string[];
+  foreignKeys: ForeignKey[];
+}
+
+interface Edge {
+  id: string;
+  source: string;
+  target: string;
+  type: string;
+  animated: boolean;
+  style: { stroke: string};
+}
+
 const generateEdges = (tables) => {
     const edges = [];
   
