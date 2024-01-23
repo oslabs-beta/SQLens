@@ -1,6 +1,6 @@
 // import { memo } from 'react';
 import { Handle, Position } from 'reactflow';
-import { IconButton, CheckIcon, Typography, Box } from '@mui/material';
+import { IconButton, Typography, Box } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteColumnButton from './DeleteColumnButton';
 import { useState } from 'react';
@@ -18,8 +18,8 @@ const ColumnNameNode = ({
     setIsEditing(true);
   };
 
-  const handleInputChange = (e) => {
-    console.log(e.target.value);
+  const handleInputChange = (e: MouseEvent) => {
+    // console.log(e.target.value);
     setEditedLabel(e.target.value);
   };
 
@@ -29,7 +29,7 @@ const ColumnNameNode = ({
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      // This query is used to get the table names and columns from the database
+      // This query is used to change the name of a column
       // This is a graphQL query, not a SQL query
       body: JSON.stringify({
         query: `
@@ -38,21 +38,15 @@ const ColumnNameNode = ({
           }
         `,
         variables: { newColumnName: editedLabel, columnName: data.label, tableName: data.parent},
-        //deleteColumnFromTable(tableName: ${data.parent}, columnName: ${data.label}): Table <-- if we want to get a string back instead of a table
       }),
     });
 
     const final = await response.json();
     if (final.errors) {
       console.error(final.errors);
-      throw new Error('Error fetching tables');
+      throw new Error('Error changing column name tables');
     }
     console.log(final);
-
-    // console.log(editedLabel);
-
-    // Here, you can perform any actions you want with the edited label.
-    // For example, you can make an API call to update the label in your database.
   };
 
   return (
@@ -75,8 +69,8 @@ const ColumnNameNode = ({
           {editedLabel}
         </Typography>
       )}
-      <Box sx={{ minWidth: 56 }}>
 
+      <Box sx={{ minWidth: 56 }}>
         {/* If editing: render check button to save; Otherwise render the edit button*/}
         {isEditing ? (
           <IconButton aria-label='edit' size='small' onClick={handleCheckClick}>
