@@ -35,6 +35,7 @@ const DeleteColumnButton = ({ data }: {data: { label: string, parent: string }})
       console.error(final.errors);
       throw new Error('Error fetching tables');
     }
+    console.log(final);
     return
   };
 

@@ -171,6 +171,17 @@ export const resolvers = {
         console.error('Error in deleteColumn resolver: ', err);
         throw new Error('Server error');
       }
+    },
+    editColumn: async (_: any, { newColumnName, columnName, tableName }: { newColumnName: string, columnName: string, tableName: string }) => {
+      try {
+        // SQL to delete a table
+        await pool.query(`ALTER TABLE ${tableName}
+        RENAME COLUMN ${columnName} to ${newColumnName};`);
+        return `Column name changed to${newColumnName} from ${columnName} on ${tableName}.`;
+      } catch (err) {
+        console.error('Error in editColumn resolver: ', err);
+        throw new Error('Server error');
+      }
     }
   },
 };
