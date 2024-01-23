@@ -41,17 +41,7 @@ app.post('/api/setDatabaseURI', (req, res) => {
   res.json({ message: 'Database connection updated successfully' });
 });
 
-app.post('/api/setDatabaseURI', (req, res) => {
-  const { databaseURI } = req.body;
 
-  if (!databaseURI) {
-    return res.status(400).json({ error: 'Database URI is required' });
-  }
-
-  pool = new Pool({ connectionString: databaseURI });
-
-  res.json({ message: 'Database connection updated successfully' });
-});
 
 // app.get('/api/tables', dbController.getTableNames, (req, res) => {
 //   res.status(200).json(res.locals.dbData)
