@@ -49,6 +49,12 @@ const getTables = async function () {
 function App() {
   const [tables, setTables] = useState< TableObj[]>([]);
 
+  const fetchAndUpdateTables = () => {
+    getTables().then((res) => {
+      setTables(res);
+    });
+  };
+
   useEffect(() => {
     getTables().then((res) => {
       console.log(res);
@@ -60,10 +66,12 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <NavBar />
-        <Flow tables={tables} />
+        <Flow tables={tables} fetchAndUpdateTables={fetchAndUpdateTables}/>
       </ThemeProvider>
     </>
   );
 }
 
 export default App;
+
+
