@@ -31,11 +31,11 @@ const DeleteColumnButton = ({ data }: {data: { label: string, parent: string, on
 
     const final = await response.json();
     if (final.errors) {
-      console.error(final.errors);
-      throw new Error('Error fetching tables');
+      console.error(final.errors[0].message);
+      alert(final.errors[0].message);
+    } else {
+      console.log(final);
     }
-    console.log(final);
-    return
   };
 
   //click handlers
@@ -64,8 +64,8 @@ const DeleteColumnButton = ({ data }: {data: { label: string, parent: string, on
 
       {/** dialog for alert */}
       <Dialog
-        open={(alertOpen)}
-        onClose={()=> setAlertOpen(false)}
+        open={alertOpen}
+        onClose={() => setAlertOpen(false)}
         aria-describedby='alert-dialog-description'
       >
         <DialogContent>
