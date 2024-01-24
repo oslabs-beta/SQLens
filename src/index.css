@@ -104,6 +104,11 @@ button:focus-visible {
   margin-bottom: 5px;
 }
 
+.table-name-input {
+  margin-left: 15px;
+  height: 25px;
+  width: 155px;
+}
 
 
 @media (prefers-color-scheme: light) {
