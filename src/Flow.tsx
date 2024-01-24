@@ -44,6 +44,26 @@ const BasicFlow = ({ tables }: { tables: TableObj[] }) => {
     let layoutX: number = 0;
     let layoutY: number = 0;
 
+    // makes a custom node to allow for adding tables
+    const customNode: Node = {
+      id: 'custom-node-id', // A unique identifier for your custom node
+      type: 'groupNode', // Define a custom type if needed
+      data: { 
+        label: 'Custom Node', // Custom label or any other data you want to include
+        // Other custom data properties...
+      },
+      position: { x: 1000, y: 1000 }, // Define the position
+      style: {
+        width: 100,
+        height: 50,
+        backgroundColor: '#ffcc00', // Custom styling
+        // Additional styling...
+      },
+      // Other properties if needed...
+    };
+    nodes.push(customNode);
+
+
     tables.forEach((table: TableObj, tIndex: number): void => {
       //layout calcs
       if (layoutY > 600) {
