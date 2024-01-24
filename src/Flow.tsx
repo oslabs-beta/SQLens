@@ -49,10 +49,10 @@ const BasicFlow = ({ tables }: { tables: TableObj[] }) => {
       id: 'custom-node-id', // A unique identifier for your custom node
       type: 'groupNode', // Define a custom type if needed
       data: { 
-        label: 'Add new Table', // Custom label or any other data you want to include
+        label: 'Add New Table', // Custom label or any other data you want to include
         // Other custom data properties...
       },
-      position: { x: 1000, y: 1000 }, // Define the position
+      position: { x: 700, y: 1100 }, // Define the position
       style: {
         width: 250,
         // height: 60 + table.columns.length * 40,
