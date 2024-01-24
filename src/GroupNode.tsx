@@ -15,20 +15,19 @@ const GroupNode = ({ data }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState(data.label);
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(  null
-  );
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement|null>(null);
 
   //click handlers for delete table dialogue
   const handleAlertOpen = () => {
     setAlertOpen(true);
   };
-  
+
   const handleDeleteCancel = () => {
     setAlertOpen(false);
   };
-  
+
   const handleTableDelete = async () => {
-    console.log('deleting table ', data.parent);
+    console.log('deleting table:', editedLabel);
     //delete table function
     //need extra functionality to re render the node
     setAlertOpen(false);
@@ -50,7 +49,8 @@ const GroupNode = ({ data }) => {
 
     const final = await response.json();
     if (final.errors) {
-      console.error(final.errors);
+      console.error(final.errors[0].message);
+      alert(final.errors[0].message);
       throw new Error("Error deleting table");
       //add a user alert
     } else {
@@ -59,25 +59,25 @@ const GroupNode = ({ data }) => {
   };
 
   //click handlers for pop up menu
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
   //click handlers for editing table
   const handleEditTableName = () => {
+    handleMenuClose();
     setIsEditing(true);
     //use document.findElementByID to select input field and make focused or selected
     console.log("Edit Table Name for:", data.label);
-    handleClose();
   };
 
-  const handleInputChange = (e: MouseEvent) => {
-    // console.log(e.target.value);
-    setEditedLabel(e.target.value);
+  const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+    console.log(e.currentTarget.value);
+    setEditedLabel(e.currentTarget.value);
   };
 
   const handleEditCancel = () => {
@@ -85,7 +85,6 @@ const GroupNode = ({ data }) => {
   }
 
   const handleEditSubmit = async () => {
-    
     const response = await fetch("/api/graphql", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -105,8 +104,9 @@ const GroupNode = ({ data }) => {
     const final = await response.json();
     if (final.errors) {
       setEditedLabel(data.label);
-      console.error(final.errors);
-      throw new Error("Error changing table name");
+      console.error(final.errors[0].message);
+      alert(final.errors[0].message);
+      // throw new Error("Error changing table name");
       //add a user alert
     } else {
       data.label = editedLabel;
@@ -119,6 +119,7 @@ const GroupNode = ({ data }) => {
   const [openColDialog, setColDialogOpen] = React.useState(false);
 
   const handleAddColumnOpen = () => {
+    handleMenuClose();
     setColDialogOpen(true);
   };
 
@@ -172,14 +173,14 @@ const GroupNode = ({ data }) => {
           tableData={data}
           handleEditTableName={handleEditTableName}
           anchorEl={anchorEl}
-          handleClose={handleClose}
-          handleClick={handleClick}
+          handleClose={handleMenuClose}
+          handleClick={handleMenuClick}
           handleAlertOpen={handleAlertOpen}
           handleAddColumnOpen={handleAddColumnOpen}
         />
           </Box>
         )}
-      
+
     {/** dialog for alert */}
     <Dialog
       open={(alertOpen)}
@@ -197,13 +198,13 @@ const GroupNode = ({ data }) => {
           Yes
         </Button>
       </DialogActions>
-    </Dialog>     
+    </Dialog>
 
-    <AddColumnDialog data={data} handleAddColumnOpen={handleAddColumnOpen} openColDialog={openColDialog} handleAddColumnClose={handleAddColumnClose}/> 
+    <AddColumnDialog tableName={editedLabel} handleAddColumnOpen={handleAddColumnOpen} openColDialog={openColDialog} handleAddColumnClose={handleAddColumnClose}/>
 
     </Box>
 
-    
+
   );
 };
 

@@ -124,7 +124,11 @@ export const resolvers = {
     addColumnToTable: async (
       // the :_ is a placeholder for the parent object which is a neccassary argument for the resolver with apollo server
       _: any,
-      { tableName, columnName, dataType }: { tableName: string; columnName: string; dataType: string}
+      {
+        tableName,
+        columnName,
+        dataType,
+      }: { tableName: string; columnName: string; dataType: string }
     ) => {
       try {
         // SQL to add a column to a table, adjust data type as needed
@@ -141,14 +145,15 @@ export const resolvers = {
       // the :_ is a placeholder for the parent object which is a neccassary argument for the resolver with apollo server
       _: any,
       { oldName, newName }: { oldName: string; newName: string }
-    ): Promise<string> => {
+    ) => {
       try {
         // SQL to rename a table
         await pool.query(`ALTER TABLE ${oldName} RENAME TO ${newName};`);
         return `Table name changed from ${oldName} to ${newName} successfully.`;
       } catch (err) {
         console.error('Error in editTableName resolver: ', err);
-        throw new Error('Server error');
+        // throw new Error('Server error');
+        return err;
       }
     },
     // the :_ is a placeholder for the parent object which is a neccassary argument for the resolver with apollo server
@@ -159,10 +164,14 @@ export const resolvers = {
         return `Table ${tableName} deleted successfully.`;
       } catch (err) {
         console.error('Error in deleteTable resolver: ', err);
-        throw new Error('Server error');
+        // throw new Error('Server error');
+        return err;
       }
     },
-    deleteColumn: async (_: any, { columnName, tableName }: { columnName: string, tableName: string }) => {
+    deleteColumn: async (
+      _: any,
+      { columnName, tableName }: { columnName: string; tableName: string }
+    ) => {
       try {
         // SQL to delete a table
         await pool.query(`ALTER TABLE ${tableName} DROP COLUMN ${columnName};`);
@@ -172,7 +181,14 @@ export const resolvers = {
         throw new Error('Server error');
       }
     },
-    editColumn: async (_: any, { newColumnName, columnName, tableName }: { newColumnName: string, columnName: string, tableName: string }) => {
+    editColumn: async (
+      _: any,
+      {
+        newColumnName,
+        columnName,
+        tableName,
+      }: { newColumnName: string; columnName: string; tableName: string }
+    ) => {
       try {
         // SQL to delete a table
         await pool.query(`ALTER TABLE ${tableName}
@@ -181,7 +197,8 @@ export const resolvers = {
       } catch (err) {
         console.error('Error in editColumn resolver: ', err);
         throw new Error('Server error');
+        // return err;
       }
-    }
+    },
   },
 };

@@ -17,49 +17,23 @@ const MenuProps = {
 };
 
 const dataTypes = [
-    'bigint',
-    'bigserial',
-    'bit [ (n) ]',
-    'bit varying [ (n) ]',
-    'boolean',
-    'box',
-    'bytea',
-    'character [ (n) ]',
-    'character varying [ (n) ]',
-    'cidr',
-    'circle',
-    'date',
-    'double precision',
-    'inet',
-    'integer',
-    'interval [ fields ] [ (p) ]',
-    'json',
-    'jsonb',
-    'line',
-    'lseg',
-    'macaddr',
-    'macaddr8',
-    'money',
-    'numeric [ (p, s) ]',
-    'path',
-    'pg_lsn',
-    'pg_snapshot',
-    'point',
-    'polygon',
-    'real',
-    'smallint',
-    'smallserial',
-    'serial',
-    'text',
-    'time [ (p) ] [ without time zone ]',
-    'time [ (p) ] with time zone',
-    'timestamp [ (p) ] [ without time zone ]',
-    'timestamp [ (p) ] with time zone',
-    'tsvector',
-    'txid_snapshot',
-    'uuid',
-    'xml'
-  ];
+  'int',
+  'date',
+  'bool',
+  'varchar(255)',
+  //   char(n)
+  // varchar(n)
+  // varchar(max)
+  // text
+  // nchar
+  // nvarchar
+  // nvarchar(max)
+  // ntext
+  // binary(n)
+  // varbinary
+  // varbinary(max)
+  // image
+];
 
 function getStyles(name: string, personName: readonly string[], theme: Theme) {
   return {
@@ -70,47 +44,50 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-export default function DataTypeSelector() {
-//   const theme = useTheme();
-  const [selectedDataType, setSelectedDataType] = React.useState<string[]>([]);
+export default function DataTypeSelector({
+  handleDataTypeChange,
+  selectedDataType,
+}) {
+  //   const theme = useTheme();
+  // const [selectedDataType, setSelectedDataType] = React.useState<string[]>([]);
 
-  const handleChange = (event: SelectChangeEvent<typeof selectedDataType>) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedDataType(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+  // const handleChange = (event: SelectChangeEvent<typeof selectedDataType>) => {
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   setSelectedDataType(
+  //     // On autofill we get a stringified value.
+  //     typeof value === 'string' ? value.split(',') : value,
+  //   );
+  // };
 
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
         <Select
-        //   multiple
+          //   multiple
           displayEmpty
           value={selectedDataType}
-          onChange={handleChange}
+          onChange={handleDataTypeChange}
           input={<OutlinedInput />}
-          renderValue={(selected) => {
-            if (selected.length === 0) {
-              return <em>Select Data Type</em>;
-            }
+          // renderValue={(selected) => {
+          //   if (selected.length === 0) {
+          //     return <em>Select Data Type</em>;
+          //   }
 
-            return selected.join(', ');
-          }}
+          //   return selected.join(', ');
+          // }}
           MenuProps={MenuProps}
           inputProps={{ 'aria-label': 'Without label' }}
         >
-          <MenuItem disabled value="">
+          <MenuItem disabled value=''>
             <em>Select Data Type</em>
           </MenuItem>
-          {dataTypes.map((dataType:string) => (
+          {dataTypes.map((dataType: string) => (
             <MenuItem
               key={dataType}
               value={dataType}
-            //   style={getStyles(dataType, personName, theme)}
+              //   style={getStyles(dataType, personName, theme)}
             >
               {dataType}
             </MenuItem>

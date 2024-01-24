@@ -24,6 +24,7 @@ import generateEdges from "./GenerateEdges.tsx";
 const nodeTypes = {
   colNode: ColumnNameNode,
   groupNode: GroupNode,
+  //add table node
 };
 
 const BasicFlow = ({ tables }: { tables: TableObj[] }) => {
@@ -93,6 +94,7 @@ const BasicFlow = ({ tables }: { tables: TableObj[] }) => {
       });
       layoutY += 150 + table.columns.length * 40;
     });
+    //push add table node into nodes array
     return nodes;
   };
 
