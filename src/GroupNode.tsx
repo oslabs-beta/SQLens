@@ -85,6 +85,7 @@ const GroupNode = ({ data }) => {
   }
 
   const handleEditSubmit = async () => {
+    setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
     const response = await fetch("/api/graphql", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
