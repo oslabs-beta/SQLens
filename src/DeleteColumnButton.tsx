@@ -8,7 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 
-const DeleteColumnButton = ({ data }: {data: { label: string, parent: string }}) => {
+const DeleteColumnButton = ({ data }: {data: { label: string, parent: string, onDelete: () => void } }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
   //   const [focusNode, setFocusNode] = React.useState(null)
 
@@ -42,10 +42,14 @@ const DeleteColumnButton = ({ data }: {data: { label: string, parent: string }})
   const handleAlertOpen = () => {
     setAlertOpen(true);
   };
-  const handleYesDelete = () => {
+  const handleYesDelete = async () => {
     console.log('deleting column', data.label, ' from table ', data.parent);
-    deleteCol();
-    //need extra functionality to re render the node
+    try {
+      await deleteCol();
+      data.onDelete();
+    } catch (error) {
+      console.error("Error during deletion:", error);
+    }
     setAlertOpen(false);
   };
   const handleNoDelete = () => {
