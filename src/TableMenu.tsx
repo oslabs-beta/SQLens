@@ -8,13 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 //   setAnchorEl(null);
 // };
 
-function TableMenu({ tableData, handleEditTableName, anchorEl, handleClick }) {
-
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-
-  export const handleClose = () => {
-    setAnchorEl(null);
-  };
+export default function TableMenu({ tableData, handleEditTableName, anchorEl, handleClick, handleClose }) {
 
   const handleAddColumn = () => {
     console.log("Add Column to:", tableData.label);
@@ -58,4 +52,3 @@ function TableMenu({ tableData, handleEditTableName, anchorEl, handleClick }) {
   );
 }
 
-export TableMenu

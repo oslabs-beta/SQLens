@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 import ReactFlow, {
   addEdge,
   Background,
@@ -7,12 +7,12 @@ import ReactFlow, {
   Connection,
   useNodesState,
   useEdgesState,
-} from 'reactflow';
-import TableObj from './vite-env';
-import ColumnNameNode from './ColumnNameNode.tsx';
-import GroupNode from './GroupNode.tsx';
-import 'reactflow/dist/style.css';
-import generateEdges from './GenerateEdges.tsx';
+} from "reactflow";
+import TableObj from "./vite-env";
+import ColumnNameNode from "./ColumnNameNode.tsx";
+import GroupNode from "./GroupNode.tsx";
+import "reactflow/dist/style.css";
+import generateEdges from "./GenerateEdges.tsx";
 
 //not using edges currently
 // const initialEdges: Edge[] = [
@@ -26,7 +26,7 @@ const nodeTypes = {
   groupNode: GroupNode,
 };
 
-const BasicFlow = ({ tables }: {tables: TableObj[]}) => {
+const BasicFlow = ({ tables }: { tables: TableObj[] }) => {
   // Initialize states for nodes and edges
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -44,77 +44,80 @@ const BasicFlow = ({ tables }: {tables: TableObj[]}) => {
     let layoutX: number = 0;
     let layoutY: number = 0;
 
-    tables.forEach((table: TableObj, tIndex: number):void => {
+    tables.forEach((table: TableObj, tIndex: number): void => {
       //layout calcs
       if (layoutY > 600) {
         layoutY = 0;
         layoutX += 350;
-        }
+      }
 
       //create group node for each table
       const groupNode: Node = {
         id: `table-${tIndex}`, //tables[index][name]
-        type: 'groupNode',
+        type: "groupNode",
         // type: 'input',
         data: { label: table.name },
-        className: 'light',
+        className: "light",
         position: { x: layoutX, y: layoutY },
         style: {
           width: 250,
           height: 60 + table.columns.length * 40,
-          backgroundColor: 'rgba(245, 245, 245, 0.9)',
-          borderRadius: '4px',
-          boxShadow: '0px 2px 4px rgba(0,0,0,0.1)',
+          backgroundColor: "rgba(245, 245, 245, 0.9)",
+          borderRadius: "4px",
+          boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
         },
-      }
+      };
       nodes.push(groupNode);
 
       //initialize column node position at 45px from top
       let y = 45;
       // iterate through columns array and create node for each column name
-      table.columns.forEach((column: string, cIndex: number):void => {
+      table.columns.forEach((column: string, cIndex: number): void => {
         const columnNode: Node = {
           // id: 'A-2',
           id: `table-${tIndex}-column-${cIndex}`,
           // type: 'custom',
-          data: { label: column, parent: table.name},
-          type: 'colNode',
+          data: { label: column, parent: table.name },
+          type: "colNode",
           position: { x: 15, y: y },
           parentNode: `table-${tIndex}`,
           draggable: false,
-          extent: 'parent',
+          extent: "parent",
           style: {
             width: 220,
             height: 40,
-          }
-        }
+          },
+        };
         nodes.push(columnNode);
         y += 40;
-      })
+      });
       layoutY += 150 + table.columns.length * 40;
     });
     return nodes;
   };
 
-  const onNodeClick = async (event: React.MouseEvent, node: Node): Promise<void> => {
+  const onNodeClick = async (
+    event: React.MouseEvent,
+    node: Node
+  ): Promise<void> => {
     // try {
-      console.log('node: ', node);
-      console.log('table name: ', node.data.label);
-      //node.data.label is the table name
-      const columnData = await fetchColumnData(node.data.label);
-      console.log('columnData: ', columnData);
-      // setSelectedNode is passing in the node and columnData, appending the columnData to the node
-      setSelectedNode({ ...node, columnData });
+    console.log("node: ", node);
+    console.log("table name: ", node.data.label);
+    //node.data.label is the table name
+    const columnData = await fetchColumnData(node.data.label);
+    console.log("columnData: ", columnData);
+    // setSelectedNode is passing in the node and columnData, appending the columnData to the node
+    setSelectedNode({ ...node, columnData });
     // } catch (error) {
-      // console.error('Error fetching column data: ', error);
+    // console.error('Error fetching column data: ', error);
     // }
   };
 
   // Fetches column data from the database
   const fetchColumnData = async (tableName: string) => {
-    const response = await fetch('/api/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch("/api/graphql", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
           query GetTableData($tableName: String!) {
@@ -130,16 +133,16 @@ const BasicFlow = ({ tables }: {tables: TableObj[]}) => {
     const result = await response.json();
     if (result.errors) {
       console.error(result.errors);
-      throw new Error('Error fetching column data');
+      throw new Error("Error fetching column data");
     }
     return result.data.getTableData;
   };
 
   // Effect to update nodes when 'tables' prop changes
   useEffect(() => {
-    if (tables.length>0) {
+    if (tables.length > 0) {
       const newNodes = generateNodes();
-      const newEdges = generateEdges(tables)
+      const newEdges = generateEdges(tables);
       setNodes(newNodes);
       setEdges(newEdges);
     }
@@ -147,7 +150,7 @@ const BasicFlow = ({ tables }: {tables: TableObj[]}) => {
 
   const proOptions = { hideAttribution: true };
   return (
-    <div className='flow-container'>
+    <div className="flow-container">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -162,11 +165,10 @@ const BasicFlow = ({ tables }: {tables: TableObj[]}) => {
       >
         {/* <Background /> */}
         <Background
-        color='#B3D7FF'  // Color of the grid lines
-        gap={50}      // Spacing between grid lines
-        size={4}      // Thickness of grid lines
-    />
-
+          color="#B3D7FF" // Color of the grid lines
+          gap={50} // Spacing between grid lines
+          size={4} // Thickness of grid lines
+        />
       </ReactFlow>
     </div>
   );
