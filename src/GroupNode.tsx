@@ -2,16 +2,63 @@ import React from "react";
 import TableMenu from "./TableMenu";
 import { useState } from "react";
 import { Check } from "@mui/icons-material";
-import { IconButton, Typography, Box } from "@mui/material";
+import { IconButton, Typography, Box, Button } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import AddColumnDialog from "./AddColumnDialog";
+
 
 const GroupNode = ({ data }) => {
+  const [alertOpen, setAlertOpen] = React.useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState(data.label);
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(  null
   );
 
+  //click handlers for delete table dialogue
+  const handleAlertOpen = () => {
+    setAlertOpen(true);
+  };
+  
+  const handleDeleteCancel = () => {
+    setAlertOpen(false);
+  };
+  
+  const handleTableDelete = async () => {
+    console.log('deleting table ', data.parent);
+    //delete table function
+    //need extra functionality to re render the node
+    setAlertOpen(false);
+
+    const response = await fetch("/api/graphql", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // This mutation is used to change the table name in the database
+      // This is a graphQL query, not a SQL query
+      body: JSON.stringify({
+        query: `
+          mutation deleteTable($tableName: String!){
+            deleteTable( tableName: $tableName)
+          }
+        `,
+        variables: { tableName: data.label },
+      }),
+    });
+
+    const final = await response.json();
+    if (final.errors) {
+      console.error(final.errors);
+      throw new Error("Error deleting table");
+      //add a user alert
+    } else {
+      console.log(final);
+    }
+  };
+
+  //click handlers for pop up menu
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -20,6 +67,7 @@ const GroupNode = ({ data }) => {
     setAnchorEl(null);
   };
 
+  //click handlers for editing table
   const handleEditTableName = () => {
     setIsEditing(true);
     //use document.findElementByID to select input field and make focused or selected
@@ -32,11 +80,11 @@ const GroupNode = ({ data }) => {
     setEditedLabel(e.target.value);
   };
 
-  const handleXClick = () => {
+  const handleEditCancel = () => {
     setIsEditing(false);
   }
 
-  const handleCheckClick = async () => {
+  const handleEditSubmit = async () => {
     
     const response = await fetch("/api/graphql", {
       method: "POST",
@@ -67,6 +115,18 @@ const GroupNode = ({ data }) => {
     }
   };
 
+  // click handlers for Add Column Dialog
+  const [openColDialog, setColDialogOpen] = React.useState(false);
+
+  const handleAddColumnOpen = () => {
+    setColDialogOpen(true);
+  };
+
+  const handleAddColumnClose = () => {
+    setColDialogOpen(false);
+  };
+
+
   return (
     <Box
       className="group-node"
@@ -78,7 +138,6 @@ const GroupNode = ({ data }) => {
         color: "black",
       }}
     >
-      
         {isEditing ? (
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <input
@@ -92,14 +151,14 @@ const GroupNode = ({ data }) => {
             <IconButton
               aria-label="edit"
               size="small"
-              onClick={handleCheckClick}
+              onClick={handleEditSubmit}
             >
               <Check fontSize="inherit" />
             </IconButton>
             <IconButton
               aria-label="cancel"
               size="small"
-              onClick={handleXClick}
+              onClick={handleEditCancel}
             >
               <ClearIcon fontSize="inherit" />
             </IconButton>
@@ -115,11 +174,36 @@ const GroupNode = ({ data }) => {
           anchorEl={anchorEl}
           handleClose={handleClose}
           handleClick={handleClick}
+          handleAlertOpen={handleAlertOpen}
+          handleAddColumnOpen={handleAddColumnOpen}
         />
           </Box>
         )}
       
+    {/** dialog for alert */}
+    <Dialog
+      open={(alertOpen)}
+      onClose={()=> setAlertOpen(false)}
+      aria-describedby='alert-dialog-description'
+    >
+      <DialogContent>
+        <DialogContentText id='alert-dialog-description'>
+          Are you sure you want to delete this table?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleDeleteCancel}>No</Button>
+        <Button onClick={handleTableDelete} autoFocus>
+          Yes
+        </Button>
+      </DialogActions>
+    </Dialog>     
+
+    <AddColumnDialog data={data} handleAddColumnOpen={handleAddColumnOpen} openColDialog={openColDialog} handleAddColumnClose={handleAddColumnClose}/> 
+
     </Box>
+
+    
   );
 };
 

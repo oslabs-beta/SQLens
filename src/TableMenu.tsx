@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 //   setAnchorEl(null);
 // };
 
-export default function TableMenu({ tableData, handleEditTableName, anchorEl, handleClick, handleClose }) {
+export default function TableMenu({ handleAddColumnOpen, handleAlertOpen, tableData, handleEditTableName, anchorEl, handleClick, handleClose }) {
 
   const handleAddColumn = () => {
     console.log("Add Column to:", tableData.label);
@@ -45,8 +45,8 @@ export default function TableMenu({ tableData, handleEditTableName, anchorEl, ha
         }}
       >
         <MenuItem onClick={handleEditTableName} style={{color: 'black'}}>Edit Table Name</MenuItem>
-        <MenuItem onClick={handleAddColumn} style={{color: 'black'}}>Add Column</MenuItem>
-        <MenuItem onClick={handleDeleteTable} style={{color: 'black'}}>Delete Table</MenuItem>
+        <MenuItem onClick={handleAddColumnOpen} style={{color: 'black'}}>Add Column</MenuItem>
+        <MenuItem onClick={handleAlertOpen} style={{color: 'black'}}>Delete Table</MenuItem>
       </Popover>
     </div>
   );
