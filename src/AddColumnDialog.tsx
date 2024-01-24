@@ -10,7 +10,15 @@ import DataTypeSelector from './DataTypeSelector';
 
 export default function AddColumnDialog({ data, handleAddColumnClose, handleAddColumnOpen, openColDialog }) {
 
-
+  const handleSubmit = () => {
+    event.preventDefault();
+    //this is placeholder stuff from the dialog
+    const formData = new FormData(event.currentTarget);
+    const formJson = Object.fromEntries((formData as any).entries());
+    const columnName = formJson.columnName;
+    console.log(columnName);
+    handleAddColumnClose();
+  }
 
   return (
     <React.Fragment>
@@ -19,13 +27,7 @@ export default function AddColumnDialog({ data, handleAddColumnClose, handleAddC
         onClose={handleAddColumnClose}
         PaperProps={{
           component: 'form',
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries((formData as any).entries());
-            const email = formJson.email;
-            console.log(email);
-            handleAddColumnClose();
+          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {handleSubmit
           },
         }}
       >
