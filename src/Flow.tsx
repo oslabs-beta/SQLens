@@ -26,7 +26,7 @@ const nodeTypes = {
   groupNode: GroupNode,
 };
 
-const BasicFlow = ({ tables }: { tables: TableObj[] }) => {
+const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[] }) => {
   // Initialize states for nodes and edges
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -77,7 +77,7 @@ const BasicFlow = ({ tables }: { tables: TableObj[] }) => {
           // id: 'A-2',
           id: `table-${tIndex}-column-${cIndex}`,
           // type: 'custom',
-          data: { label: column, parent: table.name },
+          data: { label: column, parent: table.name, onDelete: fetchAndUpdateTables },
           type: "colNode",
           position: { x: 15, y: y },
           parentNode: `table-${tIndex}`,
