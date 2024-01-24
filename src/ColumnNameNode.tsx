@@ -43,8 +43,8 @@ const ColumnNameNode = ({
 
     const final = await response.json();
     if (final.errors) {
-      console.error(final.errors);
-      throw new Error('Error changing column name tables');
+      console.error(final.errors[0].message);
+      alert(final.errors[0].message);
     }
     console.log(final);
   };

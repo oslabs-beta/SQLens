@@ -16,24 +16,7 @@ const MenuProps = {
   },
 };
 
-const dataTypes = [
-  'int',
-  'date',
-  'bool',
-  'varchar(255)',
-  //   char(n)
-  // varchar(n)
-  // varchar(max)
-  // text
-  // nchar
-  // nvarchar
-  // nvarchar(max)
-  // ntext
-  // binary(n)
-  // varbinary
-  // varbinary(max)
-  // image
-];
+const dataTypes = ['int', 'date', 'bool', 'varchar(255)'];
 
 function getStyles(name: string, personName: readonly string[], theme: Theme) {
   return {
@@ -49,34 +32,16 @@ export default function DataTypeSelector({
   selectedDataType,
 }) {
   //   const theme = useTheme();
-  // const [selectedDataType, setSelectedDataType] = React.useState<string[]>([]);
-
-  // const handleChange = (event: SelectChangeEvent<typeof selectedDataType>) => {
-  //   const {
-  //     target: { value },
-  //   } = event;
-  //   setSelectedDataType(
-  //     // On autofill we get a stringified value.
-  //     typeof value === 'string' ? value.split(',') : value,
-  //   );
-  // };
+  // const [selectedDataType, setSelectedDataType] = React.useState<string[]>([]); //moved to parent
 
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
         <Select
-          //   multiple
           displayEmpty
           value={selectedDataType}
           onChange={handleDataTypeChange}
           input={<OutlinedInput />}
-          // renderValue={(selected) => {
-          //   if (selected.length === 0) {
-          //     return <em>Select Data Type</em>;
-          //   }
-
-          //   return selected.join(', ');
-          // }}
           MenuProps={MenuProps}
           inputProps={{ 'aria-label': 'Without label' }}
         >
@@ -84,11 +49,7 @@ export default function DataTypeSelector({
             <em>Select Data Type</em>
           </MenuItem>
           {dataTypes.map((dataType: string) => (
-            <MenuItem
-              key={dataType}
-              value={dataType}
-              //   style={getStyles(dataType, personName, theme)}
-            >
+            <MenuItem key={dataType} value={dataType}>
               {dataType}
             </MenuItem>
           ))}

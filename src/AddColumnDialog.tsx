@@ -8,28 +8,28 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DataTypeSelector from './DataTypeSelector';
 
-export default function AddColumnDialog({ tableName, handleAddColumnClose, handleAddColumnOpen, openColDialog }) {
+export default function AddColumnDialog({
+  tableName,
+  handleAddColumnClose,
+  handleAddColumnOpen,
+  openColDialog,
+}) {
   const [columnName, setColumnName] = useState('');
   const [selectedDataType, setSelectedDataType] = useState('');
 
-  const handleColumnNameChange = (event) => {
-    setColumnName(event.target.value);
+  const handleColumnNameChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setColumnName(event.currentTarget.value);
   };
 
-  const handleDataTypeChange = (event) => {
-    setSelectedDataType(event.target.value);
+  const handleDataTypeChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setSelectedDataType(event.currentTarget.value);
   };
-
-  const handleSaveClick = async() => {
-
-    console.log('Table Name: ', tableName)
-    console.log('Column Name:', columnName);
-    console.log('Selected Data Type:', selectedDataType);
+ekse
+  const handleSaveClick = async () => {
     handleAddColumnClose();
-
-    const response = await fetch("/api/graphql", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       // This mutation is used to change the table name in the database
       // This is a graphQL query, not a SQL query
       body: JSON.stringify({
@@ -39,8 +39,12 @@ export default function AddColumnDialog({ tableName, handleAddColumnClose, handl
           }
         `,
         //addColumnToTable(tableName: String!, columnName: String!, dataType: String!): String
-        variables: { tableName: tableName, columnName: columnName, dataType: selectedDataType },
-         }),
+        variables: {
+          tableName: tableName,
+          columnName: columnName,
+          dataType: selectedDataType,
+        },
+      }),
     });
 
     const final = await response.json();
@@ -52,7 +56,7 @@ export default function AddColumnDialog({ tableName, handleAddColumnClose, handl
     } else {
       console.log(final);
     }
-  }
+  };
 
   return (
     <React.Fragment>
@@ -61,28 +65,30 @@ export default function AddColumnDialog({ tableName, handleAddColumnClose, handl
         onClose={handleAddColumnClose}
         PaperProps={{
           component: 'form',
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {handleSubmit
-          },
+          // onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+          //   handleSubmit;
+          // },
         }}
       >
         {/* <DialogTitle>Add Column</DialogTitle> */}
         <DialogContent>
-          <DialogTitle>
-            Add Column and Data Type
-          </DialogTitle>
+          <DialogTitle>Add Column and Data Type</DialogTitle>
           <TextField
             autoFocus
             required
-            margin="dense"
-            id="columnName"
-            name="columnName"
-            label="columnName"
-            type="text"
+            margin='dense'
+            id='columnName'
+            name='columnName'
+            label='columnName'
+            type='text'
             // fullWidth
-            variant="standard"
+            variant='standard'
             onChange={handleColumnNameChange}
           />
-          <DataTypeSelector handleDataTypeChange={handleDataTypeChange} selectedDataType={selectedDataType} />
+          <DataTypeSelector
+            handleDataTypeChange={handleDataTypeChange}
+            selectedDataType={selectedDataType}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleAddColumnClose}>Cancel</Button>

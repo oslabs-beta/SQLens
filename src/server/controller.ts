@@ -138,7 +138,8 @@ export const resolvers = {
         return `Column ${columnName} added to ${tableName} successfully.`;
       } catch (err) {
         console.error('Error in addColumnToTable resolver: ', err);
-        throw new Error('Server error');
+        // throw new Error('Server error');
+        return err;
       }
     },
     editTableName: async (
@@ -178,7 +179,8 @@ export const resolvers = {
         return `Column ${columnName} deleted successfully from ${tableName}.`;
       } catch (err) {
         console.error('Error in deleteColumn resolver: ', err);
-        throw new Error('Server error');
+        // throw new Error('Server error');
+        return err;
       }
     },
     editColumn: async (
@@ -196,8 +198,8 @@ export const resolvers = {
         return `Column name changed to${newColumnName} from ${columnName} on ${tableName}.`;
       } catch (err) {
         console.error('Error in editColumn resolver: ', err);
-        throw new Error('Server error');
-        // return err;
+        // throw new Error('Server error');
+        return err;
       }
     },
   },
