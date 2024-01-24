@@ -9,7 +9,7 @@ import { Check } from '@mui/icons-material';
 const ColumnNameNode = ({
   data,
 }: {
-  data: { label: string; parent: string };
+  data: { label: string; parent: string, onDelete: ()=>void };
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState(data.label);

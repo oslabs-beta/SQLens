@@ -27,7 +27,7 @@ const nodeTypes = {
   //add table node
 };
 
-const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[] }) => {
+const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[], fetchAndUpdateTables: ()=> void }) => {
   // Initialize states for nodes and edges
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);

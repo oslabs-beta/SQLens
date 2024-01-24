@@ -11,7 +11,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import AddColumnDialog from "./AddColumnDialog";
 
 
-const GroupNode = ({ data }) => {
+const GroupNode = ({ data }:{
+  data: { label: string; parent: string, onDelete: ()=> void };
+}) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState(data.label);

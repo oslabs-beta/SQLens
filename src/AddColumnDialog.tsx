@@ -17,11 +17,11 @@ export default function AddColumnDialog({
   const [columnName, setColumnName] = useState('');
   const [selectedDataType, setSelectedDataType] = useState('');
 
-  const handleColumnNameChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleColumnNameChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
     setColumnName(event.currentTarget.value);
   };
 
-  const handleDataTypeChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleDataTypeChange = (event: React.FormEvent<HTMLSelectElement>) => {
     setSelectedDataType(event.currentTarget.value);
   };
 
