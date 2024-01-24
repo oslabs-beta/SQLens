@@ -24,9 +24,10 @@ export default function AddColumnDialog({
   const handleDataTypeChange = (event: React.FormEvent<HTMLInputElement>) => {
     setSelectedDataType(event.currentTarget.value);
   };
-ekse
+
   const handleSaveClick = async () => {
     handleAddColumnClose();
+    setColumnName(columnName.trim().replace(/[^A-Za-z0-9_]/g, '_'));
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

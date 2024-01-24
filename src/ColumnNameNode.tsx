@@ -18,14 +18,14 @@ const ColumnNameNode = ({
     setIsEditing(true);
   };
 
-  const handleInputChange = (e: MouseEvent) => {
+  const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     // console.log(e.target.value);
-    setEditedLabel(e.target.value);
+    setEditedLabel(e.currentTarget.value);
   };
 
   const handleCheckClick = async () => {
-
     setIsEditing(false);
+    setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -37,7 +37,11 @@ const ColumnNameNode = ({
             editColumn( newColumnName: $newColumnName, columnName: $columnName, tableName: $tableName)
           }
         `,
-        variables: { newColumnName: editedLabel, columnName: data.label, tableName: data.parent},
+        variables: {
+          newColumnName: editedLabel,
+          columnName: data.label,
+          tableName: data.parent,
+        },
       }),
     });
 
