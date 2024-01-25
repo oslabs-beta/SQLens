@@ -2,6 +2,7 @@ import React, { memo, ReactNode } from 'react';
 import { Handle, NodeProps, Position, Node } from 'reactflow';
 import { FiCloud } from 'react-icons/fi';
 import { AiOutlineDrag } from "react-icons/ai";
+import { MdDragHandle } from "react-icons/md";
 // import TableMenu from "./TableMenu";
 // import { useState } from "react";
 // import { Check } from "@mui/icons-material";
@@ -24,7 +25,7 @@ export default function TurboNode ({ data }: NodeProps<TurboNodeData>) {
     <>
       <div className="cloud gradient">
         <div>
-          <AiOutlineDrag />
+          <MdDragHandle />
         </div>
       </div>
       <div className="wrapper gradient">

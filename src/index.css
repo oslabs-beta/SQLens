@@ -91,6 +91,7 @@ button:hover {
   align-items: center;
   border: solid 1px #213547;
   border-radius: 3px;
+  font-family: 'Fira Mono', monospace;
 }
 
 .column-label {
@@ -173,8 +174,7 @@ button:hover {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border-radius: var(--node-border-radius);
-  /* border-radius: 100%; */
+  border-radius: 100%;
 }
 
 .react-flow__node-turbo.selected .wrapper.gradient:before {
