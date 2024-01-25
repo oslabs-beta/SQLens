@@ -3,8 +3,8 @@
 @import url('https://fonts.googleapis.com/css?family=Dosis:600,800');
 
 $ff: 'Dosis', sans-serif;
-$slate: #3F3C3C;
-$blue: #00B4FF;
+$slate: #e92a67;
+$blue: #646cff;
 
 @function rem($px, $base: 16) {
     @return #{math.div($px, $base)}rem;
@@ -82,7 +82,7 @@ body {
   position: absolute;
   bottom: 0;
   left: 0;
-  background: #015871;
+  background: $blue;
 }
 
 .wave {
@@ -95,6 +95,7 @@ body {
   transform: translate(0, 0, 0);
   animation: wave 7s ease infinite;
   transform: translate3d(0, 0, 0);
+  
 }
 
 .wave.wave2 {
