@@ -1,17 +1,19 @@
-import express, { Express, Response } from 'express';
+import express, { Response, Express } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { resolvers } from './controller';
 import { typeDefs } from './typeDefs';
 import pkg from 'pg';
+const { Pool } = pkg;
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 
-const { Pool } = pkg;
-export let pool = new Pool({
-  connectionString: process.env.DATABASE_URI,
-});
+export let pool: pkg.Pool | null = null;
+
+const initializePool = (uri: string) => {
+  pool = new Pool({ connectionString: uri });
+};
 
 export const app: Express = express();
 
@@ -22,7 +24,7 @@ const server = new ApolloServer({ typeDefs, resolvers });
 // starting apollo server and applying it to express app
 // This route will be used to make GraphQL queries
 server.start().then(() => {
-  server.applyMiddleware({ app: app as any, path: '/api/graphql' });
+  server.applyMiddleware({ app, path: '/api/graphql' });
 });
 
 app.get('/api/test', (_, res: Response) => {
@@ -36,7 +38,7 @@ app.post('/api/setDatabaseURI', (req, res) => {
     return res.status(400).json({ error: 'Database URI is required' });
   }
 
-  pool = new Pool({ connectionString: databaseURI });
+  initializePool(databaseURI);
 
   res.json({ message: 'Database connection updated successfully' });
 });

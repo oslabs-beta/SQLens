@@ -8,11 +8,13 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
 } from "reactflow";
+import BasicFlowProps from "./vite-env";
 import TableObj from "./vite-env";
 import ColumnNameNode from "./ColumnNameNode.tsx";
 import GroupNode from "./GroupNode.tsx";
 import "reactflow/dist/style.css";
 import generateEdges from "./GenerateEdges.tsx";
+import NavBar from './NavBar';
 
 import 'reactflow/dist/base.css';
 import './index.css';
@@ -44,7 +46,7 @@ const defaultEdgeOptions = {
   markerEnd: 'edge-circle',
 };
 
-const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[], fetchAndUpdateTables: ()=> void }) => {
+const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmit, searchValue }: BasicFlowProps) => {
   // Initialize states for nodes and edges
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -192,6 +194,12 @@ const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[], fetch
 
   const proOptions = { hideAttribution: true };
   return (
+    <>
+     <NavBar 
+        onSearchSubmit={onSearchSubmit} 
+        onSearchChange={onSearchChange}
+        searchValue={searchValue}
+      />
     <div className="flow-container">
       <ReactFlow
         nodes={nodes}
@@ -236,6 +244,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[], fetch
         </svg>
       </ReactFlow>
     </div>
+    </>
   );
 };
 
