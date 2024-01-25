@@ -1,8 +1,8 @@
 @use "sass:math";
 
-@import url('https://fonts.googleapis.com/css?family=Dosis:600,800');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap');
 
-$ff: 'Dosis', sans-serif;
+$ff: 'Fira Mono' , monospace;
 $slate: #e92a67;
 $blue: #646cff;
 
@@ -15,10 +15,6 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  // font-family: $ff;
-  // color: $slate;
-  // background-color: rgb(214, 214, 214);
-  // background:radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
   overflow: hidden;
 }
 
@@ -48,15 +44,38 @@ body {
   margin-left: rem(-68);
   z-index: 1;
   transform: translateZ(0);
+  font-family: $ff;
 }
 
 .site-title-text {
   padding: rem(4) rem(6) rem(4) rem(28);
   color: $slate;
   font-size: rem(45);
-  font-weight: 800;
-  
+  font-weight: 300;
+
   span {
+    font-family: $ff;
+    margin-left: rem(0.25);
+    color: $blue;
+  }
+}
+
+
+.nav-title {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transform: translateZ(0);
+  font-family: $ff;
+}
+
+.nav-title-text {
+  color: $slate;
+  font-size: rem(20);
+  font-weight: 300;
+
+  span {
+    font-family: $ff;
     margin-left: rem(0.25);
     color: $blue;
   }
@@ -82,7 +101,7 @@ body {
   position: absolute;
   bottom: 0;
   left: 0;
-  background: #646cff;
+  background: #8157f4;
 }
 
 .wave {
@@ -109,6 +128,23 @@ body {
   top: -175px;
   animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
   opacity: 1;
+}
+
+.moving-shadow {
+  --border-size: 3px;
+  animation: shadow-move 3s linear infinite;
+}
+
+@keyframes shadow-move {
+  0% {
+    box-shadow: 10px 0 15px rgba(42, 138, 246, 0.3), -10px 0 15px rgba(233, 42, 103, 0.3);
+  }
+  50% {
+    box-shadow: -10px 0 15px rgba(42, 138, 246, 0.3), 10px 0 15px rgba(233, 42, 103, 0.3);
+  }
+  100% {
+    box-shadow: 10px 0 15px rgba(42, 138, 246, 0.3), -10px 0 15px rgba(233, 42, 103, 0.3);
+  }
 }
 
 @keyframes wave {

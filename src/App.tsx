@@ -10,9 +10,9 @@ import React from 'react';
 const theme = createTheme({
   palette: {
     mode: 'dark',
-    primary: {
-      main: '#3f50b5',
-    },
+  },
+  typography: {
+    fontFamily: 'Fira Mono',
   },
 });
 
