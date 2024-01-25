@@ -158,7 +158,8 @@ button:focus-visible {
   content: '';
   position: absolute;
   padding-bottom: calc(100% * 1.41421356237);
-  width: calc(100% * 1.41421356237);
+  /* width: calc(100% * 1.41421356237); */
+  width: 800px;
   background: conic-gradient(
     from -160deg at 50% 50%,
     #e92a67 0deg,
