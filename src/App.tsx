@@ -9,7 +9,7 @@ import React from 'react';
 
 const theme = createTheme({
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
       main: '#3f50b5',
     },
