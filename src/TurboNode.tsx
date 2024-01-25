@@ -1,6 +1,18 @@
 import React, { memo, ReactNode } from 'react';
 import { Handle, NodeProps, Position, Node } from 'reactflow';
 import { FiCloud } from 'react-icons/fi';
+import { AiOutlineDrag } from "react-icons/ai";
+// import React from "react";
+// import TableMenu from "./TableMenu";
+// import { useState } from "react";
+// import { Check } from "@mui/icons-material";
+// import { IconButton, Typography, Box, Button } from "@mui/material";
+// import ClearIcon from "@mui/icons-material/Clear";
+// import Dialog from '@mui/material/Dialog';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogContent from '@mui/material/DialogContent';
+// import DialogContentText from '@mui/material/DialogContentText';
+// import AddColumnDialog from "./AddColumnDialog";
 
 export type TurboNodeData = {
   title: string;
@@ -13,7 +25,7 @@ export default function TurboNode ({ data }: NodeProps<TurboNodeData>) {
     <>
       <div className="cloud gradient">
         <div>
-          <FiCloud />
+          <AiOutlineDrag />
         </div>
       </div>
       <div className="wrapper gradient">

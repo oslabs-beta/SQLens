@@ -206,11 +206,11 @@ const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[], fetch
         proOptions={proOptions}
       >
         {/* <Background /> */}
-        <Background
-          color="#B3D7FF" // Color of the grid lines
-          gap={50} // Spacing between grid lines
-          size={4} // Thickness of grid lines
-        />
+        {/* <Background */}
+          {/* color="#B3D7FF" // Color of the grid lines */}
+          {/* gap={50} // Spacing between grid lines */}
+          {/* size={4} // Thickness of grid lines */}
+        {/* /> */}
         
         {/* <Controls showInteractive={false} /> */}
         <svg>
