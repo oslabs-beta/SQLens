@@ -17,7 +17,7 @@ import generateEdges from "./GenerateEdges.tsx";
 import NavBar from './NavBar';
 
 import 'reactflow/dist/base.css';
-import './index.css';
+import './stylesheets/index.css';
 import TurboNode, { TurboNodeData } from './TurboNode';
 import TurboEdge from './TurboEdge';
 import FunctionIcon from './FunctionIcon';
