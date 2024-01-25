@@ -44,7 +44,7 @@ const defaultEdgeOptions = {
   markerEnd: 'edge-circle',
 };
 
-const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[] }) => {
+const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[], fetchAndUpdateTables: ()=> void }) => {
   // Initialize states for nodes and edges
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -134,6 +134,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[] }) => 
       });
       layoutY += 150 + table.columns.length * 40;
     });
+    //push add table node into nodes array
     return nodes;
   };
 

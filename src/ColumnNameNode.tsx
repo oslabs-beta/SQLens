@@ -9,7 +9,7 @@ import { Check } from '@mui/icons-material';
 const ColumnNameNode = ({
   data,
 }: {
-  data: { label: string; parent: string };
+  data: { label: string; parent: string, onDelete: ()=>void };
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState(data.label);
@@ -18,14 +18,14 @@ const ColumnNameNode = ({
     setIsEditing(true);
   };
 
-  const handleInputChange = (e: MouseEvent) => {
+  const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     // console.log(e.target.value);
-    setEditedLabel(e.target.value);
+    setEditedLabel(e.currentTarget.value);
   };
 
   const handleCheckClick = async () => {
-
     setIsEditing(false);
+    setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -37,14 +37,18 @@ const ColumnNameNode = ({
             editColumn( newColumnName: $newColumnName, columnName: $columnName, tableName: $tableName)
           }
         `,
-        variables: { newColumnName: editedLabel, columnName: data.label, tableName: data.parent},
+        variables: {
+          newColumnName: editedLabel,
+          columnName: data.label,
+          tableName: data.parent,
+        },
       }),
     });
 
     const final = await response.json();
     if (final.errors) {
-      console.error(final.errors);
-      throw new Error('Error changing column name tables');
+      console.error(final.errors[0].message);
+      alert(final.errors[0].message);
     }
     console.log(final);
   };
