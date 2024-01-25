@@ -12,10 +12,11 @@ const AddTable = ({
     label: string;
     // parent: string,
     // onDelete: () => void;
+    fetchAndUpdateTables: ()=>void;
   };
 }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedLabel, setEditedLabel] = useState(data.label);
+  const [editedLabel, setEditedLabel] = useState('');
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -26,7 +27,7 @@ const AddTable = ({
   };
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    // console.log(e.target.value);
+    console.log(e.currentTarget.value);
     setEditedLabel(e.currentTarget.value);
   };
 
@@ -55,8 +56,11 @@ const AddTable = ({
     if (final.errors) {
       console.error(final.errors[0].message);
       alert(final.errors[0].message);
-    }
+    } else {
+      setEditedLabel(data.label)
+      await data.fetchAndUpdateTables();
     console.log(final);
+    }
   };
 
   return (
@@ -107,7 +111,7 @@ const AddTable = ({
           }}
         >
           <Typography className='column-label' variant='h6' noWrap>
-            {editedLabel}
+            {data.label}
           </Typography>
 
           <IconButton aria-label='edit' size='small' onClick={handleEditClick}>

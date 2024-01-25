@@ -8,7 +8,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 
-const DeleteColumnButton = ({ data }: {data: { label: string, parent: string, onDelete: () => void } }) => {
+const DeleteColumnButton = ({
+  data,
+}: {
+  data: { label: string; parent: string; fetchAndUpdateTables: () => void };
+}) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
   //   const [focusNode, setFocusNode] = React.useState(null)
 
@@ -35,6 +39,8 @@ const DeleteColumnButton = ({ data }: {data: { label: string, parent: string, on
       alert(final.errors[0].message);
     } else {
       console.log(final);
+      // await data.fetchAndUpdateTables();
+      setAlertOpen(false);
     }
   };
 
@@ -48,7 +54,7 @@ const DeleteColumnButton = ({ data }: {data: { label: string, parent: string, on
       await deleteCol();
       data.onDelete();
     } catch (error) {
-      console.error("Error during deletion:", error);
+      console.error('Error during deletion:', error);
     }
     setAlertOpen(false);
   };

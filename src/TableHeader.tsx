@@ -16,7 +16,7 @@ const TableHeader = ({
   data: {
     label?: string;
     // parent: string,
-    onDelete?: () => void;
+    fetchAndUpdateTables: () => void;
   };
 }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
@@ -63,6 +63,7 @@ const TableHeader = ({
       throw new Error('Error deleting table');
       //add a user alert
     } else {
+      // await data.fetchAndUpdateTables();
       console.log(final);
     }
   };

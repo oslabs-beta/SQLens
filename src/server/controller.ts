@@ -12,7 +12,6 @@ interface TableData {
 
 export const resolvers = {
   Query: {
-
     getTableNames: async () => {
       if (!pool) {
         throw new Error('Database connection not initialized');
@@ -202,6 +201,18 @@ export const resolvers = {
         return `Column name changed to${newColumnName} from ${columnName} on ${tableName}.`;
       } catch (err) {
         console.error('Error in editColumn resolver: ', err);
+        // throw new Error('Server error');
+        return err;
+      }
+    },
+    addTable: async (_: any, { tableName }: { tableName: string }) => {
+      try {
+        // SQL to delete a table
+        await pool.query(`CREATE TABLE ${tableName} (
+          );`);
+        return `Table named ${tableName} created.`;
+      } catch (err) {
+        console.error('Error in addTable resolver: ', err);
         // throw new Error('Server error');
         return err;
       }

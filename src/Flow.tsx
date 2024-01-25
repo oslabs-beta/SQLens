@@ -78,7 +78,9 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
         type: "turbo",
         // type: 'input',
         data: {
-          label: table.name },
+          label: table.name,
+          fetchAndUpdateTables: fetchAndUpdateTables
+        },
         className: "light",
         position: { x: layoutX, y: layoutY },
         style: {
@@ -99,7 +101,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
           // id: 'A-2',
           id: `table-${tIndex}-column-${cIndex}`,
           // type: 'custom',
-          data: { label: column, parent: table.name, onDelete: fetchAndUpdateTables },
+          data: { label: column, parent: table.name, fetchAndUpdateTables: fetchAndUpdateTables },
           type: "colNode",
           position: { x: 15, y: y },
           parentNode: `table-${tIndex}`,
@@ -122,7 +124,9 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
       id: 'add-table-node', // A unique identifier for your custom node
       type: 'turbo', // Define a custom type if needed
       data: {
-        label: 'Add New Table', // Custom label or any other data you want to include
+        label: 'Add New Table',
+        fetchAndUpdateTables: fetchAndUpdateTables,
+         // Custom label or any other data you want to include
         // Other custom data properties...
       },
       position: { x: layoutX, y: layoutY }, // Define the position
