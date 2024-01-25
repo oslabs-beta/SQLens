@@ -96,6 +96,7 @@ button:hover {
 
 .column-label {
   padding: 0px 8px;
+  font-family: 'Fira Mono', monospace;
 }
 
 /* .tableName {
@@ -202,8 +203,8 @@ button:hover {
   padding: 16px 20px;
   border-radius: var(--node-border-radius);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  /* flex-direction: column; */
+  /* justify-content: center; */
   flex-grow: 1;
   position: relative;
 }
@@ -214,6 +215,10 @@ button:hover {
 
 .react-flow__node-turbo .body {
   display: flex;
+  /* added from column-name-node */
+  justify-content: space-between;
+  height: 40px;
+  justify-items: start;
 }
 
 .react-flow__node-turbo .title {
