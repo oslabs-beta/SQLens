@@ -84,11 +84,10 @@ const LandingPage = ({ searchValue, onSearchChange, onSearchSubmit }) => {
           </div>
         </div>
   
-        <div className="input-container">
-      
+        <div className="input-container" >
           <div style={{ display: 'flex', alignItems: 'center'}}> 
             <TextField
-              id="standard-textarea"
+             className="moving-shadow"
               label="URI"
               placeholder="Enter URI here"
               multiline
@@ -97,25 +96,27 @@ const LandingPage = ({ searchValue, onSearchChange, onSearchSubmit }) => {
                         onChange={handleInputChange}
               style={{ 
                 width: '40vw',
-                color: '#ADD8E6',
+                color: '#646cff',
                 fontSize: '20px',
                 marginTop: '5px',
               }}
               InputProps={{
                 style: {
-                  color: '#ADD8E6'
+                  color: '#646cff'
                 }
               }}
               InputLabelProps={{
                 style: {
-                  color: '#ADD8E6'
+                  color: '#646cff'
                 }
               }}
+             
+            
             />
     <IconButton 
               style={{ 
                 marginTop: '5px', 
-                color: '#00B4FF',
+                color: '#646cff',
               }}
               onClick={handleSubmit}
             >
