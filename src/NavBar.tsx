@@ -4,16 +4,11 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Button } from '@mui/material';
 
@@ -119,8 +114,8 @@ export default function PrimarySearchAppBar({ onSearchSubmit, onSearchChange, se
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="static"  style={{ background: 'rgba(0, 0, 0, .25)', boxShadow: 'none'}}>
+        <Toolbar >
           <IconButton
             size="large"
             edge="start"
@@ -130,14 +125,11 @@ export default function PrimarySearchAppBar({ onSearchSubmit, onSearchChange, se
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            SQLens
-          </Typography>
+          <div className="nav-title">
+              <div id="nav-text" className="nav-title-text">
+                SQL<span>ens</span>
+              </div>
+            </div>
           <form onSubmit={handleFormSubmit}>
             <Search>
               <StyledInputBase
@@ -146,27 +138,13 @@ export default function PrimarySearchAppBar({ onSearchSubmit, onSearchChange, se
                 value={searchValue}
                 onChange={handleSearchChange}
               />
-               <Button type="submit" color="primary" variant="contained">
-      Submit
-    </Button>
+             <Button variant="text" type="submit" sx={{color: '#646cff'}}>
+  Submit
+</Button>
             </Search>
           </form>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              {/* <Badge badgeContent={4} color="error"> */}
-                <MailIcon />
-              {/* </Badge> */}
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              {/* <Badge badgeContent={6} color="error"> */}
-                <NotificationsIcon />
-              {/* </Badge> */}
-            </IconButton>
             <IconButton
               size="large"
               edge="end"

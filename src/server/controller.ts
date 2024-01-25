@@ -178,6 +178,7 @@ export const resolvers = {
       { columnName, tableName }: { columnName: string; tableName: string }
     ) => {
       try {
+        console.log(columnName, tableName);
         // SQL to delete a table
         await pool.query(`ALTER TABLE ${tableName} DROP COLUMN ${columnName};`);
         return `Column ${columnName} deleted successfully from ${tableName}.`;
