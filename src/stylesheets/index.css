@@ -1,0 +1,335 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap');
+
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  margin: 0px;
+  padding: 0px;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  /* min-width: 320px; */
+  /* min-height: 100vh; */
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+
+.react-flow__handle {
+  opacity: 0;
+}
+
+.flow-container {
+  /* style={{ display: 'flex', width: '100vw', height: '90vh' }} */
+  display: flex;
+  width: 100vw;
+  height: calc(100vh - 64px);
+}
+.react-flow__node-custom {
+  padding: 10px;
+  background-color: #556677;
+  color: white;
+  min-width: 10vw;
+  /* max-height: 30vh; */
+  /* border-radius: 3px; */
+  font-size: 16px;
+  line-height: 25px;
+  padding: 10px;
+}
+
+.column-name-node {
+  /* background-color:  #556677; */
+  display: flex;
+  justify-content: space-between;
+  height: 39px;
+  align-items: center;
+  border: solid 1px #213547;
+  border-radius: 3px;
+  font-family: 'Fira Mono', monospace;
+  padding-left: 5px;
+}
+
+.column-label {
+  padding: 0px 8px;
+  font-family: 'Fira Mono', monospace;
+}
+
+/* .tableName {
+  font-weight: bolder;
+  border-bottom: 1px solid;
+  margin-bottom: 5px;
+} */
+
+.table-name-input {
+  margin-left: -3px;
+  height: 30px;
+  width: 155px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 2px solid #2a8af6;
+  border: 2px solid #e92a67;
+  border-radius: 4px;
+  font-family: 'Fira mono';
+}
+.table-name-input:focus {
+  outline: none;
+}
+
+.turbo-header-sqlens {
+  width: 100%;
+  display: "flex";
+  flex-direction: "column";
+  /* align-items: "stretch"; */
+  justify-content: "space-between";
+  /* color: "black"; */
+}
+/*
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+} */
+
+
+/* EVERYTHING BELOW  HERE IS THE PREFERRED STYLES, redundant styles from above can be removed ABOVE*/
+/* turbo flow */
+.react-flow {
+  --bg-color: rgb(17, 17, 17);
+  --text-color: rgb(243, 244, 246);
+  --node-border-radius: 10px;
+  --node-box-shadow: 10px 0 15px rgba(42, 138, 246, 0.3), -10px 0 15px rgba(233, 42, 103, 0.3);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.react-flow__node-turbo {
+  border-radius: var(--node-border-radius);
+  /* border-radius: 8px; */
+  display: flex;
+  height: 70px;
+  min-width: 150px;
+  font-family: 'Fira Mono', monospace;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  box-shadow: var(--node-box-shadow);
+}
+
+.react-flow__node-turbo .wrapper {
+  overflow: hidden;
+  display: flex;
+  padding: 2px;
+  position: relative;
+  border-radius: var(--node-border-radius);
+  flex-grow: 1;
+}
+
+.gradient:before {
+  content: '';
+  position: absolute;
+  /* padding-bottom: calc(100% * 1.41421356237); */
+  /* width: calc(100% * 1.41421356237); */
+  height: 800px;
+  width: 800px;
+  background: conic-gradient(
+    from -160deg at 50% 50%,
+    #e92a67 0deg,
+    #a853ba 120deg,
+    #2a8af6 240deg,
+    #e92a67 360deg
+  );
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 100%;
+}
+
+.react-flow__node-turbo.selected .wrapper.gradient:before {
+  content: '';
+  background: conic-gradient(
+    from -160deg at 50% 50%,
+    #e92a67 0deg,
+    #a853ba 120deg,
+    #2a8af6 240deg,
+    rgba(42, 138, 246, 0) 360deg
+  );
+  animation: spinner 4s linear infinite;
+  transform: translate(-50%, -50%) rotate(0deg);
+  z-index: -1;
+}
+
+@keyframes spinner {
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+.react-flow__node-turbo .inner {
+  background: var(--bg-color);
+  padding: 15px 15px;
+  border-radius: var(--node-border-radius);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-grow: 1;
+  position: relative;
+}
+
+.react-flow__node-turbo .icon {
+  margin-right: 8px;
+}
+
+.react-flow__node-turbo .body {
+  display: flex;
+  /* added from column-name-node */
+  justify-content: space-between;
+  height: 40px;
+  justify-items: start;
+}
+
+.react-flow__node-turbo .title {
+  font-size: 16px;
+  margin-bottom: 2px;
+  line-height: 1;
+}
+
+.react-flow__node-turbo .subline {
+  font-size: 12px;
+  color: #777;
+}
+
+.react-flow__node-turbo .cloud {
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  right: 0;
+  position: absolute;
+  top: 0;
+  transform: translate(50%, -50%);
+  display: flex;
+  transform-origin: center center;
+  padding: 2px;
+  overflow: hidden;
+  box-shadow: var(--node-box-shadow);
+  z-index: 1;
+}
+
+.react-flow__node-turbo .cloud div {
+  background-color: var(--bg-color);
+  flex-grow: 1;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.react-flow__handle {
+  opacity: 0;
+}
+
+.react-flow__handle.source {
+  right: -10px;
+}
+
+.react-flow__handle.target {
+  left: -10px;
+}
+
+.react-flow__node:focus {
+  outline: none;
+}
+
+.react-flow__edge .react-flow__edge-path {
+  stroke: url(#edge-gradient);
+  stroke-width: 2;
+  stroke-opacity: 0.75;
+}
+
+.react-flow__controls button {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid #95679e;
+  border-bottom: none;
+}
+
+.react-flow__controls button:hover {
+  background-color: rgb(37, 37, 37);
+}
+
+.react-flow__controls button:first-child {
+  border-radius: 5px 5px 0 0;
+}
+
+.react-flow__controls button:last-child {
+  border-bottom: 1px solid #95679e;
+  border-radius: 0 0 5px 5px;
+}
+
+.react-flow__controls button path {
+  fill: var(--text-color);
+}
+
+.react-flow__attribution {
+  background: rgba(200, 200, 200, 0.2);
+}
+
+.react-flow__attribution a {
+  color: #95679e;
+}
+
+.table-menu-dots {
+  margin: -8px;
+}
