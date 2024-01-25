@@ -9,7 +9,7 @@ import { Check } from '@mui/icons-material';
 const ColumnNameNode = ({
   data,
 }: {
-  data: { label: string; parent: string, onDelete: ()=>void };
+  data: { label: string; parent: string; fetchAndUpdateTables: () => void };
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState(data.label);
@@ -49,8 +49,10 @@ const ColumnNameNode = ({
     if (final.errors) {
       console.error(final.errors[0].message);
       alert(final.errors[0].message);
+    } else {
+      // await data.fetchAndUpdateTables();
+      console.log(final);
     }
-    console.log(final);
   };
 
   return (
@@ -66,10 +68,10 @@ const ColumnNameNode = ({
           value={editedLabel}
           onChange={handleInputChange}
           placeholder={data.label}
-          className='column-input'
+          className='table-name-input'
         />
       ) : (
-        <Typography className='column-label' noWrap>
+        <Typography className='column-label' variant='body2' noWrap>
           {editedLabel}
         </Typography>
       )}

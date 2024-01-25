@@ -30,6 +30,7 @@ export const typeDefs = gql`
     deleteTable(tableName: String!): String
     deleteColumn(tableName: String!, columnName: String!): String
     editColumn(newColumnName: String!, columnName: String!, tableName: String!): String
+    addTable(tableName: String!): String
   }
 `;
 

@@ -24,8 +24,8 @@ export default function TableMenu({ handleAddColumnOpen, handleAlertOpen, tableD
   const id = open ? 'simple-popover' : undefined;
 
   return (
-    <div>
-      <IconButton aria-label="more" style={{color: 'black'}} onClick={handleClick}>
+    <div className="table-menu-dots">
+      <IconButton aria-label="more" style={{color: 'white'}} onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
       <Popover

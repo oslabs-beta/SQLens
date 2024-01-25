@@ -11,7 +11,7 @@ import DataTypeSelector from './DataTypeSelector';
 export default function AddColumnDialog({
   tableName,
   handleAddColumnClose,
-  handleAddColumnOpen,
+  // handleAddColumnOpen,
   openColDialog,
 }) {
   const [columnName, setColumnName] = useState('');
@@ -21,8 +21,9 @@ export default function AddColumnDialog({
     setColumnName(event.currentTarget.value);
   };
 
-  const handleDataTypeChange = (event: React.FormEvent<HTMLSelectElement>) => {
-    setSelectedDataType(event.currentTarget.value);
+  const handleDataTypeChange = (event: SelectChangeEvent<HTMLSelectElement>) => {
+    console.log(event.target.value);
+    setSelectedDataType(event.target.value);
   };
 
   const handleSaveClick = async () => {
@@ -66,9 +67,9 @@ export default function AddColumnDialog({
         onClose={handleAddColumnClose}
         PaperProps={{
           component: 'form',
-          // onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-          //   handleSubmit;
-          // },
+          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+            handleSubmit;
+          },
         }}
       >
         {/* <DialogTitle>Add Column</DialogTitle> */}
