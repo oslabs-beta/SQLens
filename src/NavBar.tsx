@@ -15,6 +15,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { Button } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,29 +57,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar({ onSearchSubmit, onSearchChange, searchValue }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  const [searchValue, setSearchValue] = React.useState('');
 
-  const handleSearchChange = (event) => {
-    setSearchValue(event.target.value);
-  }
 
-  const handleSubmit = async (event) => {
-    try {
-      const response = await fetch('/api/setDatabaseUri', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ databaseURI: searchValue})
-      })
-    } catch (error) {
-      throw new Error('Enter a valid database URI')
-    }
-  }
+    const handleSearchChange = (event) => {
+      onSearchChange(event.target.value); 
+    };
+
+    const handleFormSubmit = (event) => {
+      onSearchSubmit(); 
+    };
+
+
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -145,7 +138,7 @@ export default function PrimarySearchAppBar() {
           >
             SQLens
           </Typography>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleFormSubmit}>
             <Search>
               <StyledInputBase
                 placeholder="Database URI..."
@@ -153,6 +146,9 @@ export default function PrimarySearchAppBar() {
                 value={searchValue}
                 onChange={handleSearchChange}
               />
+               <Button type="submit" color="primary" variant="contained">
+      Submit
+    </Button>
             </Search>
           </form>
           <Box sx={{ flexGrow: 1 }} />

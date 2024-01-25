@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import './index.css';
+import './stylesheets/index.css';
 import Flow from './Flow';
-import NavBar from './NavBar';
+import LandingPage from './LandingPage';
 import TableObj from './vite-env';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import React from 'react';
 
 const theme = createTheme({
   palette: {
@@ -47,11 +49,35 @@ const getTables = async function () {
 
 function App() {
   const [tables, setTables] = useState<TableObj[]>([]);
+  const [searchValue, setSearchValue] = React.useState('');
 
-  const fetchAndUpdateTables = () => {
-    getTables().then((res) => {
+  const fetchAndUpdateTables = async () => {
+    try {
+      const res = await getTables();
       setTables(res);
-    });
+    } catch (error) {
+      console.error('Error fetching updated tables:', error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('/api/setDatabaseUri', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ databaseURI: searchValue })
+      });
+      const data = await response.json();
+      if (response.ok && data.message === 'Database connection updated successfully') {
+        await fetchAndUpdateTables();
+      } else {
+        console.error(data.error || 'Failed to update database URI');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   useEffect(() => {
@@ -62,12 +88,16 @@ function App() {
   }, []);
 
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <NavBar />
-        <Flow tables={tables} fetchAndUpdateTables={fetchAndUpdateTables} />
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage onSearchSubmit={handleSubmit} onSearchChange={setSearchValue} searchValue={searchValue}/>} />
+          <Route path="/flow" element={
+            <Flow tables={tables} fetchAndUpdateTables={fetchAndUpdateTables} onSearchSubmit={handleSubmit} onSearchChange={setSearchValue}/>
+          } />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

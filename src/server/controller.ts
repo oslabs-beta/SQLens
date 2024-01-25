@@ -12,7 +12,11 @@ interface TableData {
 
 export const resolvers = {
   Query: {
+
     getTableNames: async () => {
+      if (!pool) {
+        throw new Error('Database connection not initialized');
+      }
       try {
         // Query to get all table names
         const tablesData = await pool.query(

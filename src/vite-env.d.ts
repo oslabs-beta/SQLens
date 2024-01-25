@@ -11,3 +11,11 @@ export default interface foreignKeysObj {
     foreignTableName: string;
     foreignColumnName: string;
 }
+
+export default interface BasicFlowProps {
+    tables: TableObj[];
+    fetchAndUpdateTables: () => void;
+    onSearchChange: (value: string) => void; 
+    onSearchSubmit: () => void; 
+    searchValue: string; 
+  }
