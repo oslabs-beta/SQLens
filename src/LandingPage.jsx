@@ -72,8 +72,8 @@ const LandingPage = ({ searchValue, onSearchChange, onSearchSubmit }) => {
                 <circle id="logo-mask" fill="black" cx="120" cy="96" r="28"></circle>
               </mask>
             </defs>
-            <polygon id="logo-hexagon" fill="#00B4FF" points="64 128 8.574 96 8.574 32 64 0 119.426 32 119.426 96" mask="url(#circle-mask)"></polygon>
-            <circle id="logo-circle" fill="#3F3C3C" cx="120" cy="96" r="20"></circle>
+            <polygon id="logo-hexagon" fill="#646cff" points="64 128 8.574 96 8.574 32 64 0 119.426 32 119.426 96" mask="url(#circle-mask)"></polygon>
+            <circle id="logo-circle" fill="#e92a67" cx="120" cy="96" r="20"></circle>
             </svg> 
             </figure>
             <div className="site-title">
