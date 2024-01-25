@@ -1,5 +1,5 @@
 import React, { memo, ReactNode } from 'react';
-import { Handle, NodeProps, Position } from 'reactflow';
+import { Handle, NodeProps, Position, Node } from 'reactflow';
 import { FiCloud } from 'react-icons/fi';
 
 export type TurboNodeData = {
@@ -8,7 +8,7 @@ export type TurboNodeData = {
   subline?: string;
 };
 
-export default memo(({ data }: NodeProps<TurboNodeData>) => {
+export default function TurboNode ({ data }: NodeProps<TurboNodeData>) {
   return (
     <>
       <div className="cloud gradient">
@@ -19,7 +19,7 @@ export default memo(({ data }: NodeProps<TurboNodeData>) => {
       <div className="wrapper gradient">
         <div className="inner">
           <div className="body">
-            {data.icon && <div className="icon">{data.icon}</div>}
+            {/* {data.icon && <div className="icon">{data.icon}</div>} */}
             <div>
               <div className="title">{data.title}</div>
               {data.subline && <div className="subline">{data.subline}</div>}
@@ -31,4 +31,6 @@ export default memo(({ data }: NodeProps<TurboNodeData>) => {
       </div>
     </>
   );
-});
+}
+
+TurboNode.displayName = 'TurboNode';
