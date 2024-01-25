@@ -82,7 +82,7 @@ body {
   position: absolute;
   bottom: 0;
   left: 0;
-  background: $blue;
+  background: #646cff;
 }
 
 .wave {
@@ -95,6 +95,7 @@ body {
   transform: translate(0, 0, 0);
   animation: wave 7s ease infinite;
   transform: translate3d(0, 0, 0);
+  filter: invert(47%) sepia(95%) saturate(6399%) hue-rotate(244deg) brightness(102%) contrast(102%);
   
 }
 
