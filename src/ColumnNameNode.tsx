@@ -69,9 +69,7 @@ const ColumnNameNode = ({
           className='column-input'
         />
       ) : (
-        <Typography className='column-label' noWrap>
-          {editedLabel}
-        </Typography>
+        <div className="title">{editedLabel}</div>
       )}
 
       <Box sx={{ minWidth: 56 }}>

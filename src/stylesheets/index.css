@@ -92,6 +92,7 @@ button:hover {
   border: solid 1px #213547;
   border-radius: 3px;
   font-family: 'Fira Mono', monospace;
+  padding-left: 8px;
 }
 
 .column-label {
@@ -203,8 +204,9 @@ button:hover {
   padding: 16px 20px;
   border-radius: var(--node-border-radius);
   display: flex;
-  /* flex-direction: column; */
-  /* justify-content: center; */
+  flex-direction: row;
+  justify-content: space-between;
+
   flex-grow: 1;
   position: relative;
 }
@@ -310,4 +312,8 @@ button:hover {
 
 .react-flow__attribution a {
   color: #95679e;
+}
+
+.table-menu-dots {
+  margin: -12px;
 }
