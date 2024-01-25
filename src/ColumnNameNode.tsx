@@ -66,10 +66,12 @@ const ColumnNameNode = ({
           value={editedLabel}
           onChange={handleInputChange}
           placeholder={data.label}
-          className='column-input'
+          className='table-name-input'
         />
       ) : (
-        <div className="title">{editedLabel}</div>
+        <Typography className='column-label' variant="body2" noWrap>
+        {editedLabel}
+      </Typography>
       )}
 
       <Box sx={{ minWidth: 56 }}>

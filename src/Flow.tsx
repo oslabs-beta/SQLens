@@ -21,6 +21,7 @@ import './stylesheets/index.css';
 import TurboNode, { TurboNodeData } from './TurboNode';
 import TurboEdge from './TurboEdge';
 import FunctionIcon from './FunctionIcon';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 //not using edges currently
 // const initialEdges: Edge[] = [
@@ -64,32 +65,11 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
     let layoutX: number = 0;
     let layoutY: number = 0;
 
-    // makes a custom node to allow for adding tables
-    const customNode: Node = {
-      id: 'custom-node-id', // A unique identifier for your custom node
-      type: 'turbo', // Define a custom type if needed
-      data: {
-        label: 'Add New Table', // Custom label or any other data you want to include
-        // Other custom data properties...
-      },
-      position: { x: 700, y: 1100 }, // Define the position
-      style: {
-        width: 250,
-        // height: 60 + table.columns.length * 40,
-        // backgroundColor: "rgba(245, 245, 245, 0.9)",
-        // borderRadius: "4px",
-        // boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
-      },
-      // Other properties if needed...
-    };
-    nodes.push(customNode);
-
-
     tables.forEach((table: TableObj, tIndex: number): void => {
       //layout calcs
       if (layoutY > 600) {
         layoutY = 0;
-        layoutX += 350;
+        layoutX += 375;
       }
 
       //create group node for each table
@@ -98,13 +78,12 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
         type: "turbo",
         // type: 'input',
         data: {
-          icon: <FunctionIcon />,
           label: table.name },
         className: "light",
         position: { x: layoutX, y: layoutY },
         style: {
-          width: 300,
-          height: 60 + table.columns.length * 40,
+          width: 250,
+          height: 75 + table.columns.length * 40,
           // backgroundColor: "rgba(245, 245, 245, 0.9)",
           // borderRadius: "4px",
           // boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
@@ -113,7 +92,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
       nodes.push(groupNode);
 
       //initialize column node position at 45px from top
-      let y = 45;
+      let y = 60;
       // iterate through columns array and create node for each column name
       table.columns.forEach((column: string, cIndex: number): void => {
         const columnNode: Node = {
@@ -127,7 +106,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
           draggable: false,
           extent: "parent",
           style: {
-            width: 270,
+            width: 220,
             height: 40,
           },
         };
@@ -137,6 +116,28 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
       layoutY += 150 + table.columns.length * 40;
     });
     //push add table node into nodes array
+
+    // makes a custom node to allow for adding tables
+    const addTable: Node = {
+      id: 'add-table-node', // A unique identifier for your custom node
+      type: 'turbo', // Define a custom type if needed
+      data: {
+        label: 'Add New Table', // Custom label or any other data you want to include
+        // Other custom data properties...
+      },
+      position: { x: layoutX, y: layoutY }, // Define the position
+      // position: { x: 700, y: 1100 }, // Define the position
+      style: {
+        width: 250,
+        // height: 60 + table.columns.length * 40,
+        // backgroundColor: "rgba(245, 245, 245, 0.9)",
+        // borderRadius: "4px",
+        // boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
+      },
+      // Other properties if needed...
+    };
+    nodes.push(addTable);
+
     return nodes;
   };
 

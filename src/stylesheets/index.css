@@ -92,7 +92,7 @@ button:hover {
   border: solid 1px #213547;
   border-radius: 3px;
   font-family: 'Fira Mono', monospace;
-  padding-left: 18px;
+  padding-left: 5px;
 }
 
 .column-label {
@@ -107,9 +107,18 @@ button:hover {
 } */
 
 .table-name-input {
-  margin-left: 15px;
-  height: 25px;
+  margin-left: -3px;
+  height: 30px;
   width: 155px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 2px solid #2a8af6;
+  border: 2px solid #e92a67;
+  border-radius: 4px;
+  font-family: 'Fira mono';
+}
+.table-name-input:focus {
+  outline: none;
 }
 
 .turbo-header-sqlens {
@@ -209,7 +218,7 @@ button:hover {
 
 .react-flow__node-turbo .inner {
   background: var(--bg-color);
-  padding: 16px 20px;
+  padding: 15px 15px;
   border-radius: var(--node-border-radius);
   display: flex;
   flex-direction: row;
@@ -322,5 +331,5 @@ button:hover {
 }
 
 .table-menu-dots {
-  margin: -12px;
+  margin: -8px;
 }

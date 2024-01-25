@@ -14,9 +14,9 @@ const TableHeader = ({
   data,
 }: {
   data: {
-    label: string;
+    label?: string;
     // parent: string,
-    onDelete: () => void;
+    onDelete?: () => void;
   };
 }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
@@ -149,7 +149,7 @@ const TableHeader = ({
       }}
     >
       {isEditing ? (
-        <div>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
           <input
             type='text'
             value={editedLabel}
@@ -158,6 +158,7 @@ const TableHeader = ({
             className='table-name-input'
             autoFocus={true}
           />
+          <div>
           <IconButton aria-label='edit' size='small' onClick={handleEditSubmit}>
             <Check fontSize='inherit' />
           </IconButton>
@@ -168,12 +169,14 @@ const TableHeader = ({
           >
             <ClearIcon fontSize='inherit' />
           </IconButton>
-        </div>
+          </div>
+        </Box>
       ) : (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-          <Typography variant='body1' sx={{ flexGrow: 1 }}>
+          <Typography variant='h6' noWrap sx={{ flexGrow: 1, maxWidth: 200}}>
             {editedLabel}
           </Typography>
+
           <TableMenu
             tableData={data}
             handleEditTableName={handleEditTableName}
