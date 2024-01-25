@@ -14,6 +14,12 @@ import GroupNode from "./GroupNode.tsx";
 import "reactflow/dist/style.css";
 import generateEdges from "./GenerateEdges.tsx";
 
+import 'reactflow/dist/base.css';
+import './index.css';
+import TurboNode, { TurboNodeData } from './TurboNode';
+import TurboEdge from './TurboEdge';
+import FunctionIcon from './FunctionIcon';
+
 //not using edges currently
 // const initialEdges: Edge[] = [
 //     { id: "e1-2", source: "1", target: "2", animated: true },
@@ -22,8 +28,20 @@ import generateEdges from "./GenerateEdges.tsx";
 
 // custom nodes
 const nodeTypes = {
+  turbo: TurboNode,
   colNode: ColumnNameNode,
-  groupNode: GroupNode,
+  // groupNode: GroupNode
+};
+
+
+
+const edgeTypes = {
+  turbo: TurboEdge,
+};
+
+const defaultEdgeOptions = {
+  type: 'turbo',
+  markerEnd: 'edge-circle',
 };
 
 const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[] }) => {
@@ -47,7 +65,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[] }) => 
     // makes a custom node to allow for adding tables
     const customNode: Node = {
       id: 'custom-node-id', // A unique identifier for your custom node
-      type: 'groupNode', // Define a custom type if needed
+      type: 'turbo', // Define a custom type if needed
       data: { 
         label: 'Add New Table', // Custom label or any other data you want to include
         // Other custom data properties...
@@ -75,9 +93,11 @@ const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[] }) => 
       //create group node for each table
       const groupNode: Node = {
         id: `table-${tIndex}`, //tables[index][name]
-        type: "groupNode",
+        type: "turbo",
         // type: 'input',
-        data: { label: table.name },
+        data: { 
+          icon: <FunctionIcon />,
+          label: table.name },
         className: "light",
         position: { x: layoutX, y: layoutY },
         style: {
@@ -190,6 +210,29 @@ const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[] }) => 
           gap={50} // Spacing between grid lines
           size={4} // Thickness of grid lines
         />
+        
+        {/* <Controls showInteractive={false} /> */}
+        <svg>
+          <defs>
+            <linearGradient id="edge-gradient">
+              <stop offset="0%" stopColor="#ae53ba" />
+              <stop offset="100%" stopColor="#2a8af6" />
+            </linearGradient>
+
+            <marker
+              id="edge-circle"
+              viewBox="-5 -5 10 10"
+              refX="0"
+              refY="0"
+              markerUnits="strokeWidth"
+              markerWidth="10"
+              markerHeight="10"
+              orient="auto"
+            >
+              <circle stroke="#2a8af6" strokeOpacity="0.75" r="2" cx="0" cy="0" />
+            </marker>
+          </defs>
+        </svg>
       </ReactFlow>
     </div>
   );

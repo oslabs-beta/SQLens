@@ -1,3 +1,6 @@
+
+
+
 interface ForeignKey {
   columnName: string;
   foreignTableName: string;
@@ -46,10 +49,10 @@ const generateEdges = (tables: Table[]): Edge[] => {
           id: `fk-${tIndex}-${fkIndex}`,
           source: `table-${tIndex}-column-${sourceColumnIndex}`,
           target: `table-${targetTableIndex}-column-${targetColumnIndex}`,
-          type: 'smoothstep',
+          type: 'turbo',
           animated: false,
           style: { 
-            stroke: '#ff006e',
+            // stroke: '#ff006e',
           }, // Custom styling for foreign key edges
         };
   
