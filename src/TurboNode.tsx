@@ -12,12 +12,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import AddColumnDialog from "./AddColumnDialog";
+import TableHeader from './TableHeader';
 
 export type TurboNodeData = {
   title: string;
   // icon?: ReactNode;
   // subline?: string;
   label: string;
+  parent?: string;
   onDelete: ()=> void ;
 };
 
@@ -147,61 +149,9 @@ const handleAddColumnClose = () => {
         </div>
       </div>
       <div className="wrapper gradient">
-        {/* <div className="inner"> */}
-          {/* <div className="body"> */}
-            {/* {data.icon && <div className="icon">{data.icon}</div>} */}
-            {/* <div> */}
-              {/* <div className="title">{data.label}</div> */}
-              {/* {data.subline && <div className="subline">{data.subline}</div>} */}
-            {/* </div> */}
-          {/* </div> */}
-          {/* <Handle type="target" position={Position.Left} /> */}
-          {/* <Handle type="source" position={Position.Right} /> */}
-
-          {isEditing ? (
-            <div className="inner">
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <input
-              type="text"
-              value={editedLabel}
-              onChange={handleInputChange}
-              placeholder={data.label}
-              className="table-name-input"
-              autoFocus={true}
-            />
-            <IconButton
-              aria-label="edit"
-              size="small"
-              onClick={handleEditSubmit}
-            >
-              <Check fontSize="inherit" />
-            </IconButton>
-            <IconButton
-              aria-label="cancel"
-              size="small"
-              onClick={handleEditCancel}
-            >
-              <ClearIcon fontSize="inherit" />
-            </IconButton>
-          </Box>
-          </div>
-        ) : (
-          <div className="inner">
-          {/* <Box sx={{ display: "flex", justifyContent: 'space-between' }}> */}
-          <div className="title">{editedLabel}</div>
-          <TableMenu
-          tableData={data}
-          handleEditTableName={handleEditTableName}
-          anchorEl={anchorEl}
-          handleClose={handleMenuClose}
-          handleClick={handleMenuClick}
-          handleAlertOpen={handleAlertOpen}
-          handleAddColumnOpen={handleAddColumnOpen}
-        />
-          {/* </Box> */}
-          </div>
-        )}
-          
+        <div className="inner">
+          <TableHeader data={data}/>
+        </div>
         {/* </div> */}
       </div>
     </>
@@ -209,3 +159,58 @@ const handleAddColumnClose = () => {
 }
 
 TurboNode.displayName = 'TurboNode';
+
+// {/*  */}
+//           {/* <div className="body"> */}
+//             {/* {data.icon && <div className="icon">{data.icon}</div>} */}
+//             {/* <div> */}
+//               {/* <div className="title">{data.label}</div> */}
+//               {/* {data.subline && <div className="subline">{data.subline}</div>} */}
+//             {/* </div> */}
+//           {/* </div> */}
+//           {/* <Handle type="target" position={Position.Left} /> */}
+//           {/* <Handle type="source" position={Position.Right} /> */}
+
+//           {isEditing ? (
+//             <div className="inner">
+//           <Box sx={{ display: "flex", alignItems: "center" }}>
+//             <input
+//               type="text"
+//               value={editedLabel}
+//               onChange={handleInputChange}
+//               placeholder={data.label}
+//               className="table-name-input"
+//               autoFocus={true}
+//             />
+//             <IconButton
+//               aria-label="edit"
+//               size="small"
+//               onClick={handleEditSubmit}
+//             >
+//               <Check fontSize="inherit" />
+//             </IconButton>
+//             <IconButton
+//               aria-label="cancel"
+//               size="small"
+//               onClick={handleEditCancel}
+//             >
+//               <ClearIcon fontSize="inherit" />
+//             </IconButton>
+//           </Box>
+//           </div>
+//         ) : (
+//           <div className="inner">
+//           {/* <Box sx={{ display: "flex", justifyContent: 'space-between' }}> */}
+//           <div className="title">{editedLabel}</div>
+//           <TableMenu
+//           tableData={data}
+//           handleEditTableName={handleEditTableName}
+//           anchorEl={anchorEl}
+//           handleClose={handleMenuClose}
+//           handleClick={handleMenuClick}
+//           handleAlertOpen={handleAlertOpen}
+//           handleAddColumnOpen={handleAddColumnOpen}
+//         />
+//           {/* </Box> */}
+//           </div>
+//         )}

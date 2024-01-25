@@ -92,7 +92,7 @@ button:hover {
   border: solid 1px #213547;
   border-radius: 3px;
   font-family: 'Fira Mono', monospace;
-  padding-left: 8px;
+  padding-left: 18px;
 }
 
 .column-label {
@@ -112,7 +112,15 @@ button:hover {
   width: 155px;
 }
 
-/* 
+.turbo-header-sqlens {
+  width: 100%;
+  display: "flex";
+  flex-direction: "column";
+  /* align-items: "stretch"; */
+  justify-content: "space-between";
+  /* color: "black"; */
+}
+/*
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -142,7 +150,7 @@ button:hover {
   border-radius: var(--node-border-radius);
   /* border-radius: 8px; */
   display: flex;
-  height: 70px; 
+  height: 70px;
   min-width: 150px;
   font-family: 'Fira Mono', monospace;
   font-weight: 500;
@@ -164,7 +172,7 @@ button:hover {
   position: absolute;
   padding-bottom: calc(100% * 1.41421356237);
   /* width: calc(100% * 1.41421356237); */
-  height: 800px; 
+  height: 800px;
   width: 800px;
   background: conic-gradient(
     from -160deg at 50% 50%,
@@ -206,7 +214,6 @@ button:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
   flex-grow: 1;
   position: relative;
 }

@@ -14,6 +14,9 @@ const theme = createTheme({
       main: '#3f50b5',
     },
   },
+  typography: {
+    fontFamily: 'Fira Mono',
+  },
 });
 
 const getTables = async function () {
@@ -82,6 +85,10 @@ function App() {
 
   useEffect(() => {
     getTables().then((res) => {
+      res.sort((a,b)=>{
+        if(a.foreignKeys.length < b.foreignKeys.length) return -1
+        else return 1
+      });
       console.log(res);
       setTables(res);
     });

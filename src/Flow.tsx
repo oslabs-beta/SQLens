@@ -68,7 +68,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
     const customNode: Node = {
       id: 'custom-node-id', // A unique identifier for your custom node
       type: 'turbo', // Define a custom type if needed
-      data: { 
+      data: {
         label: 'Add New Table', // Custom label or any other data you want to include
         // Other custom data properties...
       },
@@ -97,13 +97,13 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
         id: `table-${tIndex}`, //tables[index][name]
         type: "turbo",
         // type: 'input',
-        data: { 
+        data: {
           icon: <FunctionIcon />,
           label: table.name },
         className: "light",
         position: { x: layoutX, y: layoutY },
         style: {
-          width: 250,
+          width: 300,
           height: 60 + table.columns.length * 40,
           // backgroundColor: "rgba(245, 245, 245, 0.9)",
           // borderRadius: "4px",
@@ -127,7 +127,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
           draggable: false,
           extent: "parent",
           style: {
-            width: 220,
+            width: 270,
             height: 40,
           },
         };
@@ -195,8 +195,8 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
   const proOptions = { hideAttribution: true };
   return (
     <>
-     <NavBar 
-        onSearchSubmit={onSearchSubmit} 
+     <NavBar
+        onSearchSubmit={onSearchSubmit}
         onSearchChange={onSearchChange}
         searchValue={searchValue}
       />
@@ -219,7 +219,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
           {/* gap={50} // Spacing between grid lines */}
           {/* size={4} // Thickness of grid lines */}
         {/* /> */}
-        
+
         {/* <Controls showInteractive={false} /> */}
         <svg>
           <defs>
