@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap');
+
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -57,10 +60,6 @@ button {
 button:hover {
   border-color: #646cff;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
 
 .react-flow__handle {
   opacity: 0;
@@ -78,7 +77,7 @@ button:focus-visible {
   color: white;
   min-width: 10vw;
   /* max-height: 30vh; */
-  border-radius: 3px;
+  /* border-radius: 3px; */
   font-size: 16px;
   line-height: 25px;
   padding: 10px;
@@ -88,7 +87,7 @@ button:focus-visible {
   /* background-color:  #556677; */
   display: flex;
   justify-content: space-between;
-  height: 40px;
+  height: 39px;
   align-items: center;
   border: solid 1px #213547;
   border-radius: 3px;
@@ -98,11 +97,11 @@ button:focus-visible {
   padding: 0px 8px;
 }
 
-.tableName {
+/* .tableName {
   font-weight: bolder;
   border-bottom: 1px solid;
   margin-bottom: 5px;
-}
+} */
 
 .table-name-input {
   margin-left: 15px;
@@ -110,7 +109,7 @@ button:focus-visible {
   width: 155px;
 }
 
-
+/* 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -122,8 +121,10 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
 
+
+/* EVERYTHING BELOW  HERE IS THE PREFERRED STYLES, redundant styles from above can be removed ABOVE*/
 /* turbo flow */
 .react-flow {
   --bg-color: rgb(17, 17, 17);
@@ -136,10 +137,11 @@ button:focus-visible {
 
 .react-flow__node-turbo {
   border-radius: var(--node-border-radius);
+  /* border-radius: 8px; */
   display: flex;
-  height: 70px;
+  height: 70px; 
   min-width: 150px;
-  font-family: 'Fira Mono', Monospace;
+  font-family: 'Fira Mono', monospace;
   font-weight: 500;
   letter-spacing: -0.2px;
   box-shadow: var(--node-box-shadow);
@@ -159,6 +161,7 @@ button:focus-visible {
   position: absolute;
   padding-bottom: calc(100% * 1.41421356237);
   /* width: calc(100% * 1.41421356237); */
+  height: 800px; 
   width: 800px;
   background: conic-gradient(
     from -160deg at 50% 50%,
@@ -170,7 +173,8 @@ button:focus-visible {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 100%;
+  border-radius: var(--node-border-radius);
+  /* border-radius: 100%; */
 }
 
 .react-flow__node-turbo.selected .wrapper.gradient:before {

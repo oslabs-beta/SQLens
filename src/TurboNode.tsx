@@ -2,7 +2,6 @@ import React, { memo, ReactNode } from 'react';
 import { Handle, NodeProps, Position, Node } from 'reactflow';
 import { FiCloud } from 'react-icons/fi';
 import { AiOutlineDrag } from "react-icons/ai";
-// import React from "react";
 // import TableMenu from "./TableMenu";
 // import { useState } from "react";
 // import { Check } from "@mui/icons-material";

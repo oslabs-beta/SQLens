@@ -56,7 +56,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[], fetch
     [setEdges]
   );
 
-  //generate all tables as group nodes with column nodes inside
+  //generate all tables as TURBO group nodes with column nodes inside
   const generateNodes = () => {
     const nodes: Node[] = [];
     let layoutX: number = 0;
@@ -74,9 +74,9 @@ const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[], fetch
       style: {
         width: 250,
         // height: 60 + table.columns.length * 40,
-        backgroundColor: "rgba(245, 245, 245, 0.9)",
-        borderRadius: "4px",
-        boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
+        // backgroundColor: "rgba(245, 245, 245, 0.9)",
+        // borderRadius: "4px",
+        // boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
       },
       // Other properties if needed...
     };
@@ -103,9 +103,9 @@ const BasicFlow = ({ tables, fetchAndUpdateTables }: { tables: TableObj[], fetch
         style: {
           width: 250,
           height: 60 + table.columns.length * 40,
-          backgroundColor: "rgba(245, 245, 245, 0.9)",
-          borderRadius: "4px",
-          boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
+          // backgroundColor: "rgba(245, 245, 245, 0.9)",
+          // borderRadius: "4px",
+          // boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
         },
       };
       nodes.push(groupNode);
