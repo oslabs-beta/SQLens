@@ -179,7 +179,7 @@ button:hover {
 .gradient:before {
   content: '';
   position: absolute;
-  padding-bottom: calc(100% * 1.41421356237);
+  /* padding-bottom: calc(100% * 1.41421356237); */
   /* width: calc(100% * 1.41421356237); */
   height: 800px;
   width: 800px;
