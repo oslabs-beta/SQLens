@@ -47,8 +47,8 @@ const generateEdges = (tables: Table[]): Edge[] => {
         // Create the edge
         const edge = {
           id: `fk-${tIndex}-${fkIndex}`,
-          source: `table-${tIndex}-column-${sourceColumnIndex}`,
-          target: `table-${targetTableIndex}-column-${targetColumnIndex}`,
+          target: `table-${tIndex}-column-${sourceColumnIndex}`,
+          source: `table-${targetTableIndex}-column-${targetColumnIndex}`,
           type: 'turbo',
           animated: false,
           style: { 
