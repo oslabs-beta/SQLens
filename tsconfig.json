@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noEmit": true,
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
@@ -11,7 +12,7 @@
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    // "noEmit": true,
     "jsx": "react-jsx",
 
     /* Linting */

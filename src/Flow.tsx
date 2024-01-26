@@ -8,14 +8,14 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
 } from "reactflow";
-import BasicFlowProps from "./vite-env";
+import FlowProps from "./vite-env";
 import TableObj from "./vite-env";
 import ColumnNameNode from "./ColumnNameNode.tsx";
 import GroupNode from "./GroupNode.tsx";
 import "reactflow/dist/style.css";
 import generateEdges from "./GenerateEdges.tsx";
 import NavBar from './NavBar';
-
+import useStore from './store';
 import 'reactflow/dist/base.css';
 import './stylesheets/index.css';
 import TurboNode, { TurboNodeData } from './TurboNode';
@@ -47,12 +47,17 @@ const defaultEdgeOptions = {
   markerEnd: 'edge-circle',
 };
 
-const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmit, searchValue }: BasicFlowProps) => {
-  // Initialize states for nodes and edges
+const Flow = () => {
+ // Initialize states for nodes and edges
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   // useState to grab a selected Node (to display table rows)
   const [selectedNode, setSelectedNode] = useState(null);
+  const { tables, fetchTables } = useStore(state => ({
+    tables: state.tables,
+    fetchTables: state.fetchTables
+  }));
+
 
   const onConnect = useCallback(
     (params: Edge | Connection) => setEdges((els) => addEdge(params, els)),
@@ -79,7 +84,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
         // type: 'input',
         data: {
           label: table.name,
-          fetchAndUpdateTables: fetchAndUpdateTables
+          fetchAndUpdateTables: fetchTables
         },
         className: "light",
         position: { x: layoutX, y: layoutY },
@@ -101,7 +106,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
           // id: 'A-2',
           id: `table-${tIndex}-column-${cIndex}`,
           // type: 'custom',
-          data: { label: column, parent: table.name, fetchAndUpdateTables: fetchAndUpdateTables },
+          data: { label: column, parent: table.name, fetchAndUpdateTables: fetchTables },
           type: "colNode",
           position: { x: 15, y: y },
           parentNode: `table-${tIndex}`,
@@ -125,7 +130,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
       type: 'turbo', // Define a custom type if needed
       data: {
         label: 'Add New Table',
-        fetchAndUpdateTables: fetchAndUpdateTables,
+        fetchAndUpdateTables: fetchTables,
          // Custom label or any other data you want to include
         // Other custom data properties...
       },
@@ -200,11 +205,7 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
   const proOptions = { hideAttribution: true };
   return (
     <>
-     <NavBar
-        onSearchSubmit={onSearchSubmit}
-        onSearchChange={onSearchChange}
-        searchValue={searchValue}
-      />
+     <NavBar />
     <div className="flow-container">
       <ReactFlow
         nodes={nodes}
@@ -253,4 +254,4 @@ const BasicFlow = ({ tables, fetchAndUpdateTables, onSearchChange, onSearchSubmi
   );
 };
 
-export default BasicFlow;
+export default Flow;

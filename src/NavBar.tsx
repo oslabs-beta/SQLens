@@ -11,6 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Button } from '@mui/material';
+import useStore from './store';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,18 +53,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar({ onSearchSubmit, onSearchChange, searchValue }) {
+export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
 
+    const { searchValue, setSearchValue, handleSubmit } = useStore(state => ({
+      searchValue: state.searchValue,
+      setSearchValue: state.setSearchValue,
+      handleSubmit: state.handleSubmit
+    }));
+
 
     const handleSearchChange = (event) => {
-      onSearchChange(event.target.value); 
+      setSearchValue(event.target.value); 
     };
 
     const handleFormSubmit = (event) => {
-      onSearchSubmit(); 
+      handleSubmit(); 
     };
 
 

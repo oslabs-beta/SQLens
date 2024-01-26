@@ -12,7 +12,7 @@ export default interface foreignKeysObj {
     foreignColumnName: string;
 }
 
-export default interface BasicFlowProps {
+export default interface FlowProps {
     tables: TableObj[];
     fetchAndUpdateTables: () => void;
     onSearchChange: (value: string) => void; 
