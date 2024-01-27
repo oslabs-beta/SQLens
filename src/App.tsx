@@ -17,8 +17,6 @@ const theme = createTheme({
   },
 });
 
-
-
 function App() {
   const { fetchTables } = useStore((state) => ({
     fetchTables: state.fetchTables,
