@@ -33,7 +33,7 @@ body {
   flex: 0 0 rem(90);
   width: rem(100);
   z-index: 2;
-  
+
   polygon { transform-origin: 50% }
   circle  { transform-origin: 80% 80% }
 }
@@ -83,20 +83,20 @@ body {
 
 .outer-container {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   min-height: 100vh;
   text-align: center
 }
 
 .input-container {
-  width: 40vw; 
-  margin-top: 20px; 
+  width: 40vw;
+  margin-top: 20px;
 }
 
 .ocean {
-  height: 5%;
+  // height: 5%;
   width:100%;
   position: absolute;
   bottom: 0;
@@ -108,20 +108,21 @@ body {
   background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg') repeat-x;
   position: absolute;
   width: 6400px;
-  top: -198px;
+  top: -168px;
   left: 0;
   height: 198px;
   transform: translate(0, 0, 0);
-  animation: wave 7s ease infinite;
+  animation: wave 10s ease infinite;
   transform: translate3d(0, 0, 0);
-  filter: invert(47%) sepia(95%) saturate(6399%) hue-rotate(244deg) brightness(102%) contrast(102%);
-  
+
+  filter: invert(47%) sepia(95%) saturate(6399%) hue-rotate(314deg) brightness(102%) contrast(102%);
 }
 
 .wave.wave2 {
-  top: -168px;
-  animation: swell 4s ease infinite;
+  // top: -108px;
+  animation: swell 8s ease infinite;
   opacity: 1;
+  filter: invert(47%) sepia(95%) saturate(6399%) hue-rotate(244deg) brightness(102%) contrast(102%);
 }
 
 .wave:nth-of-type(2) {
@@ -154,7 +155,7 @@ body {
 
 @keyframes swell {
   0%, 100% {
-      transform: translate(0, -30px);
+      transform: translate(0, -20px);
   }
   50% {
       transform: translate(0, 5px);
