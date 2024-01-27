@@ -11,6 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Button } from '@mui/material';
+import useStore from '../store';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,21 +53,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar({ onSearchSubmit, onSearchChange, searchValue }) {
+export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
 
+  const { searchValue, setSearchValue, handleSubmit } = useStore((state) => ({
+    searchValue: state.searchValue,
+    setSearchValue: state.setSearchValue,
+    handleSubmit: state.handleSubmit,
+  }));
 
-    const handleSearchChange = (event) => {
-      onSearchChange(event.target.value); 
-    };
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
+  };
 
-    const handleFormSubmit = (event) => {
-      onSearchSubmit(); 
-    };
-
-
+  const handleFormSubmit = (event) => {
+    handleSubmit();
+  };
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -114,8 +118,11 @@ export default function PrimarySearchAppBar({ onSearchSubmit, onSearchChange, se
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static"  style={{ background: 'rgba(0, 0, 0, .25)', boxShadow: 'none'}}>
-        <Toolbar >
+      <AppBar
+        position="static"
+        style={{ background: 'rgba(0, 0, 0, .25)', boxShadow: 'none' }}
+      >
+        <Toolbar>
           <IconButton
             size="large"
             edge="start"
@@ -126,10 +133,10 @@ export default function PrimarySearchAppBar({ onSearchSubmit, onSearchChange, se
             <MenuIcon />
           </IconButton>
           <div className="nav-title">
-              <div id="nav-text" className="nav-title-text">
-                SQL<span>ens</span>
-              </div>
+            <div id="nav-text" className="nav-title-text">
+              SQL<span>ens</span>
             </div>
+          </div>
           <form onSubmit={handleFormSubmit}>
             <Search>
               <StyledInputBase
@@ -138,9 +145,9 @@ export default function PrimarySearchAppBar({ onSearchSubmit, onSearchChange, se
                 value={searchValue}
                 onChange={handleSearchChange}
               />
-             <Button variant="text" type="submit" sx={{color: '#646cff'}}>
-  Submit
-</Button>
+              <Button variant="text" type="submit" sx={{ color: '#646cff' }}>
+                Submit
+              </Button>
             </Search>
           </form>
           <Box sx={{ flexGrow: 1 }} />

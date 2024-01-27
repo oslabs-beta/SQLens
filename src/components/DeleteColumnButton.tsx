@@ -1,5 +1,3 @@
-// import { memo } from 'react';
-
 import { IconButton, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React from 'react';
@@ -52,7 +50,8 @@ const DeleteColumnButton = ({
     console.log('deleting column', data.label, ' from table ', data.parent);
     try {
       await deleteCol();
-      data.onDelete();
+      //call refresh function
+      // data.onDelete(); // not functional
     } catch (error) {
       console.error('Error during deletion:', error);
     }

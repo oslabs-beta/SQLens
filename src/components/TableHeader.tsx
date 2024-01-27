@@ -140,7 +140,7 @@ const TableHeader = ({
 
   return (
     <Box
-      className='group-node'
+      className="group-node"
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -150,31 +150,47 @@ const TableHeader = ({
       }}
     >
       {isEditing ? (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
           <input
-            type='text'
+            type="text"
             value={editedLabel}
             onChange={handleInputChange}
             placeholder={data.label}
-            className='table-name-input'
+            className="table-name-input"
             autoFocus={true}
           />
           <div>
-          <IconButton aria-label='edit' size='small' onClick={handleEditSubmit}>
-            <Check fontSize='inherit' />
-          </IconButton>
-          <IconButton
-            aria-label='cancel'
-            size='small'
-            onClick={handleEditCancel}
-          >
-            <ClearIcon fontSize='inherit' />
-          </IconButton>
+            <IconButton
+              aria-label="edit"
+              size="small"
+              onClick={handleEditSubmit}
+            >
+              <Check fontSize="inherit" />
+            </IconButton>
+            <IconButton
+              aria-label="cancel"
+              size="small"
+              onClick={handleEditCancel}
+            >
+              <ClearIcon fontSize="inherit" />
+            </IconButton>
           </div>
         </Box>
       ) : (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-          <Typography variant='h6' noWrap sx={{ flexGrow: 1, maxWidth: 200}}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1, maxWidth: 200 }}>
             {editedLabel}
           </Typography>
 
@@ -194,10 +210,10 @@ const TableHeader = ({
       <Dialog
         open={alertOpen}
         onClose={() => setAlertOpen(false)}
-        aria-describedby='alert-dialog-description'
+        aria-describedby="alert-dialog-description"
       >
         <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
+          <DialogContentText id="alert-dialog-description">
             Are you sure you want to delete this table?
           </DialogContentText>
         </DialogContent>

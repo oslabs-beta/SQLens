@@ -56,22 +56,22 @@ const ColumnNameNode = ({
   };
 
   return (
-    <div className='column-name-node'>
+    <div className="column-name-node">
       {/* These handles are currently transparent, set in the css */}
-      <Handle type='target' position={Position.Left} />
-      <Handle type='source' position={Position.Right} />
+      <Handle type="target" position={Position.Left} />
+      <Handle type="source" position={Position.Right} />
 
       {/* If editing: render text box with the label name as placeholder; Otherwise render the label name */}
       {isEditing ? (
         <input
-          type='text'
+          type="text"
           value={editedLabel}
           onChange={handleInputChange}
           placeholder={data.label}
-          className='table-name-input'
+          className="table-name-input"
         />
       ) : (
-        <Typography className='column-label' variant='body2' noWrap>
+        <Typography className="column-label" variant="body2" noWrap>
           {editedLabel}
         </Typography>
       )}
@@ -79,12 +79,12 @@ const ColumnNameNode = ({
       <Box sx={{ minWidth: 56 }}>
         {/* If editing: render check button to save; Otherwise render the edit button*/}
         {isEditing ? (
-          <IconButton aria-label='edit' size='small' onClick={handleCheckClick}>
-            <Check fontSize='inherit' />
+          <IconButton aria-label="edit" size="small" onClick={handleCheckClick}>
+            <Check fontSize="inherit" />
           </IconButton>
         ) : (
-          <IconButton aria-label='edit' size='small' onClick={handleEditClick}>
-            <EditIcon fontSize='inherit' />
+          <IconButton aria-label="edit" size="small" onClick={handleEditClick}>
+            <EditIcon fontSize="inherit" />
           </IconButton>
         )}
         <DeleteColumnButton data={data} />

@@ -17,11 +17,15 @@ export default function AddColumnDialog({
   const [columnName, setColumnName] = useState('');
   const [selectedDataType, setSelectedDataType] = useState('');
 
-  const handleColumnNameChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
+  const handleColumnNameChange = (
+    event: React.FormEvent<HTMLTextAreaElement>
+  ) => {
     setColumnName(event.currentTarget.value);
   };
 
-  const handleDataTypeChange = (event: SelectChangeEvent<HTMLSelectElement>) => {
+  const handleDataTypeChange = (
+    event: SelectChangeEvent<HTMLSelectElement>
+  ) => {
     console.log(event.target.value);
     setSelectedDataType(event.target.value);
   };
@@ -78,13 +82,13 @@ export default function AddColumnDialog({
           <TextField
             autoFocus
             required
-            margin='dense'
-            id='columnName'
-            name='columnName'
-            label='columnName'
-            type='text'
+            margin="dense"
+            id="columnName"
+            name="columnName"
+            label="columnName"
+            type="text"
             // fullWidth
-            variant='standard'
+            variant="standard"
             onChange={handleColumnNameChange}
           />
           <DataTypeSelector
