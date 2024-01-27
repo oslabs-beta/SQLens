@@ -1,12 +1,16 @@
 import { create } from 'zustand';
-import { getTables } from './App';
+// import { getTables } from './App';
+import { getTables } from './utilities/utility.ts'
 
 const useStore = create((set, get) => ({
     tables: [],
     searchValue: '',
     setSearchValue: (searchValue) => set({ searchValue }),
 
+
+    
     setTables: (tables) => set({ tables }),
+
     fetchTables: async () => {
       try {
         const res = await getTables();
@@ -15,7 +19,9 @@ const useStore = create((set, get) => ({
         console.error('Error fetching tables:', error);
       }
     },
-    handleSubmit: async () => {
+
+
+    handleURISubmit: async () => {
         const { databaseURI } = get(); 
         try {
           const response = await fetch('/api/setDatabaseUri', {

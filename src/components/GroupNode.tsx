@@ -1,23 +1,26 @@
-import React from "react";
-import TableMenu from "./TableMenu";
-import { useState } from "react";
-import { Check } from "@mui/icons-material";
-import { IconButton, Typography, Box, Button } from "@mui/material";
-import ClearIcon from "@mui/icons-material/Clear";
+import React from 'react';
+import TableMenu from './TableMenu';
+import { useState } from 'react';
+import { Check } from '@mui/icons-material';
+import { IconButton, Typography, Box, Button } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import AddColumnDialog from "./AddColumnDialog";
+import AddColumnDialog from './AddColumnDialog';
 
-
-const GroupNode = ({ data }:{
-  data: { label: string; parent: string, onDelete: ()=> void };
+const GroupNode = ({
+  data,
+}: {
+  data: { label: string; parent: string; onDelete: () => void };
 }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState(data.label);
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement|null>(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
 
   //click handlers for delete table dialogue
   const handleAlertOpen = () => {
@@ -34,9 +37,9 @@ const GroupNode = ({ data }:{
     //need extra functionality to re render the node
     setAlertOpen(false);
 
-    const response = await fetch("/api/graphql", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       // This mutation is used to change the table name in the database
       // This is a graphQL query, not a SQL query
       body: JSON.stringify({
@@ -53,7 +56,7 @@ const GroupNode = ({ data }:{
     if (final.errors) {
       console.error(final.errors[0].message);
       alert(final.errors[0].message);
-      throw new Error("Error deleting table");
+      throw new Error('Error deleting table');
       //add a user alert
     } else {
       console.log(final);
@@ -74,7 +77,7 @@ const GroupNode = ({ data }:{
     handleMenuClose();
     setIsEditing(true);
     //use document.findElementByID to select input field and make focused or selected
-    console.log("Edit Table Name for:", data.label);
+    console.log('Edit Table Name for:', data.label);
   };
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -84,13 +87,13 @@ const GroupNode = ({ data }:{
 
   const handleEditCancel = () => {
     setIsEditing(false);
-  }
+  };
 
   const handleEditSubmit = async () => {
     setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
-    const response = await fetch("/api/graphql", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       // This mutation is used to change the table name in the database
       // This is a graphQL query, not a SQL query
       body: JSON.stringify({
@@ -130,84 +133,81 @@ const GroupNode = ({ data }:{
     setColDialogOpen(false);
   };
 
-
   return (
     <Box
       className="group-node"
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "stretch",
-        justifyContent: "space-between",
-        color: "black",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'space-between',
+        color: 'black',
       }}
     >
-        {isEditing ? (
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <input
-              type="text"
-              value={editedLabel}
-              onChange={handleInputChange}
-              placeholder={data.label}
-              className="table-name-input"
-              autoFocus={true}
-            />
-            <IconButton
-              aria-label="edit"
-              size="small"
-              onClick={handleEditSubmit}
-            >
-              <Check fontSize="inherit" />
-            </IconButton>
-            <IconButton
-              aria-label="cancel"
-              size="small"
-              onClick={handleEditCancel}
-            >
-              <ClearIcon fontSize="inherit" />
-            </IconButton>
-          </Box>
-        ) : (
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Typography variant="body1" sx={{ flexGrow: 1, marginLeft: "20px" }}>
+      {isEditing ? (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <input
+            type="text"
+            value={editedLabel}
+            onChange={handleInputChange}
+            placeholder={data.label}
+            className="table-name-input"
+            autoFocus={true}
+          />
+          <IconButton aria-label="edit" size="small" onClick={handleEditSubmit}>
+            <Check fontSize="inherit" />
+          </IconButton>
+          <IconButton
+            aria-label="cancel"
+            size="small"
+            onClick={handleEditCancel}
+          >
+            <ClearIcon fontSize="inherit" />
+          </IconButton>
+        </Box>
+      ) : (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography variant="body1" sx={{ flexGrow: 1, marginLeft: '20px' }}>
             {editedLabel}
           </Typography>
           <TableMenu
-          tableData={data}
-          handleEditTableName={handleEditTableName}
-          anchorEl={anchorEl}
-          handleClose={handleMenuClose}
-          handleClick={handleMenuClick}
-          handleAlertOpen={handleAlertOpen}
-          handleAddColumnOpen={handleAddColumnOpen}
-        />
-          </Box>
-        )}
+            tableData={data}
+            handleEditTableName={handleEditTableName}
+            anchorEl={anchorEl}
+            handleClose={handleMenuClose}
+            handleClick={handleMenuClick}
+            handleAlertOpen={handleAlertOpen}
+            handleAddColumnOpen={handleAddColumnOpen}
+          />
+        </Box>
+      )}
 
-    {/** dialog for alert */}
-    <Dialog
-      open={(alertOpen)}
-      onClose={()=> setAlertOpen(false)}
-      aria-describedby='alert-dialog-description'
-    >
-      <DialogContent>
-        <DialogContentText id='alert-dialog-description'>
-          Are you sure you want to delete this table?
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleDeleteCancel}>No</Button>
-        <Button onClick={handleTableDelete} autoFocus>
-          Yes
-        </Button>
-      </DialogActions>
-    </Dialog>
+      {/** dialog for alert */}
+      <Dialog
+        open={alertOpen}
+        onClose={() => setAlertOpen(false)}
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this table?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel}>No</Button>
+          <Button onClick={handleTableDelete} autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
 
-    <AddColumnDialog tableName={editedLabel} handleAddColumnOpen={handleAddColumnOpen} openColDialog={openColDialog} handleAddColumnClose={handleAddColumnClose}/>
-
+      <AddColumnDialog
+        tableName={editedLabel}
+        handleAddColumnOpen={handleAddColumnOpen}
+        openColDialog={openColDialog}
+        handleAddColumnClose={handleAddColumnClose}
+      />
     </Box>
-
-
   );
 };
 
