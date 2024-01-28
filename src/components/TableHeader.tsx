@@ -9,6 +9,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import AddColumnDialog from './AddColumnDialog';
+import useStore from '../store';
 
 const TableHeader = ({
   data,
@@ -16,7 +17,6 @@ const TableHeader = ({
   data: {
     label?: string;
     // parent: string,
-    fetchAndUpdateTables: () => void;
   };
 }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
@@ -25,6 +25,9 @@ const TableHeader = ({
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
+  const { fetchTables } = useStore((state) => ({
+    fetchTables: state.fetchTables,
+  }));
 
   //click handlers for delete table dialogue
   const handleAlertOpen = () => {
@@ -63,7 +66,7 @@ const TableHeader = ({
       throw new Error('Error deleting table');
       //add a user alert
     } else {
-      // await data.fetchAndUpdateTables();
+      await fetchTables();
       console.log(final);
     }
   };
@@ -122,6 +125,7 @@ const TableHeader = ({
     } else {
       data.label = editedLabel;
       setIsEditing(false);
+      await fetchTables();
       console.log(final);
     }
   };

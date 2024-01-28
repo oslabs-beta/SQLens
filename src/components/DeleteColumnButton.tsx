@@ -5,14 +5,15 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import useStore from '../store';
 
 const DeleteColumnButton = ({
   data,
 }: {
-  data: { label: string; parent: string; fetchAndUpdateTables: () => void };
+  data: { label: string; parent: string };
 }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
-  //   const [focusNode, setFocusNode] = React.useState(null)
+  const fetchTables = useStore(state => state.fetchTables);
 
   //delete column function
   const deleteCol = async function () {
@@ -37,7 +38,7 @@ const DeleteColumnButton = ({
       alert(final.errors[0].message);
     } else {
       console.log(final);
-      // await data.fetchAndUpdateTables();
+      await fetchTables();
       setAlertOpen(false);
     }
   };
@@ -46,17 +47,9 @@ const DeleteColumnButton = ({
   const handleAlertOpen = () => {
     setAlertOpen(true);
   };
-  const handleYesDelete = async () => {
-    console.log('deleting column', data.label, ' from table ', data.parent);
-    try {
-      await deleteCol();
-      //call refresh function
-      // data.onDelete(); // not functional
-    } catch (error) {
-      console.error('Error during deletion:', error);
-    }
-    setAlertOpen(false);
-  };
+
+  const handleYesDelete = async () => await deleteCol();
+
   const handleNoDelete = () => {
     setAlertOpen(false);
   };
