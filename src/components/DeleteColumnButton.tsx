@@ -38,7 +38,8 @@ const DeleteColumnButton = ({
       alert(final.errors[0].message);
     } else {
       console.log(final);
-      await fetchTables();
+      fetchTables();
+      console.log('tables fetched in deleteColumnButton')
       setAlertOpen(false);
     }
   };

@@ -18,13 +18,16 @@ const theme = createTheme({
 });
 
 function App() {
-  const { fetchTables } = useStore((state) => ({
+  const { fetchTables, tables } = useStore((state) => ({
     fetchTables: state.fetchTables,
+    tables: state.tables,
   }));
+
+  // const store = useStore();
 
   useEffect(() => {
     fetchTables();
-  }, [fetchTables]);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
