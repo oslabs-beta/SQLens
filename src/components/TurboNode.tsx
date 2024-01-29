@@ -4,16 +4,17 @@ import TableHeader from './TableHeader';
 import { FaHand } from 'react-icons/fa6';
 import AddTable from './AddTable';
 
+
 export type TurboNodeData = {
   title?: string;
   // icon?: ReactNode;
   // subline?: string;
   label: string;
   parent?: string;
-  fetchAndUpdateTables?: () => void;
 };
 
 export default function TurboNode({ data }: NodeProps<TurboNodeData>) {
+
   return (
     <>
       <div className="cloud gradient">

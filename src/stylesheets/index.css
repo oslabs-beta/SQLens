@@ -285,7 +285,7 @@ button:hover {
 }
 
 .react-flow__handle.target {
-  left: -10px;
+  left: -20px;
 }
 
 .react-flow__node:focus {

@@ -33,6 +33,30 @@
     return final.data.getTableNames;
   };
 
+  export const fetchColumnData = async (tableName: string) => {
+    const response = await fetch('/api/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: `
+          query GetTableData($tableName: String!) {
+            getTableData(tableName: $tableName) {
+              columnData
+            }
+          }
+        `,
+        variables: { tableName },
+      }),
+    });
+
+    const result = await response.json();
+    if (result.errors) {
+      console.error(result.errors);
+      throw new Error('Error fetching column data');
+    }
+    return result.data.getTableData;
+  };
+
 
 
   // export const handleSubmit = async () => {
