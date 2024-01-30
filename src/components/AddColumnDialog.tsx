@@ -7,25 +7,27 @@ import DialogContent from '@mui/material/DialogContent';
 // import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import DataTypeSelector from './DataTypeSelector';
+import { AddColumnDialogProps } from '../vite-env';
+import { SelectChangeEvent } from '@mui/material';
+import useStore from '../store';
+import { TableState } from '../vite-env';
 
 export default function AddColumnDialog({
   tableName,
   handleAddColumnClose,
-  // handleAddColumnOpen,
   openColDialog,
-}) {
+}: AddColumnDialogProps) {
   const [columnName, setColumnName] = useState('');
   const [selectedDataType, setSelectedDataType] = useState('');
-
+  const fetchTables = useStore((state: TableState) => state.fetchTables);
+  
   const handleColumnNameChange = (
-    event: React.FormEvent<HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setColumnName(event.currentTarget.value);
   };
 
-  const handleDataTypeChange = (
-    event: SelectChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleDataTypeChange = (event: SelectChangeEvent<string>) => {
     console.log(event.target.value);
     setSelectedDataType(event.target.value);
   };
@@ -60,6 +62,7 @@ export default function AddColumnDialog({
       // throw new Error("Error changing table name");
       //add a user alert
     } else {
+      fetchTables();
       console.log(final);
     }
   };
@@ -69,12 +72,6 @@ export default function AddColumnDialog({
       <Dialog
         open={openColDialog}
         onClose={handleAddColumnClose}
-        PaperProps={{
-          component: 'form',
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-            handleSubmit;
-          },
-        }}
       >
         {/* <DialogTitle>Add Column</DialogTitle> */}
         <DialogContent>

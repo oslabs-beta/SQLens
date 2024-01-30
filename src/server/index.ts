@@ -1,13 +1,13 @@
-import express, { Response, Express } from 'express';
+import express, { Response, Request, Express } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { resolvers } from './controller';
 import { typeDefs } from './typeDefs';
 import pkg from 'pg';
 const { Pool } = pkg;
 import dotenv from 'dotenv';
+// import 
 
 dotenv.config();
-
 
 export let pool: pkg.Pool | null = null;
 
@@ -16,45 +16,45 @@ const initializePool = (uri: string) => {
 };
 
 export const app: Express = express();
-
 app.use(express.json());
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
-// starting apollo server and applying it to express app
-// This route will be used to make GraphQL queries
-server.start().then(() => {
+async function startServer() {
+  await server.start();
   server.applyMiddleware({ app, path: '/api/graphql' });
-});
 
-app.get('/api/test', (_, res: Response) => {
-  res.json({ greeting: 'Hello' });
-});
-
-app.post('/api/setDatabaseURI', (req, res) => {
-  const { databaseURI } = req.body;
-
-  if (!databaseURI) {
-    return res.status(400).json({ error: 'Database URI is required' });
-  }
-
-  initializePool(databaseURI);
-
-  res.json({ message: 'Database connection updated successfully' });
-});
-
-
-
-// app.get('/api/tables', dbController.getTableNames, (req, res) => {
-//   res.status(200).json(res.locals.dbData)
-// });
-
-if (!process.env['VITE']) {
-  console.log('inside vite conditional');
-  const frontendFiles = process.cwd() + '/dist';
-  app.use(express.static(frontendFiles));
-  app.get('/*', (_, res: Response) => {
-    res.send(frontendFiles + '/index.html');
+  app.get('/api/test', (_: Request, res: Response) => {
+    res.json({ greeting: 'Hello' });
   });
-  app.listen(process.env['PORT']);
+
+  app.post('/api/setDatabaseURI', (req: Request, res: Response) => {
+    const { databaseURI } = req.body;
+
+    if (!databaseURI) {
+      return res.status(400).json({ error: 'Database URI is required' });
+    }
+
+    initializePool(databaseURI);
+    res.json({ message: 'Database connection updated successfully' });
+  });
+
+  // Conditional Express static file serving and application start
+  if (!process.env['VITE']) {
+    console.log('Serving static files and starting Express server.');
+    const frontendFiles = process.cwd() + '/dist';
+    app.use(express.static(frontendFiles));
+    app.get('/*', (_: Request, res: Response) => {
+      res.sendFile(`${frontendFiles}/index.html`);
+    });
+
+    const PORT = process.env.PORT || 3000; 
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  }
 }
+
+startServer().catch(error => {
+  console.error('Failed to start the server:', error);
+});

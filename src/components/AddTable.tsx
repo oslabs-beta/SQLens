@@ -4,19 +4,19 @@ import { Check } from '@mui/icons-material';
 import { IconButton, Typography, Box,  } from '@mui/material';
 import { ImPlus } from 'react-icons/im';
 import ClearIcon from '@mui/icons-material/Clear';
+import useStore from '../store';
+import { TableState } from '../vite-env';
 
 const AddTable = ({
   data,
 }: {
   data: {
     label: string;
-    // parent: string,
-    // onDelete: () => void;
-    fetchAndUpdateTables: ()=>void;
   };
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState('');
+  const fetchTables = useStore((state: TableState) => state.fetchTables);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -58,7 +58,7 @@ const AddTable = ({
       alert(final.errors[0].message);
     } else {
       setEditedLabel(data.label)
-      await data.fetchAndUpdateTables();
+      await fetchTables();
     console.log(final);
     }
   };

@@ -8,6 +8,15 @@ export default defineConfig({
   build: {
     outDir: 'dist', // Output directory for production build
     minify: 'terser', // Minify JavaScript
-    cssCodeSplit: true, // Enable CSS code splitting
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendors'; // This will put all node_modules code into a separate chunk
+          }
+        }
+      }
+    },
   },
 })

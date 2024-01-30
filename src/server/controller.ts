@@ -1,14 +1,6 @@
 import { pool } from './index';
-
+import { RowData, TableData } from '../vite-env';
 // The interface for data structure Jenny was talking about to make this valid TypeScript
-interface RowData {
-  columnName: string;
-  value: string | null;
-}
-
-interface TableData {
-  rowData: RowData[];
-}
 
 export const resolvers = {
   Query: {
@@ -27,7 +19,7 @@ export const resolvers = {
         );
         // tablesWithColumns is an object with keys of table names and values of objects with keys of columns and foreignKeys
         const tablesWithColumns: {
-          [key: string]: { columns: string[]; foreignKeys: any[] };
+          [key: string]: { columns: string[]; foreignKeys: unknown[] };
         } = {};
 
         // Query to get foreign key relations
@@ -98,21 +90,22 @@ export const resolvers = {
     },
     // the :_ is a placeholder for the parent object which is a neccassary argument for the resolver with apollo server
     getTableData: async (
-      _: any,
+      _: unknown,
       { tableName }: { tableName: string }
     ): Promise<TableData[]> => {
       console.log(tableName);
+      if (pool !== null) {
       try {
         const tableDataQuery = `SELECT * FROM ${tableName};`;
         const tableDataResult = await pool.query(tableDataQuery);
         console.log(tableDataResult.rows);
 
-        return tableDataResult.rows.map((row: Record<string, any>) => {
+        return tableDataResult.rows.map((row: Record<string, unknown>) => {
           const rowData: RowData[] = [];
           for (const [key, value] of Object.entries(row)) {
             rowData.push({
               columnName: key,
-              value: value !== null ? value.toString() : null,
+              value: value !== null && value !== undefined ? value.toString() : null,
             });
           }
           return { rowData };
@@ -121,18 +114,22 @@ export const resolvers = {
         console.error('Error in getTableData resolver: ', err);
         throw new Error('Server error');
       }
+    }
+    return [];
     },
+    
   },
   Mutation: {
     addColumnToTable: async (
       // the :_ is a placeholder for the parent object which is a neccassary argument for the resolver with apollo server
-      _: any,
+      _: unknown,
       {
         tableName,
         columnName,
         dataType,
       }: { tableName: string; columnName: string; dataType: string }
     ) => {
+      if (pool !== null){
       try {
         // SQL to add a column to a table, adjust data type as needed
         await pool.query(
@@ -144,12 +141,14 @@ export const resolvers = {
         // throw new Error('Server error');
         return err;
       }
+    }
     },
     editTableName: async (
       // the :_ is a placeholder for the parent object which is a neccassary argument for the resolver with apollo server
-      _: any,
+      _: unknown,
       { oldName, newName }: { oldName: string; newName: string }
     ) => {
+      if (pool !== null){
       try {
         // SQL to rename a table
         await pool.query(`ALTER TABLE ${oldName} RENAME TO ${newName};`);
@@ -159,9 +158,11 @@ export const resolvers = {
         // throw new Error('Server error');
         return err;
       }
+    }
     },
     // the :_ is a placeholder for the parent object which is a neccassary argument for the resolver with apollo server
-    deleteTable: async (_: any, { tableName }: { tableName: string }) => {
+    deleteTable: async (_: unknown, { tableName }: { tableName: string }) => {
+      if (pool !== null){
       try {
         // SQL to delete a table
         await pool.query(`DROP TABLE ${tableName};`);
@@ -171,11 +172,13 @@ export const resolvers = {
         // throw new Error('Server error');
         return err;
       }
+    }
     },
     deleteColumn: async (
-      _: any,
+      _: unknown,
       { columnName, tableName }: { columnName: string; tableName: string }
     ) => {
+      if (pool !== null){
       try {
         console.log(columnName, tableName);
         // SQL to delete a table
@@ -186,15 +189,17 @@ export const resolvers = {
         // throw new Error('Server error');
         return err;
       }
+    }
     },
     editColumn: async (
-      _: any,
+      _: unknown,
       {
         newColumnName,
         columnName,
         tableName,
       }: { newColumnName: string; columnName: string; tableName: string }
     ) => {
+      if (pool !== null){
       try {
         // SQL to delete a table
         await pool.query(`ALTER TABLE ${tableName}
@@ -205,8 +210,10 @@ export const resolvers = {
         // throw new Error('Server error');
         return err;
       }
+    }
     },
-    addTable: async (_: any, { tableName }: { tableName: string }) => {
+    addTable: async (_: unknown, { tableName }: { tableName: string }) => {
+      if (pool !== null){
       try {
         // SQL to delete a table
         await pool.query(`CREATE TABLE ${tableName} (
@@ -217,6 +224,7 @@ export const resolvers = {
         // throw new Error('Server error');
         return err;
       }
+    }
     },
   },
 };

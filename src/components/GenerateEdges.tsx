@@ -1,26 +1,4 @@
-
-
-
-interface ForeignKey {
-  columnName: string;
-  foreignTableName: string;
-  foreignColumnName: string;
-}
-
-interface Table {
-  name: string;
-  columns: string[];
-  foreignKeys: ForeignKey[];
-}
-
-interface Edge {
-  id: string;
-  source: string;
-  target: string;
-  type: string;
-  animated: boolean;
-  style: { stroke: string};
-}
+import {Table, Edge } from '../vite-env';
 
 const generateEdges = (tables: Table[]): Edge[] => {
     const edges: Edge[] = [];
@@ -60,7 +38,7 @@ const generateEdges = (tables: Table[]): Edge[] => {
         // }
 
         // Create the edge
-        const edge = {
+        const edge: Edge = {
           id: `fk-${tIndex}-${fkIndex}`,
           target: `table-${table.name}-column-${fk.columnName}`,
           source: `table-${fk.foreignTableName}-column-${fk.foreignColumnName}`,
@@ -68,7 +46,7 @@ const generateEdges = (tables: Table[]): Edge[] => {
           animated: false,
           style: {
             // stroke: '#ff006e',
-          }, // Custom styling for foreign key edges
+          }, 
         };
 
         edges.push(edge);

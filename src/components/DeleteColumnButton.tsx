@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import useStore from '../store';
+import { TableState } from '../vite-env';
 
 const DeleteColumnButton = ({
   data,
@@ -13,7 +14,7 @@ const DeleteColumnButton = ({
   data: { label: string; parent: string };
 }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
-  const fetchTables = useStore(state => state.fetchTables);
+  const fetchTables = useStore((state: TableState) => state.fetchTables);
 
   //delete column function
   const deleteCol = async function () {
