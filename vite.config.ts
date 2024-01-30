@@ -5,6 +5,14 @@ import express from './express-plugin'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), express('src/server')],
+  // server: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://localhost:4173',
+  //       changeOrigin: true,
+  //     }
+  //   },
+  // },
   build: {
     outDir: 'dist', // Output directory for production build
     minify: 'terser', // Minify JavaScript

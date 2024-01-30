@@ -28,6 +28,7 @@
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.21.3",
     "reactflow": "^11.10.1",
+    "ts-node": "^10.9.2",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
