@@ -51,6 +51,10 @@ body {
   font-family: 'Fira Mono', monospace;
 }
 
+.table-name-input:focus {
+  outline: none;
+}
+
 .table-name-input {
   margin-left: -3px;
   height: 30px;
