@@ -138,13 +138,13 @@ body {
 
 @keyframes shadow-move {
   0% {
-    box-shadow: 10px 0 15px rgba(42, 138, 246, 0.3), -10px 0 15px rgba(233, 42, 103, 0.3);
+    box-shadow: 20px 0 40px rgba(42, 138, 246, 0.7), -20px 0 40px rgba(233, 42, 103, 0.7);
   }
   50% {
-    box-shadow: -10px 0 15px rgba(42, 138, 246, 0.3), 10px 0 15px rgba(233, 42, 103, 0.3);
+    box-shadow: -20px 0 40px rgba(42, 138, 246, 0.7), 20px 0 40px rgba(233, 42, 103, 0.7);
   }
   100% {
-    box-shadow: 10px 0 15px rgba(42, 138, 246, 0.3), -10px 0 15px rgba(233, 42, 103, 0.3);
+    box-shadow: 20px 0 40px rgba(42, 138, 246, 0.7), -20px 0 40px rgba(233, 42, 103, 0.7);
   }
 }
 
