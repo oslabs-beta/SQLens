@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
     "noEmit": true,
+    "esModuleInterop": true,
     "target": "ES2015",
     "useDefineForClassFields": true,
     "lib": ["ES2015", "DOM", "DOM.Iterable"],
-    "module": "ES2015",
+    "module": "commonjs",
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    // "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,

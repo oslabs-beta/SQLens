@@ -5,7 +5,7 @@ import { typeDefs } from './typeDefs';
 import pkg from 'pg';
 const { Pool } = pkg;
 import dotenv from 'dotenv';
-// import 
+// import
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ const initializePool = (uri: string) => {
   pool = new Pool({ connectionString: uri });
 };
 
-export const app: express = express();
+export const app: any = express();
 app.use(express.json());
 
 const server = new ApolloServer({ typeDefs, resolvers });
@@ -48,7 +48,7 @@ async function startServer() {
       res.sendFile(`${frontendFiles}/index.html`);
     });
 
-    const PORT = process.env.PORT || 3000; 
+    const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
     });
