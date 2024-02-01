@@ -5,6 +5,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteColumnButton from './DeleteColumnButton';
 import { useState } from 'react';
 import { Check } from '@mui/icons-material';
+import ClearIcon from '@mui/icons-material/Clear';
+import useStore from '../store';
 
 const ColumnNameNode = ({
   data,
@@ -13,9 +15,16 @@ const ColumnNameNode = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState(data.label);
+  const { fetchTables } = useStore((state) => ({
+    fetchTables: state.fetchTables,
+  }));
 
   const handleEditClick = () => {
     setIsEditing(true);
+  };
+  const handleEditCancel = () => {
+    setEditedLabel(data.label);
+    setIsEditing(false);
   };
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -50,6 +59,7 @@ const ColumnNameNode = ({
       console.error(final.errors[0].message);
       alert(final.errors[0].message);
     } else {
+      fetchTables();
       console.log(final);
     }
   };
@@ -75,19 +85,28 @@ const ColumnNameNode = ({
         </Typography>
       )}
 
-      <Box sx={{ minWidth: 56 }}>
         {/* If editing: render check button to save; Otherwise render the edit button*/}
         {isEditing ? (
-          <IconButton aria-label="edit" size="small" onClick={handleCheckClick}>
-            <Check fontSize="inherit" />
+        <Box sx={{ minWidth: 56 }}>
+          <IconButton aria-label='edit' size='small' onClick={handleCheckClick}>
+            <Check fontSize='inherit' />
           </IconButton>
-        ) : (
-          <IconButton aria-label="edit" size="small" onClick={handleEditClick}>
-            <EditIcon fontSize="inherit" />
+          <IconButton
+            aria-label='cancel'
+            size='small'
+            onClick={handleEditCancel}
+          >
+            <ClearIcon fontSize='inherit' />
           </IconButton>
-        )}
-        <DeleteColumnButton data={data} />
-      </Box>
+        </Box>
+      ) : (
+        <Box sx={{ minWidth: 56 }}>
+          <IconButton aria-label='edit' size='small' onClick={handleEditClick}>
+            <EditIcon fontSize='inherit' />
+          </IconButton>
+          <DeleteColumnButton data={data} />
+        </Box>
+      )}
     </div>
   );
 };

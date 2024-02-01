@@ -1,12 +1,14 @@
 import { create } from 'zustand';
-// import { getTables } from './App';
+// import type { StateCreator } from 'zustand';
 import { getTables } from './utilities/utility.ts';
-import { devtools } from 'zustand/middleware';
+// import { devtools } from 'zustand/middleware';
+import { TableState }  from './vite-env';
 
-const useStore = create(devtools((set, get) => ({
+
+const useStore = create<TableState>((set, get) => ({
   tables: [],
   searchValue: '',
-  setSearchValue: (searchValue) => set({ searchValue }),
+  setSearchValue: (searchValue: string) => set({ searchValue }),
 
   setTables: (tables) => set({ tables }),
 
@@ -41,6 +43,6 @@ const useStore = create(devtools((set, get) => ({
       console.error('Error:', error);
     }
   },
-})));
+}));
 
 export default useStore;

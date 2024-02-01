@@ -1,5 +1,5 @@
-import React, { memo, ReactNode, useState } from 'react';
-import { Handle, NodeProps, Position, Node } from 'reactflow';
+// import React, { memo, ReactNode, useState } from 'react';
+import { NodeProps } from 'reactflow';
 import TableHeader from './TableHeader';
 import { FaHand } from 'react-icons/fa6';
 import AddTable from './AddTable';

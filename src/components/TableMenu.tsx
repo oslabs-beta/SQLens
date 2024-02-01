@@ -1,24 +1,12 @@
-import * as React from 'react';
+
 import Popover from '@mui/material/Popover';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MenuItem from '@mui/material/MenuItem';
+import { TableMenuProps } from '../vite-env';
 
-// export   const handleClose = () => {
-//   setAnchorEl(null);
-// };
 
-export default function TableMenu({ handleAddColumnOpen, handleAlertOpen, tableData, handleEditTableName, anchorEl, handleClick, handleClose }) {
-
-  const handleAddColumn = () => {
-    console.log("Add Column to:", tableData.label);
-    handleClose();
-  };
-
-  const handleDeleteTable = () => {
-    console.log("Delete Table:", tableData.label);
-    handleClose();
-  };
+export default function TableMenu({ handleAddColumnOpen, handleAlertOpen, handleEditTableName, anchorEl, handleClick, handleClose }: TableMenuProps) {
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;

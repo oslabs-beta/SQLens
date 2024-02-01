@@ -15,8 +15,7 @@ const TableHeader = ({
   data,
 }: {
   data: {
-    label?: string;
-    // parent: string,
+    label: string;
   };
 }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
@@ -66,7 +65,7 @@ const TableHeader = ({
       throw new Error('Error deleting table');
       //add a user alert
     } else {
-      await fetchTables();
+      fetchTables();
       console.log(final);
     }
   };
@@ -94,6 +93,7 @@ const TableHeader = ({
   };
 
   const handleEditCancel = () => {
+    setEditedLabel(data.label);
     setIsEditing(false);
   };
 
@@ -199,7 +199,6 @@ const TableHeader = ({
           </Typography>
 
           <TableMenu
-            tableData={data}
             handleEditTableName={handleEditTableName}
             anchorEl={anchorEl}
             handleClose={handleMenuClose}

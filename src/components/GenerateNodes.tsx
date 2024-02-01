@@ -1,12 +1,14 @@
-// import Node from 'react-flow';
-interface Table {
-    name: string;
-    columns: string[];
-    foreignKeys: ForeignKey[];
-  }
+import { Node as ReactFlowNode } from 'reactflow';
+import { TableObj } from "../vite-env";
 
- const generateNodes = (tables: Table[]) => {
-    const nodes: Node[] = [];
+interface ExtendedNode extends ReactFlowNode {
+  id: string;
+  parentNode?: string;
+}
+
+
+ const generateNodes = (tables: TableObj[]): ExtendedNode[] => {
+    const nodes: ExtendedNode[] = [];
     let layoutX: number = 0;
     let layoutY: number = 0;
 
@@ -20,7 +22,7 @@ interface Table {
       }
 
       //create group node for each table
-      const groupNode: Node = {
+      const groupNode: ExtendedNode = {
         id: `table-${table.name}`, //tables[index][name]
         type: 'turbo',
         // type: 'input',
@@ -47,7 +49,7 @@ interface Table {
       table.columns.forEach((column: string, 
         // cIndex: number
         ): void => {
-        const columnNode: Node = {
+        const columnNode: ExtendedNode = {
           // id: 'A-2',
           id: `table-${table.name}-column-${column}`,
           // type: 'custom',
@@ -74,7 +76,7 @@ interface Table {
     });
 
     // makes a custom node to allow for adding tables
-    const addTable: Node = {
+    const addTable: ExtendedNode = {
       id: 'add-table-node', // A unique identifier for your custom node
       type: 'turbo', // Define a custom type if needed
       data: {

@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import './stylesheets/index.css';
 import Flow from './components/Flow';
 import LandingPage from './components/LandingPage';
-import TableObj from './vite-env';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import React from 'react';
 import useStore from './store';
+import { TableState } from './vite-env';
 
 const theme = createTheme({
   palette: {
@@ -18,12 +17,8 @@ const theme = createTheme({
 });
 
 function App() {
-  const { fetchTables, tables } = useStore((state) => ({
-    fetchTables: state.fetchTables,
-    tables: state.tables,
-  }));
+  const fetchTables = useStore((state: TableState) => state.fetchTables);
 
-  // const store = useStore();
 
   useEffect(() => {
     fetchTables();
