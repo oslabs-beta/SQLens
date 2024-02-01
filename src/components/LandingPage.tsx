@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import anime from 'animejs';
+// import '../stylesheets/blobs.scss';
 import '../stylesheets/landingPage.scss';
+
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -21,7 +23,7 @@ const LandingPage = () => {
       input: { value: string };
     }
     const URIString = target.input.value;
-    
+
     try {
       const response = await fetch('/api/setDatabaseUri', {
         method: 'POST',

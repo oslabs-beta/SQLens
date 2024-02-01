@@ -40,7 +40,7 @@ async function startServer() {
   });
 
   // Conditional Express static file serving and application start
-  // if (!process.env['VITE']) {
+  if (!process.env['VITE']) {
     console.log('Serving static files and starting Express server.');
     const frontendFiles = process.cwd() + '/dist';
     app.use(express.static(frontendFiles));
@@ -53,7 +53,7 @@ async function startServer() {
       console.log(`Server running on http://localhost:${PORT}`);
     });
   }
-// }
+}
 
 startServer().catch(error => {
   console.error('Failed to start the server:', error);
