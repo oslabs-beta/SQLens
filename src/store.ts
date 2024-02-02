@@ -1,7 +1,5 @@
 import { create } from 'zustand';
-// import type { StateCreator } from 'zustand';
 import { getTables, getTableDetails } from './utilities/utility.ts';
-// import { devtools } from 'zustand/middleware';
 import { TableState }  from './vite-env';
 
 

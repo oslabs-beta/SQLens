@@ -1,4 +1,4 @@
-import express, { Response, Request, } from 'express';
+import express, { Response, Request } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { resolvers } from './controller';
 import { typeDefs } from './typeDefs';
