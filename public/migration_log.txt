@@ -1,17 +1,7 @@
 --
 -- Migration log
 -- Database URL: postgres://oqiichnc:dO9vK6vugAx45JK2QOYmS-65jjE5UJc0@berry.db.elephantsql.com/oqiichnc
--- Session started 2/2/2024, 3:09:30 PM
+-- Session started 2/2/2024, 3:15:12 PM
 --
-ALTER TABLE newtable
-        RENAME COLUMN new to newest;
-ALTER TABLE newtable
-        RENAME COLUMN newest to newess;
-ALTER TABLE newtable DROP COLUMN newess;
-ALTER TABLE newtable DROP COLUMN timing;
-CREATE TABLE Jennys (
-          );
-ALTER TABLE jennys RENAME TO jenny_table;
-ALTER TABLE jenny_table ADD COLUMN id int8;
-DROP TABLE jenny_table;
-ALTER TABLE friends DROP COLUMN friend2;
+ALTER TABLE newtable ADD COLUMN gaga bool;
+ALTER TABLE newtable DROP COLUMN gaga;
