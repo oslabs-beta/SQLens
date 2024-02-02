@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect} from 'react';
 import ReactFlow, {
   addEdge,
   Edge,
@@ -17,7 +17,7 @@ import 'reactflow/dist/base.css';
 import '../stylesheets/index.css';
 import TurboNode from './TurboNode.tsx';
 import TurboEdge from './TurboEdge.tsx';
-
+// import _ from 'lodash';
 
 // custom nodes
 const nodeTypes = {
@@ -39,17 +39,45 @@ const Flow = () => {
   // Initialize states for nodes and edges
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  // const [nodePositions, setNodePositions] = useState({});
 
-  const { tables } = useStore((state) => ({
-    tables: state.tables,
-  }));
+  const tables = useStore((state) => state.tables);
 
   const onConnect = useCallback(
     (params: Edge | Connection) => setEdges((els) => addEdge(params, els)),
     [setEdges]
   );
 
+  // const { newNodes, newEdges } = useMemo(() => {
+  //   return {
+  //     newNodes: generateNodes(tables),
+  //     newEdges: generateEdges(tables),
+  //   };
+  // }, [tables]);
+
+  // const hasChanged = (current, updated) => {
+  //   if (current.length !== updated.length) return true;
+  
+
+  //   return current.some((item, index) => {
+  //     const currentItem = { ...item, position: undefined }; 
+  //     const updatedItem = { ...updated[index], position: undefined };
+  //     return !_.isEqual(currentItem, updatedItem);
+  //   });
+  // };
+
+
   // Effect to update nodes when 'tables' prop changes
+  // useEffect(() => {
+  //   // Only update nodes or edges if they have actually changed
+  //   if (hasChanged(nodes, newNodes)) {
+  //     setNodes(newNodes);
+  //   }
+  //   if (hasChanged(edges, newEdges)) {
+  //     setEdges(newEdges);
+  //   }
+  // }, [newNodes, newEdges, nodes, edges, setNodes, setEdges]);
+
   useEffect(() => {
     if (tables.length > 0) {
       console.log('regenerating tables: ', tables)

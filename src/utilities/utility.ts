@@ -57,6 +57,35 @@
     return result.data.getTableData;
   };
 
+  export const getTableDetails = async function(tableName: string) {
+    const response = await fetch('/api/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: `
+          query GetTableDetails($tableName: String!) {
+            getTableDetails(tableName: $tableName) {
+              name
+              columns
+              foreignKeys {
+                columnName
+                foreignTableName
+                foreignColumnName
+              }
+            }
+          }
+        `,
+        variables: { tableName },
+      }),
+    });
+  
+    const final = await response.json();
+    if (final.errors) {
+      console.error(final.errors);
+      throw new Error('Error fetching table details');
+    }
+    return final.data.getTableDetails;
+  };
 
 
   // export const handleSubmit = async () => {

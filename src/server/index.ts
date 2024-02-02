@@ -1,11 +1,11 @@
-import express, { Response, Request } from 'express';
+import express, { Response, Request, } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { resolvers } from './controller';
 import { typeDefs } from './typeDefs';
 import pkg from 'pg';
 const { Pool } = pkg;
 import dotenv from 'dotenv';
-// import 
+// import open from 'open';
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ const initializePool = (uri: string) => {
   pool = new Pool({ connectionString: uri });
 };
 
-export const app: express = express();
+export const app: any = express();
 app.use(express.json());
 
 const server = new ApolloServer({ typeDefs, resolvers });
@@ -40,7 +40,7 @@ async function startServer() {
   });
 
   // Conditional Express static file serving and application start
-  // if (!process.env['VITE']) {
+  if (!process.env['VITE']) {
     console.log('Serving static files and starting Express server.');
     const frontendFiles = process.cwd() + '/dist';
     app.use(express.static(frontendFiles));
@@ -51,9 +51,10 @@ async function startServer() {
     const PORT = process.env.PORT || 3000; 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
+      // open(`http://localhost:${PORT}`);
     });
   }
-// }
+}
 
 startServer().catch(error => {
   console.error('Failed to start the server:', error);

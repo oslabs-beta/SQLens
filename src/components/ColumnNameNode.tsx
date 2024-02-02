@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Check } from '@mui/icons-material';
 import ClearIcon from '@mui/icons-material/Clear';
 import useStore from '../store';
+import { TableState } from '../vite-env';
 
 const ColumnNameNode = ({
   data,
@@ -15,9 +16,7 @@ const ColumnNameNode = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState(data.label);
-  const { fetchTables } = useStore((state) => ({
-    fetchTables: state.fetchTables,
-  }));
+  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -59,7 +58,7 @@ const ColumnNameNode = ({
       console.error(final.errors[0].message);
       alert(final.errors[0].message);
     } else {
-      fetchTables();
+      await fetchAndUpdateTableDetails(data.parent);
       console.log(final);
     }
   };

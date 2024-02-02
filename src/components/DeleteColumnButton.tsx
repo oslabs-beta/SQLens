@@ -14,7 +14,8 @@ const DeleteColumnButton = ({
   data: { label: string; parent: string };
 }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
-  const fetchTables = useStore((state: TableState) => state.fetchTables);
+  // const fetchTables = useStore((state: TableState) => state.fetchTables);
+  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
 
   //delete column function
   const deleteCol = async function () {
@@ -38,8 +39,7 @@ const DeleteColumnButton = ({
       console.error(final.errors[0].message);
       alert(final.errors[0].message);
     } else {
-      console.log(final);
-      fetchTables();
+      await fetchAndUpdateTableDetails(data.parent);
       console.log('tables fetched in deleteColumnButton')
       setAlertOpen(false);
     }
