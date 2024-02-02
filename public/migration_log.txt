@@ -1,7 +1,0 @@
---
--- Migration log
--- Database URL: postgres://oqiichnc:dO9vK6vugAx45JK2QOYmS-65jjE5UJc0@berry.db.elephantsql.com/oqiichnc
--- Session started 2/2/2024, 3:15:12 PM
---
-ALTER TABLE newtable ADD COLUMN gaga bool;
-ALTER TABLE newtable DROP COLUMN gaga;
