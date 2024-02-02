@@ -1,5 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap');
-
+@font-face {
+  font-family: 'Fira Mono';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Fira Mono'), url('../assets/FiraMono-Regular.ttf') format('ttf');
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -19,72 +23,19 @@
   padding: 0px;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
   display: flex;
   place-items: center;
-  /* min-width: 320px; */
-  /* min-height: 100vh; */
-}
-
-#root {
-  margin: 0;
-  padding: 0;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-
-.react-flow__handle {
-  opacity: 0;
 }
 
 .flow-container {
-  /* style={{ display: 'flex', width: '100vw', height: '90vh' }} */
   display: flex;
   width: 100vw;
   height: calc(100vh - 64px);
 }
-.react-flow__node-custom {
-  padding: 10px;
-  background-color: #556677;
-  color: white;
-  min-width: 10vw;
-  /* max-height: 30vh; */
-  /* border-radius: 3px; */
-  font-size: 16px;
-  line-height: 25px;
-  padding: 10px;
-}
 
 .column-name-node {
-  /* background-color:  #556677; */
   display: flex;
   justify-content: space-between;
   height: 39px;
@@ -100,11 +51,9 @@ button:hover {
   font-family: 'Fira Mono', monospace;
 }
 
-/* .tableName {
-  font-weight: bolder;
-  border-bottom: 1px solid;
-  margin-bottom: 5px;
-} */
+.table-name-input:focus {
+  outline: none;
+}
 
 .table-name-input {
   margin-left: -3px;
@@ -117,32 +66,6 @@ button:hover {
   border-radius: 4px;
   font-family: 'Fira mono';
 }
-.table-name-input:focus {
-  outline: none;
-}
-
-.turbo-header-sqlens {
-  width: 100%;
-  display: "flex";
-  flex-direction: "column";
-  /* align-items: "stretch"; */
-  justify-content: "space-between";
-  /* color: "black"; */
-}
-/*
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
-
 
 /* EVERYTHING BELOW  HERE IS THE PREFERRED STYLES, redundant styles from above can be removed ABOVE*/
 /* turbo flow */
@@ -157,7 +80,6 @@ button:hover {
 
 .react-flow__node-turbo {
   border-radius: var(--node-border-radius);
-  /* border-radius: 8px; */
   display: flex;
   height: 70px;
   min-width: 150px;
@@ -179,8 +101,6 @@ button:hover {
 .gradient:before {
   content: '';
   position: absolute;
-  /* padding-bottom: calc(100% * 1.41421356237); */
-  /* width: calc(100% * 1.41421356237); */
   height: 800px;
   width: 800px;
   background: conic-gradient(
@@ -233,7 +153,6 @@ button:hover {
 
 .react-flow__node-turbo .body {
   display: flex;
-  /* added from column-name-node */
   justify-content: space-between;
   height: 40px;
   justify-items: start;
