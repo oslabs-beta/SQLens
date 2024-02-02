@@ -6,6 +6,7 @@ import pkg from 'pg';
 const { Pool } = pkg;
 import dotenv from 'dotenv';
 import open from 'open';
+import fs from 'fs';
 
 dotenv.config();
 
@@ -36,6 +37,11 @@ async function startServer() {
     }
 
     initializePool(databaseURI);
+    const currentTimestamp = new Date().toLocaleString();
+    fs.writeFileSync(
+      './public/migration_log.txt',
+      `--\n-- Migration log\n-- Database URL: ${databaseURI}\n-- Session started ${currentTimestamp}\n--\n`
+    );
     res.json({ message: 'Database connection updated successfully' });
   });
 
@@ -56,6 +62,6 @@ async function startServer() {
   }
 }
 
-startServer().catch(error => {
+startServer().catch((error) => {
   console.error('Failed to start the server:', error);
 });

@@ -5,7 +5,7 @@
     "target": "ES2015",
     "useDefineForClassFields": true,
     "lib": ["ES2015", "DOM", "DOM.Iterable"],
-    "module": "commonjs",
+    "module": "ESNext",
     "skipLibCheck": true,
 
     /* Bundler mode */

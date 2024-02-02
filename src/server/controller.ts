@@ -1,6 +1,12 @@
 import { pool } from './index';
 import { RowData, TableData } from '../vite-env';
-// The interface for data structure Jenny was talking about to make this valid TypeScript
+import { promises as fsPromises } from 'fs';
+const migration_file = './public/migration_log.txt'
+
+const appendMigration = async (query: string): Promise<void> => {
+  await fsPromises.appendFile(migration_file, query + '\n');
+  return;
+}
 
 export const resolvers = {
   Query: {
@@ -117,7 +123,7 @@ export const resolvers = {
     }
     return [];
     },
-    
+
   },
   Mutation: {
     addColumnToTable: async (
@@ -132,9 +138,9 @@ export const resolvers = {
       if (pool !== null){
       try {
         // SQL to add a column to a table, adjust data type as needed
-        await pool.query(
-          `ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${dataType}`
-        );
+        const mutation = `ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${dataType};`
+        await pool.query(mutation);
+        await appendMigration(mutation);
         return `Column ${columnName} added to ${tableName} successfully.`;
       } catch (err) {
         console.error('Error in addColumnToTable resolver: ', err);
@@ -151,7 +157,9 @@ export const resolvers = {
       if (pool !== null){
       try {
         // SQL to rename a table
-        await pool.query(`ALTER TABLE ${oldName} RENAME TO ${newName};`);
+        const mutation = `ALTER TABLE ${oldName} RENAME TO ${newName};`;
+        await pool.query(mutation);
+        await appendMigration(mutation);
         return `Table name changed from ${oldName} to ${newName} successfully.`;
       } catch (err) {
         console.error('Error in editTableName resolver: ', err);
@@ -165,7 +173,9 @@ export const resolvers = {
       if (pool !== null){
       try {
         // SQL to delete a table
-        await pool.query(`DROP TABLE ${tableName};`);
+        const mutation = `DROP TABLE ${tableName};`;
+        await pool.query(mutation);
+        await appendMigration(mutation);
         return `Table ${tableName} deleted successfully.`;
       } catch (err) {
         console.error('Error in deleteTable resolver: ', err);
@@ -182,7 +192,9 @@ export const resolvers = {
       try {
         console.log(columnName, tableName);
         // SQL to delete a table
-        await pool.query(`ALTER TABLE ${tableName} DROP COLUMN ${columnName};`);
+        const mutation = `ALTER TABLE ${tableName} DROP COLUMN ${columnName};`;
+        await pool.query(mutation);
+        await appendMigration(mutation);
         return `Column ${columnName} deleted successfully from ${tableName}.`;
       } catch (err) {
         console.error('Error in deleteColumn resolver: ', err);
@@ -202,8 +214,10 @@ export const resolvers = {
       if (pool !== null){
       try {
         // SQL to delete a table
-        await pool.query(`ALTER TABLE ${tableName}
-        RENAME COLUMN ${columnName} to ${newColumnName};`);
+        const mutation = `ALTER TABLE ${tableName}
+        RENAME COLUMN ${columnName} to ${newColumnName};`;
+        await pool.query(mutation);
+        await appendMigration(mutation);
         return `Column name changed to${newColumnName} from ${columnName} on ${tableName}.`;
       } catch (err) {
         console.error('Error in editColumn resolver: ', err);
@@ -216,8 +230,10 @@ export const resolvers = {
       if (pool !== null){
       try {
         // SQL to delete a table
-        await pool.query(`CREATE TABLE ${tableName} (
-          );`);
+        const mutation = `CREATE TABLE ${tableName} (
+          );`;
+        await pool.query(mutation);
+        await appendMigration(mutation);
         return `Table named ${tableName} created.`;
       } catch (err) {
         console.error('Error in addTable resolver: ', err);
