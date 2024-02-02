@@ -2,6 +2,7 @@
   "name": "sqlens",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite --host --port 5173 --open",
     "build": "tsc && vite build",
