@@ -2,12 +2,13 @@
   "name": "sqlens",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite --host --port 5173 --open",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "concurrently \"ts-node src/server/index.ts\" \"open http://localhost:3000\""
+    "start": "tsx src/server/index.ts"
   },
   "dependencies": {
     "@apollo/server": "^4.10.0",
@@ -51,6 +52,7 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "sass": "^1.70.0",
     "terser": "^5.27.0",
+    "tsx": "^4.7.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.8"
   }
