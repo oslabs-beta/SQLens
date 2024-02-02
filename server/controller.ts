@@ -1,5 +1,5 @@
 import { pool } from './index';
-import { RowData, TableData } from '../vite-env';
+import { RowData, TableData } from '../src/vite-env';
 // The interface for data structure Jenny was talking about to make this valid TypeScript
 
 export const resolvers = {
