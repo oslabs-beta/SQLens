@@ -7,30 +7,37 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
-// import useStore from '../store';
 
-
-export default function PrimarySearchAppBar() {
+export default function NavBar() {
+  // navigate functionality from react-router-dom
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
+  // useState hook to set anchor element of table
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
+
+  // sets anchor element when react component is clicked (onClick)
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
+  // sets anchor element to null
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
+  // on logout, sets anchor element to null and navigates back to langing page
   const logout = () => {
     setAnchorEl(null);
     navigate('/');
   }
 
+  // click handler to confirm download of migration file
   const confirmDownload = async () => {
+    // pops up browser alert menu to confirm download
     const downloadConfirmation = window.confirm("Do you want to download the file?");
-    console.log(downloadConfirmation);
+
+    // if user confirms
     if (downloadConfirmation) {
       try {
         const backendFilePath = new URL('../../public/migration_log.txt', import.meta.url).pathname;
@@ -55,7 +62,6 @@ export default function PrimarySearchAppBar() {
     }
   }
 
-  const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -63,7 +69,7 @@ export default function PrimarySearchAppBar() {
         vertical: 'bottom',
         horizontal: 'left',
       }}
-      id={menuId}
+      id={'primary-search-account-menu'}
       keepMounted
       open={isMenuOpen}
       onClose={handleMenuClose}

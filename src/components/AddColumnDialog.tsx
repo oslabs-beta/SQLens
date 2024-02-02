@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import DataTypeSelector from './DataTypeSelector';
 import { AddColumnDialogProps } from '../vite-env';
@@ -20,7 +19,7 @@ export default function AddColumnDialog({
   const [columnName, setColumnName] = useState('');
   const [selectedDataType, setSelectedDataType] = useState('');
   const fetchTables = useStore((state: TableState) => state.fetchTables);
-  
+
   const handleColumnNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -82,11 +81,11 @@ export default function AddColumnDialog({
             margin="dense"
             id="columnName"
             name="columnName"
-            label="columnName"
+            label="Column Name"
             type="text"
-            // fullWidth
             variant="standard"
             onChange={handleColumnNameChange}
+            fullWidth
           />
           <DataTypeSelector
             handleDataTypeChange={handleDataTypeChange}
