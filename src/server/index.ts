@@ -5,7 +5,7 @@ import { typeDefs } from './typeDefs';
 import pkg from 'pg';
 const { Pool } = pkg;
 import dotenv from 'dotenv';
-// import
+import open from 'open';
 
 dotenv.config();
 
@@ -51,6 +51,7 @@ async function startServer() {
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
+      open(`http://localhost:${PORT}`);
     });
   }
 }
