@@ -3,6 +3,7 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     // Specifies glob patterns to match your test files
+    globals: true,
     environment: 'happy-dom',
     include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
     exclude: [
