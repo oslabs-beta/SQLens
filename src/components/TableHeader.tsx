@@ -26,7 +26,7 @@ const TableHeader = ({
   );
   const fetchAndUpdateTableDetails = useStore(state => state.fetchAndUpdateTableDetails);
   const tables = useStore(state => state.tables);
-  const setTables = useStore(state => state.setTables); 
+  const setTables = useStore(state => state.setTables);
 
   //click handlers for delete table dialogue
   const handleAlertOpen = () => {
@@ -66,7 +66,7 @@ const TableHeader = ({
       //add a user alert
     } else {
       const updatedTables = tables.filter((table) => table.name !== editedLabel);
-    setTables(updatedTables); 
+    setTables(updatedTables);
       fetchAndUpdateTableDetails(data.label);
       console.log(final);
     }
@@ -114,7 +114,7 @@ const TableHeader = ({
           }
         `,
         variables: { newName: editedLabel, oldName: data.label },
-        
+
         //deleteColumnFromTable(tableName: ${data.parent}, columnName: ${data.label}): Table <-- if we want to get a string back instead of a table
       }),
     });
@@ -127,7 +127,7 @@ const TableHeader = ({
       // throw new Error("Error changing table name");
       //add a user alert
     } else {
-      
+      // data.label = editedLabel;
       setIsEditing(false);
       await fetchAndUpdateTableDetails(editedLabel, data.label);
       console.log(final);

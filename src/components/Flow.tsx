@@ -51,7 +51,9 @@ const Flow = () => {
       console.log('regenerating tables: ', tables)
       const newNodes = generateNodes(tables);
       const newEdges = generateEdges(tables);
+
       const updatedNodes = newNodes.map(newNode => {
+
         const existingNode = nodes.find(n => n.id === newNode.id && !newNode.id.includes('-column-'));
         return existingNode ? { ...newNode, position: existingNode.position } : newNode;
       });

@@ -18,8 +18,10 @@ export default function AddColumnDialog({
 }: AddColumnDialogProps) {
   const [columnName, setColumnName] = useState('');
   const [selectedDataType, setSelectedDataType] = useState('');
+  // const fetchTables = useStore((state: TableState) => state.fetchTables);
+
   const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
-  
+
   const handleColumnNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -81,11 +83,11 @@ export default function AddColumnDialog({
             margin="dense"
             id="columnName"
             name="columnName"
-            label="columnName"
+            label="Column Name"
             type="text"
-            // fullWidth
             variant="standard"
             onChange={handleColumnNameChange}
+            fullWidth
           />
           <DataTypeSelector
             handleDataTypeChange={handleDataTypeChange}
