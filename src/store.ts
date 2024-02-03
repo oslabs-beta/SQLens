@@ -20,16 +20,21 @@ const useStore = create<TableState>((set, get) => ({
     }
   },
 
-  fetchAndUpdateTableDetails: async (tableName: string) => {
+  fetchAndUpdateTableDetails: async (tableName: string, oldName?: string) => {
     try {
       const updatedTableDetails = await getTableDetails(tableName);
       const tables = get().tables;
-      
 
+      let updatedTables;
+      if (oldName) {
+        updatedTables = tables.map(table =>
+          table.name === oldName ? updatedTableDetails : table);
+
+      } else {
       // Update the specific table in your Zustand store
-      const updatedTables = tables.map(table => 
+        updatedTables = tables.map(table =>
         table.name === tableName ? updatedTableDetails : table);
-
+      }
       set({ tables: updatedTables });
 
       console.log(`table in store: ${tableName}`);
