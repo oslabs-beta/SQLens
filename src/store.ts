@@ -32,8 +32,9 @@ const useStore = create<TableState>((set, get) => ({
 
       set({ tables: updatedTables });
 
-      console.log(`Regenerating table in store: ${tableName}`);
-      console.log('tables', tables)
+      console.log(`table in store: ${tableName}`);
+      console.log('tables state in store: ', tables)
+      console.log('updatedTables: ', updatedTables)
     } catch (error) {
       console.error('Error fetching updated table details:', error);
     }

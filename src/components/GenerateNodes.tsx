@@ -8,6 +8,7 @@ interface ExtendedNode extends ReactFlowNode {
 
 
  const generateNodes = (tables: TableObj[]): ExtendedNode[] => {
+  console.log('tables', tables)
     const nodes: ExtendedNode[] = [];
     let layoutX: number = 0;
     let layoutY: number = 0;

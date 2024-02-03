@@ -1,9 +1,58 @@
 import { pool } from './index';
-import { RowData, TableData } from '../src/vite-env';
+import { RowData, TableData, Table } from '../src/vite-env';
 // The interface for data structure Jenny was talking about to make this valid TypeScript
 
 export const resolvers = {
   Query: {
+    getTableDetails: async (
+      _: unknown,
+      { tableName }: { tableName: string }
+    ): Promise<Table> => {
+      if (!pool) {
+        throw new Error('Database connection not initialized');
+      }
+    
+      try {
+        const tableDetails: Table = {
+          name: tableName,
+          columns: [],
+          foreignKeys: [],
+        };
+    
+        // Fetch columns for the specified table
+        const columnQuery = `SELECT column_name FROM information_schema.columns WHERE table_name = $1`;
+        const columnData = await pool.query(columnQuery, [tableName]);
+        tableDetails.columns = columnData.rows.map(row => row.column_name);
+    
+        // Fetch foreign keys for the specified table
+        const fkQuery = `
+          SELECT
+            kcu.column_name,
+            ccu.table_name AS foreign_table_name,
+            ccu.column_name AS foreign_column_name
+          FROM
+            information_schema.table_constraints AS tc
+            JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name
+            JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name
+          WHERE
+            tc.constraint_type = 'FOREIGN KEY'
+            AND tc.table_name = $1;
+        `;
+        const fkData = await pool.query(fkQuery, [tableName]);
+    
+        // Map foreign key data to the foreignKeys array in the correct format
+        tableDetails.foreignKeys = fkData.rows.map(fk => ({
+          columnName: fk.column_name,
+          foreignTableName: fk.foreign_table_name,
+          foreignColumnName: fk.foreign_column_name,
+        }));
+    
+        return tableDetails;
+      } catch (err) {
+        console.error('Error in getTableDetails resolver:', err);
+        throw new Error('Server error');
+      }
+    },
     getTableNames: async () => {
       if (!pool) {
         throw new Error('Database connection not initialized');
