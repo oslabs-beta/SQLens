@@ -1,19 +1,7 @@
 /// <reference types="vite/client" />
 
-export interface TableObj {
-  name: string;
-  columns: string[];
-  foreignKeys: foreignKeysObj[];
-}
-
-export interface foreignKeysObj {
-  columnName: string;
-  foreignTableName: string;
-  foreignColumnName: string;
-}
-
 export interface FlowProps {
-  tables: TableObj[];
+  tables: Table[];
   fetchAndUpdateTables: () => void;
   onSearchChange: (value: string) => void;
   onSearchSubmit: () => void;
@@ -21,13 +9,12 @@ export interface FlowProps {
 }
 
 export interface TableState {
-  tables: TableObj[];
+  tables: Table[];
   searchValue: string;
   databaseURI?: string;
   setSearchValue: (searchValue: string) => void;
-  setTables: (tables: TableObj[]) => void;
+  setTables: (tables: Table[]) => void;
   fetchTables: () => Promise<void>;
-  handleURISubmit: () => Promise<void>;
   fetchAndUpdateTableDetails: (tableName: string, oldName?: string) => Promise<void>;
 }
 
@@ -82,8 +69,7 @@ export interface TableData {
   rowData: RowData[];
 }
 
-// declare module 'apollo-server-express' {
-//   interface ServerRegistration {
-//     app: Express.Application;
-//   }
-// }
+export interface Test {
+  globals: boolean;
+  environment: string;
+}
