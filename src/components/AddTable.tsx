@@ -16,7 +16,10 @@ const AddTable = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState('');
-  const fetchTables = useStore((state: TableState) => state.fetchTables);
+  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
+  const tables = useStore((state: TableState) => state.tables);
+  const setTables = useStore((state: TableState) => state.setTables);
+
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -57,8 +60,10 @@ const AddTable = ({
       console.error(final.errors[0].message);
       alert(final.errors[0].message);
     } else {
+      const newTable = { name: editedLabel, columns: [], foreignKeys: [] };
+    setTables([...tables, newTable])
       setEditedLabel(data.label)
-      await fetchTables();
+      await fetchAndUpdateTableDetails(data.label);
     console.log(final);
     }
   };

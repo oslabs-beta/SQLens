@@ -40,7 +40,7 @@ export default function NavBar() {
     // if user confirms
     if (downloadConfirmation) {
       try {
-        const backendFilePath = new URL('../../public/migration_log.txt', import.meta.url).pathname;
+        const backendFilePath = '/migration_log.txt';
 
         // Fetch the file content
         const response = await fetch(backendFilePath);

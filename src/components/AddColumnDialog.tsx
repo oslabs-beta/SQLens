@@ -18,7 +18,9 @@ export default function AddColumnDialog({
 }: AddColumnDialogProps) {
   const [columnName, setColumnName] = useState('');
   const [selectedDataType, setSelectedDataType] = useState('');
-  const fetchTables = useStore((state: TableState) => state.fetchTables);
+  // const fetchTables = useStore((state: TableState) => state.fetchTables);
+
+  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
 
   const handleColumnNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -61,7 +63,7 @@ export default function AddColumnDialog({
       // throw new Error("Error changing table name");
       //add a user alert
     } else {
-      fetchTables();
+      fetchAndUpdateTableDetails(tableName);
       console.log(final);
     }
   };
