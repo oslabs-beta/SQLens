@@ -28,6 +28,7 @@ export interface TableState {
   setTables: (tables: TableObj[]) => void;
   fetchTables: () => Promise<void>;
   handleURISubmit: () => Promise<void>;
+  fetchAndUpdateTableDetails: (tableName: string) => Promise<void>;
 }
 
 export interface TableMenuProps {

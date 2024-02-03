@@ -1,7 +1,5 @@
 import { create } from 'zustand';
-// import type { StateCreator } from 'zustand';
-import { getTables } from './utilities/utility.ts';
-// import { devtools } from 'zustand/middleware';
+import { getTables, getTableDetails } from './utilities/utility.ts';
 import { TableState }  from './vite-env';
 
 
@@ -19,6 +17,26 @@ const useStore = create<TableState>((set, get) => ({
       set({ tables: res });
     } catch (error) {
       console.error('Error fetching tables:', error);
+    }
+  },
+
+  fetchAndUpdateTableDetails: async (tableName: string) => {
+    try {
+      const updatedTableDetails = await getTableDetails(tableName);
+      const tables = get().tables;
+      
+
+      // Update the specific table in your Zustand store
+      const updatedTables = tables.map(table => 
+        table.name === tableName ? updatedTableDetails : table);
+
+      set({ tables: updatedTables });
+
+      console.log(`table in store: ${tableName}`);
+      console.log('tables state in store: ', tables)
+      console.log('updatedTables: ', updatedTables)
+    } catch (error) {
+      console.error('Error fetching updated table details:', error);
     }
   },
 

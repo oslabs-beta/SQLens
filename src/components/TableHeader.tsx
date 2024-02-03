@@ -24,9 +24,9 @@ const TableHeader = ({
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
-  const { fetchTables } = useStore((state) => ({
-    fetchTables: state.fetchTables,
-  }));
+  const fetchAndUpdateTableDetails = useStore(state => state.fetchAndUpdateTableDetails);
+  const tables = useStore(state => state.tables);
+  const setTables = useStore(state => state.setTables); 
 
   //click handlers for delete table dialogue
   const handleAlertOpen = () => {
@@ -65,7 +65,9 @@ const TableHeader = ({
       throw new Error('Error deleting table');
       //add a user alert
     } else {
-      fetchTables();
+      const updatedTables = tables.filter((table) => table.name !== editedLabel);
+    setTables(updatedTables); 
+      fetchAndUpdateTableDetails(data.label);
       console.log(final);
     }
   };
@@ -99,6 +101,7 @@ const TableHeader = ({
 
   const handleEditSubmit = async () => {
     setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
+    console.log(editedLabel, data.label);
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -111,6 +114,7 @@ const TableHeader = ({
           }
         `,
         variables: { newName: editedLabel, oldName: data.label },
+        
         //deleteColumnFromTable(tableName: ${data.parent}, columnName: ${data.label}): Table <-- if we want to get a string back instead of a table
       }),
     });
@@ -125,7 +129,7 @@ const TableHeader = ({
     } else {
       data.label = editedLabel;
       setIsEditing(false);
-      await fetchTables();
+      await fetchAndUpdateTableDetails(editedLabel);
       console.log(final);
     }
   };

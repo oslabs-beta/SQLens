@@ -5,7 +5,8 @@ import LandingPage from './components/LandingPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import useStore from './store';
-import { TableState } from './vite-env';
+import { useQuery } from '@apollo/client';
+import { GET_TABLE_NAMES } from './utilities/queries';
 
 const theme = createTheme({
   palette: {
@@ -16,20 +17,28 @@ const theme = createTheme({
   },
 });
 
+
+
 function App() {
-  const fetchTables = useStore((state: TableState) => state.fetchTables);
+  const setTables = useStore((state) => state.setTables);
+  const { data, loading, error } = useQuery(GET_TABLE_NAMES, {
+    onCompleted: (data) => {
+      setTables(data.getTableNames);
+    },
+  });
 
 
   useEffect(() => {
-    fetchTables();
-  }, []);
+    if (data && !loading && !error) {
+      setTables(data.getTableNames);
+    }
+  }, [data, loading, error, setTables]);
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-
           <Route path="/flow" element={<Flow />} />
         </Routes>
       </Router>

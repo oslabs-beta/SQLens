@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect} from 'react';
 import ReactFlow, {
   addEdge,
   Edge,
@@ -7,7 +7,6 @@ import ReactFlow, {
   useEdgesState,
 } from 'reactflow';
 import ColumnNameNode from './ColumnNameNode.tsx';
-// import GroupNode from './GroupNode.tsx';
 import 'reactflow/dist/style.css';
 import generateEdges from './GenerateEdges.tsx';
 import generateNodes from './GenerateNodes.tsx';
@@ -17,7 +16,6 @@ import 'reactflow/dist/base.css';
 import '../stylesheets/index.css';
 import TurboNode from './TurboNode.tsx';
 import TurboEdge from './TurboEdge.tsx';
-
 
 // custom nodes
 const nodeTypes = {
@@ -40,22 +38,25 @@ const Flow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
-  const { tables } = useStore((state) => ({
-    tables: state.tables,
-  }));
+
+  const tables = useStore((state) => state.tables);
 
   const onConnect = useCallback(
     (params: Edge | Connection) => setEdges((els) => addEdge(params, els)),
     [setEdges]
   );
 
-  // Effect to update nodes when 'tables' prop changes
   useEffect(() => {
     if (tables.length > 0) {
       console.log('regenerating tables: ', tables)
       const newNodes = generateNodes(tables);
       const newEdges = generateEdges(tables);
-      setNodes(newNodes);
+      const updatedNodes = newNodes.map(newNode => {
+        const existingNode = nodes.find(n => n.id === newNode.id);
+        return existingNode ? { ...newNode, position: existingNode.position } : newNode;
+      });
+
+      setNodes(updatedNodes);
       setEdges(newEdges);
     }
   }, [tables, setNodes, setEdges]);
