@@ -95,7 +95,7 @@ const AddTable = ({
             className='table-name-input'
           />
           <Box>
-          <IconButton aria-label='edit' size='small' onClick={handleCheckClick}>
+          <IconButton aria-label='save' size='small' onClick={handleCheckClick}>
             <Check fontSize='inherit' />
           </IconButton>
           <IconButton

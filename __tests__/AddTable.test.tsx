@@ -29,6 +29,7 @@ describe('AddTable Component', () => {
     fireEvent.click(screen.getByLabelText('edit'));
     expect(screen.getByRole('textbox')).toBeTruthy();
   });
+  
 
   it('cancels editing mode and reverts changes on cancel button click', async () => {
     const testData = { label: 'Editable Table' };
