@@ -26,3 +26,5 @@ dist-ssr
 
 # sql file
 starwars_postgres_create.sql
+public/migration_log.txt
+migration_log.txt
