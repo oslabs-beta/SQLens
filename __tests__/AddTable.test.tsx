@@ -1,9 +1,8 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent, screen } from '@testing-library/react';
-import AddTable from '../src/components/AddTable'; // Adjust the import path as necessary
-import * as store from '../src/store'; // Import useStore for mocking
-import { TableState } from '../src/vite-env'; // Assuming this is where the TableState type is defined
+import AddTable from '../src/components/AddTable';
+import * as store from '../src/store';
 
 
 describe('AddTable Component', () => {
