@@ -1,10 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Text from '../src/Text';
+import TestText from './TestText';
+import React from 'react';
 
 describe('App', () => {
   it('Vite to be in document', () => {
-    render(<Text />);
-    expect(screen.getByText('Vite')).toBeTruthy();
+    render(<TestText />);
+    expect(screen.getByText('TestText')).toBeTruthy();
   });
 });

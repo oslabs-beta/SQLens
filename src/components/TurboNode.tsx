@@ -7,8 +7,6 @@ import AddTable from './AddTable';
 
 export type TurboNodeData = {
   title?: string;
-  // icon?: ReactNode;
-  // subline?: string;
   label: string;
   parent?: string;
 };

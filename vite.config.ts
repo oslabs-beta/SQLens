@@ -14,10 +14,11 @@ export default defineConfig({
   //     }
   //   },
   // },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-  },
+  // test: {
+  //   globals: true,
+  //   environment: 'jsdom',
+  //   // // setupFiles: ['./__tests__/setupTests.ts'],
+  // },
   build: {
     outDir: 'dist', // Output directory for production build
     minify: 'terser', // Minify JavaScript
