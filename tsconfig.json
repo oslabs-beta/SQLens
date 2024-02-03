@@ -22,6 +22,14 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "server/controller.ts", "server/db.ts", "server/index.ts", "server/typeDefs.ts"],
+  "include": [
+    "src",
+    "server/controller.ts",
+    "server/db.ts",
+    "server/index.ts",
+    "server/typeDefs.ts",
+    "__tests__/App.test.tsx",
+    "__tests__/Text.test.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import express from './express-plugin'
@@ -13,6 +14,10 @@ export default defineConfig({
   //     }
   //   },
   // },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+  },
   build: {
     outDir: 'dist', // Output directory for production build
     minify: 'terser', // Minify JavaScript

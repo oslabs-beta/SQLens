@@ -1,5 +1,5 @@
 import { Node as ReactFlowNode } from 'reactflow';
-import { TableObj } from "../vite-env";
+import { Table } from "../vite-env";
 
 interface ExtendedNode extends ReactFlowNode {
   id: string;
@@ -7,13 +7,13 @@ interface ExtendedNode extends ReactFlowNode {
 }
 
 
- const generateNodes = (tables: TableObj[]): ExtendedNode[] => {
+ const generateNodes = (tables: Table[]): ExtendedNode[] => {
   console.log('tables', tables)
     const nodes: ExtendedNode[] = [];
     let layoutX: number = 0;
     let layoutY: number = 0;
 
-    tables.forEach((table: TableObj, 
+    tables.forEach((table: Table, 
         // tIndex: number
         ): void => {
       //layout calcs
