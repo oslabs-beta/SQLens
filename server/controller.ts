@@ -1,13 +1,13 @@
 import { pool } from './index';
 // import { RowData, TableData } from '../vite-env';
 import { promises as fsPromises } from 'fs';
-const migration_file = './public/migration_log.txt'
+const migration_file = './public/migration_log.txt' //route need to be changed for production vs dev mode
 
 const appendMigration = async (query: string): Promise<void> => {
   await fsPromises.appendFile(migration_file, query + '\n');
   return;
 }
-import { RowData, TableData, Table } from '../src/vite-env'; 
+import { RowData, TableData, Table } from '../src/vite-env';
 // The interface for data structure Jenny was talking about to make this valid TypeScript
 
 export const resolvers = {

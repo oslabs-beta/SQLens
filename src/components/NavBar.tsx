@@ -49,7 +49,7 @@ export default function NavBar() {
         // Create a temporary link element and trigger download
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'migration_log.txt';
+        link.download = 'migration_log.txt'; //need to do this as a fetch request
         link.click();
 
         // Cleanup

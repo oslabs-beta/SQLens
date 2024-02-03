@@ -39,7 +39,7 @@ async function startServer() {
     initializePool(databaseURI);
     const currentTimestamp = new Date().toLocaleString();
     fs.writeFileSync(
-      './public/migration_log.txt',
+      './public/migration_log.txt', //route needs to be changed for production vs dev mode
       `--\n-- Migration log\n-- Database URL: ${databaseURI}\n-- Session started ${currentTimestamp}\n--\n`
     );
     res.json({ message: 'Database connection updated successfully' });
