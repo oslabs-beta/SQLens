@@ -127,9 +127,9 @@ const TableHeader = ({
       // throw new Error("Error changing table name");
       //add a user alert
     } else {
-      data.label = editedLabel;
+      
       setIsEditing(false);
-      await fetchAndUpdateTableDetails(editedLabel);
+      await fetchAndUpdateTableDetails(editedLabel, data.label);
       console.log(final);
     }
   };
