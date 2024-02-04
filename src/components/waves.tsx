@@ -1,4 +1,6 @@
-// import React from 'react';
+/**  This component is used for a visual wave effect on the landing page footer.
+ * see the index.css for more information on colors and animation
+*/
 
 const OceanWaves = () => {
   return (

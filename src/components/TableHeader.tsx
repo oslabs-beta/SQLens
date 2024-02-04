@@ -1,3 +1,5 @@
+/** This component renders the name of the table and stores many of the functions for the table menu  */
+
 import React from 'react';
 import TableMenu from './TableMenu';
 import { useState } from 'react';
@@ -15,20 +17,20 @@ const TableHeader = ({
   data,
 }: {
   data: {
-    label: string;
+    label: string; // the passed in label is the table name
   };
 }) => {
-  const [alertOpen, setAlertOpen] = React.useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedLabel, setEditedLabel] = useState(data.label);
+  const [alertOpen, setAlertOpen] = React.useState(false);    // state of the alert dialog for deleting a table
+  const [isEditing, setIsEditing] = useState(false);          // state of whether the table name is being edited
+  const [editedLabel, setEditedLabel] = useState(data.label); // stores the edited label while name is being edited
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
-  );
-  const fetchAndUpdateTableDetails = useStore(state => state.fetchAndUpdateTableDetails);
-  const tables = useStore(state => state.tables);
-  const setTables = useStore(state => state.setTables);
+  );                                                          // sets anchor element for expanded table menu
+  const fetchAndUpdateTableDetails = useStore(state => state.fetchAndUpdateTableDetails); // function on App-wide store to update table
+  const tables = useStore(state => state.tables);             // all tables from database
+  const setTables = useStore(state => state.setTables);       // function to set all tables from database
 
-  //click handlers for delete table dialogue
+  // click handlers for delete table dialogue. Some of these will be passed into TableMenu
   const handleAlertOpen = () => {
     setAlertOpen(true);
   };
@@ -38,11 +40,10 @@ const TableHeader = ({
   };
 
   const handleTableDelete = async () => {
-    console.log('deleting table:', editedLabel);
-    //delete table function
-    //need extra functionality to re render the node
+    // console.log('deleting table:', editedLabel);
     setAlertOpen(false);
 
+    // send fetch request to backend to delete table
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -58,21 +59,23 @@ const TableHeader = ({
       }),
     });
 
+    // get response from backend
     const final = await response.json();
     if (final.errors) {
       console.error(final.errors[0].message);
+      // alert user if there was an error
       alert(final.errors[0].message);
       throw new Error('Error deleting table');
-      //add a user alert
     } else {
+      // update the store on the front end to delete table
       const updatedTables = tables.filter((table) => table.name !== editedLabel);
-    setTables(updatedTables);
+      setTables(updatedTables);
       fetchAndUpdateTableDetails(data.label);
-      console.log(final);
+      // console.log(final);
     }
   };
 
-  //click handlers for pop up menu
+  // click handlers for expanding table menu
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -99,9 +102,11 @@ const TableHeader = ({
     setIsEditing(false);
   };
 
+  // function to edit table name with fetch request to back end
   const handleEditSubmit = async () => {
+    // Sanitizes data
     setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
-    console.log(editedLabel, data.label);
+    // console.log(editedLabel, data.label);
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -203,6 +208,7 @@ const TableHeader = ({
           </Typography>
 
           <TableMenu
+
             handleEditTableName={handleEditTableName}
             anchorEl={anchorEl}
             handleClose={handleMenuClose}
