@@ -84,7 +84,7 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div className="outer-container">
+    <div className="outer-container" data-testid="outer-container">
       <div className="logo-container">
         <div className="site-logo">
           <figure id="logo" ref={logoRef}>
