@@ -8,6 +8,7 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function NavBar() {
   // navigate functionality from react-router-dom
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ export default function NavBar() {
     // if user confirms
     if (downloadConfirmation) {
       try {
-        const backendFilePath = '/migration_log.txt';
+        const backendFilePath = './migration_log.txt';
 
         // Fetch the file content
         const response = await fetch(backendFilePath);
