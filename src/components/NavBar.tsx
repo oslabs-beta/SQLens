@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
-// import dotenv from 'dotenv';
+
 
 export default function NavBar() {
   // navigate functionality from react-router-dom
@@ -16,11 +16,6 @@ export default function NavBar() {
   // useState hook to set anchor element of table
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
-
-  // let migration_file = './public/migration_log.txt';
-  // if (!process.env['VITE']) {
-  //   migration_file = './migration_log.txt'; //route need to be changed for production vs dev mode
-  // }
 
   // sets anchor element when react component is clicked (onClick)
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -36,19 +31,17 @@ export default function NavBar() {
   const logout = () => {
     setAnchorEl(null);
     navigate('/');
-  };
+  }
 
   // click handler to confirm download of migration file
   const confirmDownload = async () => {
     // pops up browser alert menu to confirm download
-    const downloadConfirmation = window.confirm(
-      'Do you want to download the file?'
-    );
+    const downloadConfirmation = window.confirm("Do you want to download the file?");
 
     // if user confirms
     if (downloadConfirmation) {
       try {
-        const backendFilePath = './migration_log.txt';
+        const backendFilePath = '/migration_log.txt';
 
         // Fetch the file content
         const response = await fetch(backendFilePath);
@@ -68,7 +61,7 @@ export default function NavBar() {
     } else {
       handleMenuClose();
     }
-  };
+  }
 
   const renderMenu = (
     <Menu
@@ -82,7 +75,9 @@ export default function NavBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={confirmDownload}>Download Migration File</MenuItem>
+      <MenuItem
+      onClick={confirmDownload}
+      >Download Migration File</MenuItem>
       <MenuItem onClick={logout}>Logout</MenuItem>
     </Menu>
   );
@@ -90,22 +85,22 @@ export default function NavBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
-        position='static'
+        position="static"
         style={{ background: 'rgba(0, 0, 0, .25)', boxShadow: 'none' }}
       >
         <Toolbar>
           <IconButton
-            size='large'
-            edge='start'
-            color='inherit'
-            aria-label='open drawer'
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
             sx={{ mr: 2 }}
             onClick={handleMenuOpen}
           >
             <MenuIcon />
           </IconButton>
-          <div className='nav-title'>
-            <div id='nav-text' className='nav-title-text'>
+          <div className="nav-title">
+            <div id="nav-text" className="nav-title-text">
               SQL<span>ens</span>
             </div>
           </div>
