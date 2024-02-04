@@ -40,7 +40,6 @@ const DeleteColumnButton = ({
       alert(final.errors[0].message);
     } else {
       await fetchAndUpdateTableDetails(data.parent);
-      console.log('tables fetched in deleteColumnButton')
       setAlertOpen(false);
     }
   };

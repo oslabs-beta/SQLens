@@ -67,7 +67,7 @@ const Flow = () => {
   return (
     <>
       <NavBar />
-      <div className="flow-container">
+      <div className="flow-container" data-testid="flow-container">
         <ReactFlow
           nodes={nodes}
           edges={edges}
