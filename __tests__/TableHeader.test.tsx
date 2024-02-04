@@ -1,37 +1,57 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import TableHeader from '../src/components/TableHeader';
 import { describe, it, expect } from 'vitest';
-// import { getByText } from '@testing-library/react';
-// import { mount } from 'vitest';
 
-describe('TableHeader Component', async () => {
-
-  it('renders TableHeader label', async () => {
+describe('TableHeader Component', () => {
+  it('renders TableHeader label and button', async () => {
     const mockData = {
-        label: 'Test Label',
+      label: 'Test Label',
     };
-    const { getByText } = render(<TableHeader data={mockData} />);
+    render(<TableHeader data={mockData} />);
 
     // Test rendering of initial label
-    const tableHeaderElement = getByText('Test Label');
-    expect(tableHeaderElement).toBeTruthy();
-})
+    const label = await screen.getByText('Test Label');
+    expect(label).toBeTruthy();
+  });
 
-  // Test editing functionality
-  it('has editing functionality', async () => {
+  it('Renders Table Menu button and expands Table Menu when clicked', async () => {
     const mockData = {
-        label: 'mockData',
+      label: 'Test Label',
     };
-
     render(<TableHeader data={mockData} />);
-    // await screen.setData({ isEditing: true });
-    // const inputElement = wrapper.find('input');
-    // expect(inputElement.exists()).toBe(true);
 
-//   // Test handleEditSubmit function
-//   await inputElement.setValue('NewTable');
-//   await wrapper.find('[aria-label="check"]').trigger('click');
-//   expect(console.log).toHaveBeenCalledWith('NewTable', 'TestTable');
-})
+    // Test clicking more button
+    const buttons = await screen.getAllByLabelText('expandTableMenu');
+    fireEvent.click(buttons[0]);
+
+    const edit = await screen.getByText('Edit Table Name');
+    expect(edit).toBeTruthy();
+    const add = await screen.getByText('Add Column');
+    expect(add).toBeTruthy();
+    const deleteBtn = await screen.getByText('Delete Table');
+    expect(deleteBtn).toBeTruthy();
+  });
+
+  it('Replaces label with text field when edit table is selected and removes text box after edit is canceled', async () => {
+    const mockData = {
+      label: 'Test Label',
+    };
+    render(<TableHeader data={mockData} />);
+
+    // Clicking expand button
+    const buttons = await screen.getAllByLabelText('expandTableMenu');
+    fireEvent.click(buttons[0]);
+
+    const edit = await screen.getByText('Edit Table Name');
+    fireEvent.click(edit);
+
+    expect(screen.getByRole('textbox')).toBeTruthy();
+
+    const cancel = await screen.getAllByLabelText('cancel');
+    fireEvent.click(cancel[0]);
+
+    const label = await screen.getAllByText('Test Label');
+    expect(label).toBeTruthy();
+  });
 });

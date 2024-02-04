@@ -1,3 +1,6 @@
+/**  This is a menu button component used on the main table node that
+ * gives users access to editing the table name, adding a column to
+ * the table, or deleting the table */
 
 import Popover from '@mui/material/Popover';
 import IconButton from '@mui/material/IconButton';
@@ -8,12 +11,13 @@ import { TableMenuProps } from '../vite-env';
 
 export default function TableMenu({ handleAddColumnOpen, handleAlertOpen, handleEditTableName, anchorEl, handleClick, handleClose }: TableMenuProps) {
 
+  // boolean for whether or not the expanded menu is open
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
   return (
     <div className="table-menu-dots">
-      <IconButton aria-label="more" style={{color: 'white'}} onClick={handleClick}>
+      <IconButton aria-label="expandTableMenu" style={{color: 'white'}} onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
       <Popover
@@ -25,10 +29,10 @@ export default function TableMenu({ handleAddColumnOpen, handleAlertOpen, handle
           vertical: 'bottom',
           horizontal: 'left',
         }}
-        sx={{ 
+        sx={{
           // Target the Paper component inside Popover
-          '.MuiPaper-root': { 
-            backgroundColor: 'rgba(200, 200, 200, 0.9)', 
+          '.MuiPaper-root': {
+            backgroundColor: 'rgba(200, 200, 200, 0.9)',
           }
         }}
       >
@@ -39,4 +43,3 @@ export default function TableMenu({ handleAddColumnOpen, handleAlertOpen, handle
     </div>
   );
 }
-
