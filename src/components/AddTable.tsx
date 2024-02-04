@@ -14,29 +14,37 @@ const AddTable = ({
     label: string;
   };
 }) => {
+  // manages the editing staus and edited label
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState('');
+
+  // useStore to interact with the application's global state, fetching functions and state slices.
   const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
   const tables = useStore((state: TableState) => state.tables);
   const setTables = useStore((state: TableState) => state.setTables);
 
-
+  //function to initiate the editing mode
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
+  // function to cancel editing, reverting changes
   const handleEditCancel = () => {
     setIsEditing(false);
   };
 
+  // function to update state with the new label
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     console.log(e.currentTarget.value);
     setEditedLabel(e.currentTarget.value);
   };
 
+  // finalize the addition of the table, sending a request to the backend and updating the global state.
   const handleCheckClick = async () => {
     setIsEditing(false);
     setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
+
+    // Sends mutation request to add the table
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -55,6 +63,7 @@ const AddTable = ({
       }),
     });
 
+    // Process response and update global state
     const final = await response.json();
     if (final.errors) {
       console.error(final.errors[0].message);
@@ -68,6 +77,7 @@ const AddTable = ({
     }
   };
 
+  // Render component, edit or view mode based on isEditing state
   return (
     <Box
       className='group-node'
@@ -95,7 +105,7 @@ const AddTable = ({
             className='table-name-input'
           />
           <Box>
-          <IconButton aria-label='edit' size='small' onClick={handleCheckClick}>
+          <IconButton aria-label='save' size='small' onClick={handleCheckClick}>
             <Check fontSize='inherit' />
           </IconButton>
           <IconButton
@@ -130,5 +140,3 @@ const AddTable = ({
 };
 
 export default AddTable;
-
-//
