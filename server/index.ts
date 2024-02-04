@@ -21,6 +21,11 @@ app.use(express.json());
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
+let migration_file = './public/migration_log.txt'
+if (!process.env['VITE']) {
+  migration_file = './dist/migration_log.txt' //route need to be changed for production vs dev mode
+}
+
 async function startServer() {
   await server.start();
   server.applyMiddleware({ app, path: '/api/graphql' });
@@ -39,7 +44,7 @@ async function startServer() {
     initializePool(databaseURI);
     const currentTimestamp = new Date().toLocaleString();
     fs.writeFileSync(
-      './public/migration_log.txt', //route needs to be changed for production vs dev mode
+      migration_file, //route needs to be changed for production vs dev mode
       `--\n-- Migration log\n-- Database URL: ${databaseURI}\n-- Session started ${currentTimestamp}\n--\n`
     );
     res.json({ message: 'Database connection updated successfully' });
