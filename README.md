@@ -21,12 +21,12 @@ SQLens is a powerful SQL database visualizer designed to simplify the complexiti
 4. Run npm start to spin up a server locally, and view your data on localhost:3000
 
 ### Using the app
-- Simply enter in a URI string for your postgres database
 
 <p align="center">
 <img src="https://github.com/oslabs-beta/SQLens/assets/21320155/bdb12a63-5001-4a14-9e78-3b3486d3819c">
 </p>
 
+- Simply enter in a URI string for your postgres database
 - Click and drag to view foreign-key relationships between tables
 
 <p align="center">
@@ -37,14 +37,14 @@ SQLens is a powerful SQL database visualizer designed to simplify the complexiti
 - Add a column from the drop-down table to the right
 - In the pop-out, name the column and select its data type from the drop-down menu
 - Click Save to add.
-- To rename columns, use the pencil tool
-- To delete a column, simply click the trashcan, you will be asked "Are you sure?"
-- To delete a table, use the menu to the right
-
+  
 <p align="center">
 <img src="https://github.com/oslabs-beta/SQLens/assets/21320155/aa79febe-e4f7-4dc9-a69f-13a09ad18aaf">
 </p>
 
+- To rename columns, use the pencil tool
+- To delete a column, simply click the trashcan, you will be asked "Are you sure?"
+- To delete a table, use the menu to the right
 - To download a migration file of any changes made, use the menu at the top left corner of the browser
 
 <p align="center">
@@ -60,21 +60,52 @@ SQLens is a powerful SQL database visualizer designed to simplify the complexiti
 
 - Fork this repository
 - Checkout from dev to a new feature branch with the format <your-name/your-new-feature>
+- Test code before PR with npm run test
+- Make a Pull Request 
 
 ### Features to Work On
 
-< TODO: THIS NEEDS TO BE COMPLETED WITH TEAM >
+
+| Feature                                                                               | Status    |
+|---------------------------------------------------------------------------------------|-----------|
+| Migration to use TurboNode styling for React Flow component                           | ✅        |
+| Add, delete, edit table and column names                                              | ✅        |
+| Apollo Server graphQL cacheing                                                        | ✅        |
+| Downloadable migration file                                                           | ✅        |
+| Clean way to view row data                                                            | ⏳        |
+| Update algorithm for best visual rendering of foreign key relationships               | ⏳        |
+| Allow user to add/edit relationships between tables w/ GUI                            | ⏳        |
+| Build docker container for CI/CD w/ github actions                                    | 🙏🏻        |
+
+- ✅ = Ready to use
+- ⏳ = In progress
+- 🙏🏻 = Looking for contributors
 
 ## License 
 
-< link to MIT license >
+SQLens is free and open-source licensed under the [MIT License](https://github.com/oslabs-beta/SQLens/blob/main/LICENSE)
+
+
+## Technologies Used
+<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+<img src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white" />
+<img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
+<img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" />
+<img src="https://img.shields.io/badge/Apollo%20GraphQL-311C87?&style=for-the-badge&logo=Apollo%20GraphQL&logoColor=white" />
+<img src="https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white" />
+<img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor" />
+<img src="https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+<img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white" />
+<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" />
+<img src="https://img.shields.io/badge/Miro-F7C922?style=for-the-badge&logo=Miro&logoColor=050036" />
+
 
 ## Contributors 
 
 <table>
   <tr>
     <td align="center">
-      <img src="https://github.com/oslabs-beta/SQLens/assets/21320155/ec582896-c2a8-4e7c-90f9-3721d0baf292" width="140px;" alt=""/>
+      <img src="https://github.com/oslabs-beta/SQLens/assets/21320155/b69ce72b-a556-400a-8292-ab26fb867633" width="140px;" alt=""/>
       <br />
       <sub><b>Alex Palazzo</b></sub>
       <br />
