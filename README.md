@@ -30,3 +30,63 @@ SQLens is a powerful SQL database visualizer designed to simplify the complexiti
 
 - To download a migration file of any changes made, use the menu at the top left corner of the browser
 <Gif of download-migration>
+
+## Contributing 
+
+- To run the app in dev mode, simply npm run dev
+- To ensure updates are compatible with all functional components, run unit tests with npm run test
+
+### Contribution Guidelines
+
+- Fork this repository
+- Checkout from dev to a new feature branch with the formate <your-name/your-new-feature>
+
+### Features to Work On
+
+< TODO: THIS NEEDS TO BE COMPLETED WITH TEAM >
+
+## License 
+
+< link to MIT license >
+
+## Contributors 
+
+  <table>
+  <tr>
+    <td align="center">
+      <img src="TODO: photo here" width="140px;" alt=""/>
+      <br />
+      <sub><b>Alex Palazzo</b></sub>
+      <br />
+      <a href="https://www.linkedin.com/in/alexpalazzo/">🖇️</a>
+      <a href="https://github.com/alexpalazzo">🐙</a>
+    </td>
+    <td align="center">
+      <img src="TODO: DEV PHOTO" width="140px;" alt=""/>
+      <br />
+      <sub><b>Jarod Crawford</b></sub>
+      <br />
+      <a href="TODO: LINKEDIN LINK">🖇️</a>
+      <a href="TODO: GITHUB LINK>🐙</a>
+    </td>
+    <td align="center">
+      <img src="TODO: DEV PHOTO" width="140px;" alt=""/>
+      <br />
+      <sub><b>Jenny Ouk</b></sub>
+      <br />
+      <a href="TODO: Linkedin Link">🖇️</a>
+      <a href="TODO: GITHUB LINK>🐙</a>
+    </td>
+     <td align="center">
+      <img src="TODO: DEV PHOTO" width="140px;" alt=""/>
+      <br />
+      <sub><b>Margaret Hatch</b></sub>
+      <br />
+      <a href="TODO: LinkedIN LInk">🖇️</a>
+      <a href="TODO: GITHUB LINK>🐙</a>
+    </td>
+
+</table>
+
+- 🖇️ = LinkedIn
+- 🐙 = Github
