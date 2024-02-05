@@ -51,6 +51,11 @@ SQLens is a powerful SQL database visualizer designed to simplify the complexiti
 <img src="https://github.com/oslabs-beta/SQLens/assets/21320155/5586206d-06a9-453b-b2c8-32b7e218e084">
 </p>
 
+- SQLens ensures data integrity and operational reliability, leveraging the fact that PostgreSQL databases are ACID-compliant, which means invalid column or table names are automatically rejected by PostgreSQL and will not be saved.
+<p align="center">
+<img src="https://github.com/oslabs-beta/SQLens/assets/21320155/8a5a92a9-a19a-4ac9-86c0-9ab7558a1e1a">
+</p>
+
 ## Contributing 
 
 - To run the app in dev mode, simply npm run dev
