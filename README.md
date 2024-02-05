@@ -50,6 +50,7 @@ SQLens is a powerful SQL database visualizer designed to simplify the complexiti
 <p align="center">
 <img src="https://github.com/oslabs-beta/SQLens/assets/21320155/5586206d-06a9-453b-b2c8-32b7e218e084">
 </p>
+
 ## Contributing 
 
 - To run the app in dev mode, simply npm run dev
@@ -70,10 +71,10 @@ SQLens is a powerful SQL database visualizer designed to simplify the complexiti
 
 ## Contributors 
 
-  <table>
+<table>
   <tr>
     <td align="center">
-      <img src="TODO: photo here" width="140px;" alt=""/>
+      <img src="https://github.com/oslabs-beta/SQLens/assets/21320155/ec582896-c2a8-4e7c-90f9-3721d0baf292" width="140px;" alt=""/>
       <br />
       <sub><b>Alex Palazzo</b></sub>
       <br />
@@ -81,31 +82,32 @@ SQLens is a powerful SQL database visualizer designed to simplify the complexiti
       <a href="https://github.com/alexpalazzo">🐙</a>
     </td>
     <td align="center">
-      <img src="TODO: DEV PHOTO" width="140px;" alt=""/>
+      <img src="https://github.com/oslabs-beta/SQLens/assets/21320155/e1b01912-421b-4fe2-9788-747804fcfe8d" width="140px;" alt=""/>
       <br />
       <sub><b>Jarod Crawford</b></sub>
       <br />
-      <a href="TODO: LINKEDIN LINK">🖇️</a>
-      <a href="TODO: GITHUB LINK>🐙</a>
+      <a href="http://www.linkedin.com/in/jarod-crawford-b83096253">🖇️</a>
+      <a href="https://github.com/JarodCrawford">🐙</a>
     </td>
     <td align="center">
-      <img src="TODO: DEV PHOTO" width="140px;" alt=""/>
+      <img src="https://github.com/oslabs-beta/SQLens/assets/21320155/c9a1a4e3-e9ad-4569-b9f8-5cca777ec966" width="140px;" alt=""/>
       <br />
       <sub><b>Jenny Ouk</b></sub>
       <br />
-      <a href="TODO: Linkedin Link">🖇️</a>
-      <a href="TODO: GITHUB LINK>🐙</a>
+      <a href="https://www.linkedin.com/in/jenny-ouk-a3668814/">🖇️</a>
+      <a href="https://github.com/jennyouk">🐙</a>
     </td>
-     <td align="center">
-      <img src="TODO: DEV PHOTO" width="140px;" alt=""/>
+    <td align="center">
+      <img src="https://github.com/oslabs-beta/SQLens/assets/21320155/c4116f00-617a-4122-bb86-f7a65055e08b" width="140px;" alt=""/>
       <br />
       <sub><b>Margaret Hatch</b></sub>
       <br />
-      <a href="TODO: LinkedIN LInk">🖇️</a>
-      <a href="TODO: GITHUB LINK>🐙</a>
+      <a href="https://www.linkedin.com/in/margarethatch/">🖇️</a>
+      <a href="https://github.com/margarethatch">🐙</a>
     </td>
-
+  </tr>
 </table>
+
 
 - 🖇️ = LinkedIn
 - 🐙 = Github
