@@ -2,9 +2,15 @@
 
 SQLens is a powerful SQL database visualizer designed to simplify the complexities of managing and understanding relational databases with extensive foreign key relationships. In the world of database administration and development, keeping track of intricate relationships and optimizing queries across large datasets can be daunting. SQLens addresses these challenges head-on by providing a dynamic, graphical representation of your database schema, making it easier and more enjoyable to visualize, analyze, and manage data relationships.
 
-<SQLens-logo goes here>
+<p align="center">
+<img src="https://github.com/oslabs-beta/SQLens/assets/21320155/0442c96a-f287-4b4d-8289-0ffdc0b84fc4" >
+</p>
 
-<SQLens-dynamic move goes here>
+## Visualize Your Data
+
+<p align="center">
+<img src="https://github.com/oslabs-beta/SQLens/assets/21320155/969f8cfd-d7cf-47a4-a788-fc9e86415b7f" >
+</p>
 
 ## Getting Started
 
@@ -15,10 +21,18 @@ SQLens is a powerful SQL database visualizer designed to simplify the complexiti
 4. Run npm start to spin up a server locally, and view your data on localhost:3000
 
 ### Using the app
-- Simply enter in a URI string for a postgres database
-<Gif of homepage>
+- Simply enter in a URI string for your postgres database
+
+<p align="center">
+<img src="https://github.com/oslabs-beta/SQLens/assets/21320155/bdb12a63-5001-4a14-9e78-3b3486d3819c">
+</p>
+
 - Click and drag to view foreign-key relationships between tables
-<Gif of dynamic-move>
+
+<p align="center">
+<img src="https://github.com/oslabs-beta/SQLens/assets/21320155/5da53966-188f-43d4-a80b-4604c204079d">
+</p>
+
 - Add a new table using the + button on the Add New Table component
 - Add a column from the drop-down table to the right
 - In the pop-out, name the column and select its data type from the drop-down menu
@@ -26,11 +40,16 @@ SQLens is a powerful SQL database visualizer designed to simplify the complexiti
 - To rename columns, use the pencil tool
 - To delete a column, simply click the trashcan, you will be asked "Are you sure?"
 - To delete a table, use the menu to the right
-<Gif of functional-tests>
+
+<p align="center">
+<img src="https://github.com/oslabs-beta/SQLens/assets/21320155/aa79febe-e4f7-4dc9-a69f-13a09ad18aaf">
+</p>
 
 - To download a migration file of any changes made, use the menu at the top left corner of the browser
-<Gif of download-migration>
 
+<p align="center">
+<img src="https://github.com/oslabs-beta/SQLens/assets/21320155/5586206d-06a9-453b-b2c8-32b7e218e084">
+</p>
 ## Contributing 
 
 - To run the app in dev mode, simply npm run dev
@@ -39,7 +58,7 @@ SQLens is a powerful SQL database visualizer designed to simplify the complexiti
 ### Contribution Guidelines
 
 - Fork this repository
-- Checkout from dev to a new feature branch with the formate <your-name/your-new-feature>
+- Checkout from dev to a new feature branch with the format <your-name/your-new-feature>
 
 ### Features to Work On
 
