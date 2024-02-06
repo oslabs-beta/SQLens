@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Check } from '@mui/icons-material';
-import { IconButton, Typography, Box,  } from '@mui/material';
+import { IconButton, Typography, Box } from '@mui/material';
 import { ImPlus } from 'react-icons/im';
 import ClearIcon from '@mui/icons-material/Clear';
 import useStore from '../store';
@@ -69,13 +69,12 @@ const AddTable = ({
     //   console.error(final.errors[0].message);
     //   alert(final.errors[0].message);
     // } else {
-      const newTable = { name: editedLabel, columns: [], foreignKeys: [] };
-    setTables([...tables, newTable])
-      setEditedLabel(data.label)
-      // await fetchAndUpdateTableDetails(data.label);
+    const newTable = { name: editedLabel, columns: [], foreignKeys: [] };
+    setTables([...tables, newTable]);
+    setEditedLabel(data.label);
+    // await fetchAndUpdateTableDetails(data.label);
     // console.log(final);
     // }
-
   };
 
   // Render component, edit or view mode based on isEditing state
@@ -106,16 +105,20 @@ const AddTable = ({
             className='table-name-input'
           />
           <Box>
-          <IconButton aria-label='save' size='small' onClick={handleCheckClick}>
-            <Check fontSize='inherit' />
-          </IconButton>
-          <IconButton
-            aria-label='cancel'
-            size='small'
-            onClick={handleEditCancel}
-          >
-            <ClearIcon fontSize='inherit' />
-          </IconButton>
+            <IconButton
+              aria-label='save'
+              size='small'
+              onClick={handleCheckClick}
+            >
+              <Check fontSize='inherit' />
+            </IconButton>
+            <IconButton
+              aria-label='cancel'
+              size='small'
+              onClick={handleEditCancel}
+            >
+              <ClearIcon fontSize='inherit' />
+            </IconButton>
           </Box>
         </Box>
       ) : (
@@ -133,7 +136,6 @@ const AddTable = ({
           <IconButton aria-label='edit' size='small' onClick={handleEditClick}>
             <ImPlus fontSize='inherit' />
           </IconButton>
-
         </Box>
       )}
     </Box>

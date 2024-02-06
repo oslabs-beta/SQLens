@@ -12,6 +12,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import AddColumnDialog from './AddColumnDialog';
 import useStore from '../store';
+import { Table } from '../vite-env';
 
 const TableHeader = ({
   data,
@@ -20,15 +21,15 @@ const TableHeader = ({
     label: string; // the passed in label is the table name
   };
 }) => {
-  const [alertOpen, setAlertOpen] = React.useState(false);    // state of the alert dialog for deleting a table
-  const [isEditing, setIsEditing] = useState(false);          // state of whether the table name is being edited
+  const [alertOpen, setAlertOpen] = React.useState(false); // state of the alert dialog for deleting a table
+  const [isEditing, setIsEditing] = useState(false); // state of whether the table name is being edited
   const [editedLabel, setEditedLabel] = useState(data.label); // stores the edited label while name is being edited
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
-  );                                                          // sets anchor element for expanded table menu
-  const fetchAndUpdateTableDetails = useStore(state => state.fetchAndUpdateTableDetails); // function on App-wide store to update table
-  const tables = useStore(state => state.tables);             // all tables from database
-  const setTables = useStore(state => state.setTables);       // function to set all tables from database
+  ); // sets anchor element for expanded table menu
+
+  const tables = useStore((state) => state.tables); // all tables from database
+  const setTables = useStore((state) => state.setTables); // function to set all tables from database
 
   // click handlers for delete table dialogue. Some of these will be passed into TableMenu
   const handleAlertOpen = () => {
@@ -43,36 +44,8 @@ const TableHeader = ({
     // console.log('deleting table:', editedLabel);
     setAlertOpen(false);
 
-    // send fetch request to backend to delete table
-    const response = await fetch('/api/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      // This mutation is used to change the table name in the database
-      // This is a graphQL query, not a SQL query
-      body: JSON.stringify({
-        query: `
-          mutation deleteTable($tableName: String!){
-            deleteTable( tableName: $tableName)
-          }
-        `,
-        variables: { tableName: data.label },
-      }),
-    });
-
-    // get response from backend
-    const final = await response.json();
-    if (final.errors) {
-      console.error(final.errors[0].message);
-      // alert user if there was an error
-      alert(final.errors[0].message);
-      throw new Error('Error deleting table');
-    } else {
-      // update the store on the front end to delete table
-      const updatedTables = tables.filter((table) => table.name !== editedLabel);
-      setTables(updatedTables);
-      fetchAndUpdateTableDetails(data.label);
-      // console.log(final);
-    }
+    const updatedTables = tables.filter((table) => table.name !== editedLabel);
+    setTables(updatedTables);
   };
 
   // click handlers for expanding table menu
@@ -88,8 +61,6 @@ const TableHeader = ({
   const handleEditTableName = () => {
     handleMenuClose();
     setIsEditing(true);
-    //use document.findElementByID to select input field and make focused or selected
-    // console.log('Edit Table Name for:', data.label);
   };
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -106,37 +77,18 @@ const TableHeader = ({
   const handleEditSubmit = async () => {
     // Sanitizes data
     setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
-    // console.log(editedLabel, data.label);
-    const response = await fetch('/api/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      // This mutation is used to change the table name in the database
-      // This is a graphQL query, not a SQL query
-      body: JSON.stringify({
-        query: `
-          mutation editTableName($oldName: String!, $newName: String!){
-            editTableName( oldName: $oldName, newName: $newName)
-          }
-        `,
-        variables: { newName: editedLabel, oldName: data.label },
 
-        //deleteColumnFromTable(tableName: ${data.parent}, columnName: ${data.label}): Table <-- if we want to get a string back instead of a table
-      }),
+    const updatedTables: Table[] = tables.map((table) => {
+      if (table.name === data.label) {
+        table.name = editedLabel;
+      }
+      return table;
     });
+    setTables(updatedTables);
+    data.label = editedLabel;
 
-    const final = await response.json();
-    if (final.errors) {
-      setEditedLabel(data.label);
-      console.error(final.errors[0].message);
-      alert(final.errors[0].message);
-      // throw new Error("Error changing table name");
-      //add a user alert
-    } else {
-      // data.label = editedLabel;
-      setIsEditing(false);
-      await fetchAndUpdateTableDetails(editedLabel, data.label);
-      // console.log(final);
-    }
+    // console.log(final);
+    setIsEditing(false);
   };
 
   // click handlers for Add Column Dialog
@@ -153,7 +105,7 @@ const TableHeader = ({
 
   return (
     <Box
-      className="group-node"
+      className='group-node'
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -171,27 +123,27 @@ const TableHeader = ({
           }}
         >
           <input
-            type="text"
+            type='text'
             value={editedLabel}
             onChange={handleInputChange}
             placeholder={data.label}
-            className="table-name-input"
+            className='table-name-input'
             autoFocus={true}
           />
           <div>
             <IconButton
-              aria-label="edit"
-              size="small"
+              aria-label='edit'
+              size='small'
               onClick={handleEditSubmit}
             >
-              <Check fontSize="inherit" />
+              <Check fontSize='inherit' />
             </IconButton>
             <IconButton
-              aria-label="cancel"
-              size="small"
+              aria-label='cancel'
+              size='small'
               onClick={handleEditCancel}
             >
-              <ClearIcon fontSize="inherit" />
+              <ClearIcon fontSize='inherit' />
             </IconButton>
           </div>
         </Box>
@@ -203,12 +155,11 @@ const TableHeader = ({
             justifyContent: 'space-between',
           }}
         >
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1, maxWidth: 200 }}>
+          <Typography variant='h6' noWrap sx={{ flexGrow: 1, maxWidth: 200 }}>
             {editedLabel}
           </Typography>
 
           <TableMenu
-
             handleEditTableName={handleEditTableName}
             anchorEl={anchorEl}
             handleClose={handleMenuClose}
@@ -223,10 +174,10 @@ const TableHeader = ({
       <Dialog
         open={alertOpen}
         onClose={() => setAlertOpen(false)}
-        aria-describedby="alert-dialog-description"
+        aria-describedby='alert-dialog-description'
       >
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText id='alert-dialog-description'>
             Are you sure you want to delete this table?
           </DialogContentText>
         </DialogContent>

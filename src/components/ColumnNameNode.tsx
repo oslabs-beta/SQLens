@@ -17,7 +17,6 @@ const ColumnNameNode = ({
   const [editedLabel, setEditedLabel] = useState(data.label);
   const tables = useStore((state: TableState) => state.tables);
   const setTables = useStore((state: TableState) => state.setTables);
-  // const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -45,7 +44,7 @@ const ColumnNameNode = ({
       return table;
     });
     setTables(updatedTables);
-
+    data.label = editedLabel;
 
   };
 

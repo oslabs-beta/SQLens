@@ -10,7 +10,7 @@ const theme = createTheme({
     mode: 'dark',
   },
   typography: {
-    fontFamily: 'Fira Mono',
+    fontFamily: 'Fira Mono, monospace',
   },
 });
 

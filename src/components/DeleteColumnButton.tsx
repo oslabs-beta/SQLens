@@ -28,6 +28,7 @@ const DeleteColumnButton = ({
             table.columns.splice(index, 1);
           }
         });
+        // table.columns.filter((column) => column !== data.label);
       }
       return table;
     });
