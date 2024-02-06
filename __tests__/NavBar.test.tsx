@@ -6,7 +6,9 @@ import { MemoryRouter } from 'react-router-dom';
 
 describe('NavBar Component', () => {
     //renders navbar nested in memory router since navbar uses useNavigate
-    render(<MemoryRouter><NavBar/></MemoryRouter>);
+    beforeEach(() => {
+      render(<MemoryRouter><NavBar/></MemoryRouter>);
+    });
     it('renders NavBar Component with button and logo', async () => {
       const logo = await screen.getByText('SQL');
       expect(logo).toBeTruthy();
