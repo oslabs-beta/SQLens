@@ -20,10 +20,6 @@ export default function AddColumnDialog({
   const [selectedDataType, setSelectedDataType] = useState('');
   const tables = useStore((state: TableState) => state.tables);
   const setTables = useStore((state: TableState) => state.setTables);
-  const selectedTable = tables.filter((table) => table.name === tableName)[0];
-  // const fetchTables = useStore((state: TableState) => state.fetchTables);
-
-  // const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
 
   const handleColumnNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -37,11 +33,11 @@ export default function AddColumnDialog({
   };
 
   const handleSaveClick = async () => {
-    handleAddColumnClose();
+    const selectedTable = tables.filter((table) => table.name === tableName)[0];
     if (selectedTable.columns.includes(columnName) || columnName.match(/[^A-Za-z0-9_]/g)) {
-      alert(`Please select a valid column name. \nNames may include underscores, but must not include spaces or other special characters. \nNames must be unique.`);
-      return;
+      alert(`Please select a valid name. \n\nNames may include underscores, but must not include spaces or other special characters. \n\nNames must be unique.`);
     } else {
+      handleAddColumnClose();
       const updatedTables: Table[] = tables.map((table) => {
         if (table.name === tableName) {
           table.columns.push(columnName);

@@ -32,20 +32,21 @@ const ColumnNameNode = ({
   };
 
   const handleCheckClick = async () => {
-    setIsEditing(false);
-    setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
-
-
-    const updatedTables: Table[] = tables.map((table) => {
-      if (table.name === data.parent) {
-        table.columns.map((column) =>
-        column === data.label ? editedLabel : column)
-      }
-      return table;
-    });
-    setTables(updatedTables);
-    data.label = editedLabel;
-
+    const selectedTable = tables.filter((table) => table.name === data.parent)[0];
+    if (selectedTable.columns.includes(editedLabel) || editedLabel.match(/[^A-Za-z0-9_]/g)) {
+      alert(`Please select a valid name. \n\nNames may include underscores, but must not include spaces or other special characters. \n\nNames must be unique.`);
+    } else {
+      setIsEditing(false);
+      const updatedTables: Table[] = tables.map((table) => {
+        if (table.name === data.parent) {
+          table.columns.map((column) =>
+          column === data.label ? editedLabel : column)
+        }
+        return table;
+      });
+      setTables(updatedTables);
+      data.label = editedLabel;
+    }
   };
 
   return (

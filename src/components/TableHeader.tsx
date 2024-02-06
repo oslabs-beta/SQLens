@@ -75,20 +75,25 @@ const TableHeader = ({
 
   // function to edit table name with fetch request to back end
   const handleEditSubmit = async () => {
-    // Sanitizes data
-    setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
-
-    const updatedTables: Table[] = tables.map((table) => {
-      if (table.name === data.label) {
-        table.name = editedLabel;
-      }
-      return table;
-    });
-    setTables(updatedTables);
-    data.label = editedLabel;
-
-    // console.log(final);
-    setIsEditing(false);
+    const tableNames = tables.map((table) => table.name);
+    if (
+      tableNames.includes(editedLabel) ||
+      editedLabel.match(/[^A-Za-z0-9_]/g)
+    ) {
+      alert(
+        `Please select a valid name. \n\nNames may include underscores, but must not include spaces or other special characters. \n\nNames must be unique.`
+      );
+    } else {
+      const updatedTables: Table[] = tables.map((table) => {
+        if (table.name === data.label) {
+          table.name = editedLabel;
+        }
+        return table;
+      });
+      setTables(updatedTables);
+      data.label = editedLabel;
+      setIsEditing(false);
+    }
   };
 
   // click handlers for Add Column Dialog

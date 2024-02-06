@@ -43,8 +43,7 @@ const AddTable = ({
   const handleCheckClick = async () => {
     const tableNames = tables.map(table => table.name)
     if (tableNames.includes(editedLabel) || editedLabel.match(/[^A-Za-z0-9_]/g)) {
-      alert(`Please select a valid table name. \nNames may include underscores, but must not include spaces or other special characters. \nNames must be unique`);
-      return;
+      alert(`Please select a valid name. \n\nNames may include underscores, but must not include spaces or other special characters. \n\nNames must be unique.`);
     } else {
       setIsEditing(false);
       setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));

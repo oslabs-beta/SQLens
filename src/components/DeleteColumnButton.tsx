@@ -21,21 +21,24 @@ const DeleteColumnButton = ({
 
   //delete column function
   const deleteCol = async function () {
-    const updatedTables: Table[] = tables.map((table) => {
-      if (table.name === data.parent) {
-        table.columns.forEach((column, index) => {
-          if (data.label === column) {
-            table.columns.splice(index, 1);
-          }
-        });
-        // table.columns.filter((column) => column !== data.label);
-      }
-      return table;
-    });
-    setTables(updatedTables);
-    setAlertOpen(false);
-  };
+    if (data.label === '_id') {
+      setAlertOpen(false);
+      alert(`Cannot delete primary key`);
+    } else {
+      const selectedTable = tables.filter((table) => table.name === data.parent)[0];
+      const updatedTables: Table[] = tables.map((table) => {
+          selectedTable.columns.forEach((column, index) => {
+            if (data.label === column) {
+              table.columns.splice(index, 1);
+            }
+          });
 
+        return table;
+      });
+      setTables(updatedTables);
+      setAlertOpen(false);
+    }
+  };
   //click handlers
   const handleAlertOpen = () => {
     setAlertOpen(true);
