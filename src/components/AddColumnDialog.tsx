@@ -38,10 +38,8 @@ export default function AddColumnDialog({
 
   const handleSaveClick = async () => {
     handleAddColumnClose();
-    // setColumnName(columnName.trim().replace(/[^A-Za-z0-9_]/g, '_'));
-    console.log(selectedTable)
     if (selectedTable.columns.includes(columnName) || columnName.match(/[^A-Za-z0-9_]/g)) {
-      alert('Please select a valid column name. Names may include underscores, but must not include spaces or other special characters. They must be unique to their table.');
+      alert(`Please select a valid column name. \nNames may include underscores, but must not include spaces or other special characters. \nNames must be unique.`);
       return;
     } else {
       const updatedTables: Table[] = tables.map((table) => {

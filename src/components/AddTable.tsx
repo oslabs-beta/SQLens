@@ -41,40 +41,17 @@ const AddTable = ({
 
   // finalize the addition of the table, sending a request to the backend and updating the global state.
   const handleCheckClick = async () => {
-    setIsEditing(false);
-    setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
-
-    // Sends mutation request to add the table
-    // const response = await fetch('/api/graphql', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   // This query is used to change the name of a column
-    //   // This is a graphQL query, not a SQL query
-    //   body: JSON.stringify({
-    //     query: `
-    //       mutation addTable($tableName: String!){
-    //         addTable( tableName: $tableName)
-    //       }
-
-    //     `,
-    //     variables: {
-    //       tableName: editedLabel,
-    //     },
-    //   }),
-    // });
-
-    // Process response and update global state
-    // const final = await response.json();
-    // if (final.errors) {
-    //   console.error(final.errors[0].message);
-    //   alert(final.errors[0].message);
-    // } else {
-    const newTable = { name: editedLabel, columns: [], foreignKeys: [] };
-    setTables([...tables, newTable]);
-    setEditedLabel(data.label);
-    // await fetchAndUpdateTableDetails(data.label);
-    // console.log(final);
-    // }
+    const tableNames = tables.map(table => table.name)
+    if (tableNames.includes(editedLabel) || editedLabel.match(/[^A-Za-z0-9_]/g)) {
+      alert(`Please select a valid table name. \nNames may include underscores, but must not include spaces or other special characters. \nNames must be unique`);
+      return;
+    } else {
+      setIsEditing(false);
+      setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
+      const newTable = { name: editedLabel, columns: [], foreignKeys: [] };
+      setTables([...tables, newTable]);
+      setEditedLabel(data.label);
+    }
   };
 
   // Render component, edit or view mode based on isEditing state
