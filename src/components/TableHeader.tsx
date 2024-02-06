@@ -12,7 +12,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import AddColumnDialog from './AddColumnDialog';
 import useStore from '../store';
-import { Table } from '../vite-env';
+import { Table, TableState } from '../vite-env';
 
 const TableHeader = ({
   data,
@@ -30,6 +30,8 @@ const TableHeader = ({
 
   const tables = useStore((state) => state.tables); // all tables from database
   const setTables = useStore((state) => state.setTables); // function to set all tables from database
+  const queries = useStore((state: TableState) => state.queries);
+  const setQueries = useStore((state: TableState) => state.setQueries);
 
   // click handlers for delete table dialogue. Some of these will be passed into TableMenu
   const handleAlertOpen = () => {
@@ -40,12 +42,14 @@ const TableHeader = ({
     setAlertOpen(false);
   };
 
-  const handleTableDelete = async () => {
+  const handleTableDelete = () => {
     // console.log('deleting table:', editedLabel);
     setAlertOpen(false);
 
-    const updatedTables = tables.filter((table) => table.name !== editedLabel);
+    const updatedTables = tables.filter((table) => table.name !== data.label);
     setTables(updatedTables);
+    const query = `DROP TABLE ${data.label};`;
+      setQueries([...queries, query]);
   };
 
   // click handlers for expanding table menu
@@ -91,6 +95,8 @@ const TableHeader = ({
         return table;
       });
       setTables(updatedTables);
+      const query = `ALTER TABLE ${data.label} RENAME TO ${editedLabel};`;
+      setQueries([...queries, query]);
       data.label = editedLabel;
       setIsEditing(false);
     }

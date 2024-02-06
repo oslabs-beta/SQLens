@@ -20,6 +20,8 @@ export default function AddColumnDialog({
   const [selectedDataType, setSelectedDataType] = useState('');
   const tables = useStore((state: TableState) => state.tables);
   const setTables = useStore((state: TableState) => state.setTables);
+  const queries = useStore((state: TableState) => state.queries);
+  const setQueries = useStore((state: TableState) => state.setQueries);
 
   const handleColumnNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -45,6 +47,8 @@ export default function AddColumnDialog({
         return table;
       });
       setTables(updatedTables);
+      const query = `ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${selectedDataType};`
+      setQueries([...queries, query]);
     }
   };
 

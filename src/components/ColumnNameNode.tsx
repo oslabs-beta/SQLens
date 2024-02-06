@@ -17,6 +17,8 @@ const ColumnNameNode = ({
   const [editedLabel, setEditedLabel] = useState(data.label);
   const tables = useStore((state: TableState) => state.tables);
   const setTables = useStore((state: TableState) => state.setTables);
+  const queries = useStore((state: TableState) => state.queries);
+  const setQueries = useStore((state: TableState) => state.setQueries);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -45,6 +47,10 @@ const ColumnNameNode = ({
         return table;
       });
       setTables(updatedTables);
+      setTables(updatedTables);
+      const query = `ALTER TABLE ${data.parent} 
+            RENAME COLUMN ${data.label} to ${editedLabel};`;
+      setQueries([...queries, query]);
       data.label = editedLabel;
     }
   };

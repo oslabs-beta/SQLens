@@ -17,6 +17,8 @@ const AddTable = ({
   // manages the editing staus and edited label
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState('');
+  const queries = useStore((state: TableState) => state.queries);
+  const setQueries = useStore((state: TableState) => state.setQueries);
 
   // useStore to interact with the application's global state, fetching functions and state slices.
   // const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
@@ -49,6 +51,8 @@ const AddTable = ({
       setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
       const newTable = { name: editedLabel, columns: [], foreignKeys: [] };
       setTables([...tables, newTable]);
+      const query = 	`CREATE TABLE ${editedLabel} ( );`;
+      setQueries([...queries, query]);
       setEditedLabel(data.label);
     }
   };

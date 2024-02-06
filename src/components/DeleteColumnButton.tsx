@@ -16,9 +16,8 @@ const DeleteColumnButton = ({
   const [alertOpen, setAlertOpen] = React.useState(false);
   const tables = useStore((state: TableState) => state.tables);
   const setTables = useStore((state: TableState) => state.setTables);
-  // const fetchTables = useStore((state: TableState) => state.fetchTables);
-  // const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
-
+  const queries = useStore((state: TableState) => state.queries);
+  const setQueries = useStore((state: TableState) => state.setQueries);
   //delete column function
   const deleteCol = async function () {
     if (data.label === '_id') {
@@ -36,6 +35,8 @@ const DeleteColumnButton = ({
         return table;
       });
       setTables(updatedTables);
+      const query = `ALTER TABLE ${data.parent} DROP COLUMN ${data.label};`;
+      setQueries([...queries, query]);
       setAlertOpen(false);
     }
   };
