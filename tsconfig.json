@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "noEmit": true,
+    "esModuleInterop": true,
+    "target": "ES2015",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ES2015", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
 
@@ -11,7 +13,7 @@
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    // "noEmit": true,
     "jsx": "react-jsx",
 
     /* Linting */
@@ -20,6 +22,14 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "server/controller.ts",
+    "server/db.ts",
+    "server/index.ts",
+    "server/typeDefs.ts",
+    "__tests__/App.test.tsx",
+    "__tests__/Text.test.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

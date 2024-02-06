@@ -1,5 +1,3 @@
-// import { memo } from 'react';
-
 import { IconButton, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React from 'react';
@@ -7,14 +5,17 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import useStore from '../store';
+import { TableState } from '../vite-env';
 
 const DeleteColumnButton = ({
   data,
 }: {
-  data: { label: string; parent: string; fetchAndUpdateTables: () => void };
+  data: { label: string; parent: string };
 }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
-  //   const [focusNode, setFocusNode] = React.useState(null)
+  // const fetchTables = useStore((state: TableState) => state.fetchTables);
+  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
 
   //delete column function
   const deleteCol = async function () {
@@ -38,8 +39,7 @@ const DeleteColumnButton = ({
       console.error(final.errors[0].message);
       alert(final.errors[0].message);
     } else {
-      console.log(final);
-      // await data.fetchAndUpdateTables();
+      await fetchAndUpdateTableDetails(data.parent);
       setAlertOpen(false);
     }
   };
@@ -48,16 +48,9 @@ const DeleteColumnButton = ({
   const handleAlertOpen = () => {
     setAlertOpen(true);
   };
-  const handleYesDelete = async () => {
-    console.log('deleting column', data.label, ' from table ', data.parent);
-    try {
-      await deleteCol();
-      data.onDelete();
-    } catch (error) {
-      console.error('Error during deletion:', error);
-    }
-    setAlertOpen(false);
-  };
+
+  const handleYesDelete = async () => await deleteCol();
+
   const handleNoDelete = () => {
     setAlertOpen(false);
   };

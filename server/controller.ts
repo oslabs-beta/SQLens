@@ -1,17 +1,68 @@
 import { pool } from './index';
+import { promises as fsPromises } from 'fs';
+let migration_file = './public/migration_log.txt'
+if (!process.env['VITE']) {
+  migration_file = './dist/migration_log.txt' //route need to be changed for production vs dev mode
+}
 
+const appendMigration = async (query: string): Promise<void> => {
+  await fsPromises.appendFile(migration_file, query + '\n');
+  return;
+}
+import { RowData, TableData, Table } from '../src/vite-env';
 // The interface for data structure Jenny was talking about to make this valid TypeScript
-interface RowData {
-  columnName: string;
-  value: string | null;
-}
-
-interface TableData {
-  rowData: RowData[];
-}
 
 export const resolvers = {
   Query: {
+    getTableDetails: async (
+      _: unknown,
+      { tableName }: { tableName: string }
+    ): Promise<Table> => {
+      if (!pool) {
+        throw new Error('Database connection not initialized');
+      }
+
+      try {
+        const tableDetails: Table = {
+          name: tableName,
+          columns: [],
+          foreignKeys: [],
+        };
+
+        // Fetch columns for the specified table
+        const columnQuery = `SELECT column_name FROM information_schema.columns WHERE table_name = $1`;
+        const columnData = await pool.query(columnQuery, [tableName]);
+        tableDetails.columns = columnData.rows.map(row => row.column_name);
+
+        // Fetch foreign keys for the specified table
+        const fkQuery = `
+          SELECT
+            kcu.column_name,
+            ccu.table_name AS foreign_table_name,
+            ccu.column_name AS foreign_column_name
+          FROM
+            information_schema.table_constraints AS tc
+            JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name
+            JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name
+          WHERE
+            tc.constraint_type = 'FOREIGN KEY'
+            AND tc.table_name = $1;
+        `;
+        const fkData = await pool.query(fkQuery, [tableName]);
+
+        // Map foreign key data to the foreignKeys array in the correct format
+        tableDetails.foreignKeys = fkData.rows.map(fk => ({
+          columnName: fk.column_name,
+          foreignTableName: fk.foreign_table_name,
+          foreignColumnName: fk.foreign_column_name,
+        }));
+
+        return tableDetails;
+      } catch (err) {
+        console.error('Error in getTableDetails resolver:', err);
+        throw new Error('Server error');
+      }
+    },
     getTableNames: async () => {
       if (!pool) {
         throw new Error('Database connection not initialized');
@@ -27,7 +78,7 @@ export const resolvers = {
         );
         // tablesWithColumns is an object with keys of table names and values of objects with keys of columns and foreignKeys
         const tablesWithColumns: {
-          [key: string]: { columns: string[]; foreignKeys: any[] };
+          [key: string]: { columns: string[]; foreignKeys: unknown[] };
         } = {};
 
         // Query to get foreign key relations
@@ -98,21 +149,22 @@ export const resolvers = {
     },
     // the :_ is a placeholder for the parent object which is a neccassary argument for the resolver with apollo server
     getTableData: async (
-      _: any,
+      _: unknown,
       { tableName }: { tableName: string }
     ): Promise<TableData[]> => {
-      console.log(tableName);
+      // console.log(tableName);
+      if (pool !== null) {
       try {
         const tableDataQuery = `SELECT * FROM ${tableName};`;
         const tableDataResult = await pool.query(tableDataQuery);
-        console.log(tableDataResult.rows);
+        // console.log(tableDataResult.rows);
 
-        return tableDataResult.rows.map((row: Record<string, any>) => {
+        return tableDataResult.rows.map((row: Record<string, unknown>) => {
           const rowData: RowData[] = [];
           for (const [key, value] of Object.entries(row)) {
             rowData.push({
               columnName: key,
-              value: value !== null ? value.toString() : null,
+              value: value !== null && value !== undefined ? value.toString() : null,
             });
           }
           return { rowData };
@@ -121,102 +173,127 @@ export const resolvers = {
         console.error('Error in getTableData resolver: ', err);
         throw new Error('Server error');
       }
+    }
+    return [];
     },
+
   },
   Mutation: {
     addColumnToTable: async (
       // the :_ is a placeholder for the parent object which is a neccassary argument for the resolver with apollo server
-      _: any,
+      _: unknown,
       {
         tableName,
         columnName,
         dataType,
       }: { tableName: string; columnName: string; dataType: string }
     ) => {
+      if (pool !== null){
       try {
         // SQL to add a column to a table, adjust data type as needed
-        await pool.query(
-          `ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${dataType}`
-        );
+        const mutation = `ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${dataType};`
+        await pool.query(mutation);
+        await appendMigration(mutation);
         return `Column ${columnName} added to ${tableName} successfully.`;
       } catch (err) {
         console.error('Error in addColumnToTable resolver: ', err);
         // throw new Error('Server error');
         return err;
       }
+    }
     },
     editTableName: async (
       // the :_ is a placeholder for the parent object which is a neccassary argument for the resolver with apollo server
-      _: any,
+      _: unknown,
       { oldName, newName }: { oldName: string; newName: string }
     ) => {
+      if (pool !== null){
       try {
         // SQL to rename a table
-        await pool.query(`ALTER TABLE ${oldName} RENAME TO ${newName};`);
+        const mutation = `ALTER TABLE ${oldName} RENAME TO ${newName};`;
+        await pool.query(mutation);
+        await appendMigration(mutation);
         return `Table name changed from ${oldName} to ${newName} successfully.`;
       } catch (err) {
         console.error('Error in editTableName resolver: ', err);
         // throw new Error('Server error');
         return err;
       }
+    }
     },
     // the :_ is a placeholder for the parent object which is a neccassary argument for the resolver with apollo server
-    deleteTable: async (_: any, { tableName }: { tableName: string }) => {
+    deleteTable: async (_: unknown, { tableName }: { tableName: string }) => {
+      if (pool !== null){
       try {
         // SQL to delete a table
-        await pool.query(`DROP TABLE ${tableName};`);
+        const mutation = `DROP TABLE ${tableName};`;
+        await pool.query(mutation);
+        await appendMigration(mutation);
         return `Table ${tableName} deleted successfully.`;
       } catch (err) {
         console.error('Error in deleteTable resolver: ', err);
         // throw new Error('Server error');
         return err;
       }
+    }
     },
     deleteColumn: async (
-      _: any,
+      _: unknown,
       { columnName, tableName }: { columnName: string; tableName: string }
     ) => {
+      if (pool !== null){
       try {
-        console.log(columnName, tableName);
+        // console.log(columnName, tableName);
         // SQL to delete a table
-        await pool.query(`ALTER TABLE ${tableName} DROP COLUMN ${columnName};`);
+        const mutation = `ALTER TABLE ${tableName} DROP COLUMN ${columnName};`;
+        await pool.query(mutation);
+        await appendMigration(mutation);
         return `Column ${columnName} deleted successfully from ${tableName}.`;
       } catch (err) {
         console.error('Error in deleteColumn resolver: ', err);
         // throw new Error('Server error');
         return err;
       }
+    }
     },
     editColumn: async (
-      _: any,
+      _: unknown,
       {
         newColumnName,
         columnName,
         tableName,
       }: { newColumnName: string; columnName: string; tableName: string }
     ) => {
+      if (pool !== null){
       try {
         // SQL to delete a table
-        await pool.query(`ALTER TABLE ${tableName}
-        RENAME COLUMN ${columnName} to ${newColumnName};`);
+        const mutation = `ALTER TABLE ${tableName}
+        RENAME COLUMN ${columnName} to ${newColumnName};`;
+        await pool.query(mutation);
+        await appendMigration(mutation);
         return `Column name changed to${newColumnName} from ${columnName} on ${tableName}.`;
       } catch (err) {
         console.error('Error in editColumn resolver: ', err);
         // throw new Error('Server error');
         return err;
       }
+    }
     },
-    addTable: async (_: any, { tableName }: { tableName: string }) => {
+    addTable: async (_: unknown, { tableName }: { tableName: string }) => {
+      if (pool !== null){
       try {
         // SQL to delete a table
-        await pool.query(`CREATE TABLE ${tableName} (
-          );`);
+        const mutation = `CREATE TABLE ${tableName} (
+          );`;
+        await pool.query(mutation);
+        await appendMigration(mutation);
         return `Table named ${tableName} created.`;
       } catch (err) {
         console.error('Error in addTable resolver: ', err);
         // throw new Error('Server error');
         return err;
       }
+    }
     },
   },
 };

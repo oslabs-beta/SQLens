@@ -22,6 +22,7 @@ export const typeDefs = gql`
   type Query {
     getTableNames: [Table]
     getTableData(tableName: String!): [RowData]
+    getTableDetails(tableName: String!): Table
   }
 
   type Mutation {

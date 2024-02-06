@@ -1,9 +1,10 @@
-import * as React from 'react';
-import { Theme } from '@mui/material/styles';
+// import * as React from 'react';
+// import { Theme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
+import { DataTypeSelectorProps } from '../vite-env';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -60,19 +61,12 @@ const dataTypes = ['bit(8)',
 'varchar (255)',
 'xml'];
 
-function getStyles(name: string, personName: readonly string[], theme: Theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
+
 
 export default function DataTypeSelector({
   handleDataTypeChange,
   selectedDataType,
-}) {
+}: DataTypeSelectorProps) {
   //   const theme = useTheme();
   // const [selectedDataType, setSelectedDataType] = React.useState<string[]>([]); //moved to parent
 

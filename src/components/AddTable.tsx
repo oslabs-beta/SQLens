@@ -4,36 +4,47 @@ import { Check } from '@mui/icons-material';
 import { IconButton, Typography, Box,  } from '@mui/material';
 import { ImPlus } from 'react-icons/im';
 import ClearIcon from '@mui/icons-material/Clear';
+import useStore from '../store';
+import { TableState } from '../vite-env';
 
 const AddTable = ({
   data,
 }: {
   data: {
     label: string;
-    // parent: string,
-    // onDelete: () => void;
-    fetchAndUpdateTables: ()=>void;
   };
 }) => {
+  // manages the editing staus and edited label
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState('');
 
+  // useStore to interact with the application's global state, fetching functions and state slices.
+  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
+  const tables = useStore((state: TableState) => state.tables);
+  const setTables = useStore((state: TableState) => state.setTables);
+
+  //function to initiate the editing mode
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
+  // function to cancel editing, reverting changes
   const handleEditCancel = () => {
     setIsEditing(false);
   };
 
+  // function to update state with the new label
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
     setEditedLabel(e.currentTarget.value);
   };
 
+  // finalize the addition of the table, sending a request to the backend and updating the global state.
   const handleCheckClick = async () => {
     setIsEditing(false);
     setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
+
+    // Sends mutation request to add the table
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -52,17 +63,21 @@ const AddTable = ({
       }),
     });
 
+    // Process response and update global state
     const final = await response.json();
     if (final.errors) {
       console.error(final.errors[0].message);
       alert(final.errors[0].message);
     } else {
+      const newTable = { name: editedLabel, columns: [], foreignKeys: [] };
+    setTables([...tables, newTable])
       setEditedLabel(data.label)
-      await data.fetchAndUpdateTables();
-    console.log(final);
+      await fetchAndUpdateTableDetails(data.label);
+    // console.log(final);
     }
   };
 
+  // Render component, edit or view mode based on isEditing state
   return (
     <Box
       className='group-node'
@@ -90,7 +105,7 @@ const AddTable = ({
             className='table-name-input'
           />
           <Box>
-          <IconButton aria-label='edit' size='small' onClick={handleCheckClick}>
+          <IconButton aria-label='save' size='small' onClick={handleCheckClick}>
             <Check fontSize='inherit' />
           </IconButton>
           <IconButton
@@ -125,5 +140,3 @@ const AddTable = ({
 };
 
 export default AddTable;
-
-//

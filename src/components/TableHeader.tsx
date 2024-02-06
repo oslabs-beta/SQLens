@@ -1,3 +1,5 @@
+/** This component renders the name of the table and stores many of the functions for the table menu  */
+
 import React from 'react';
 import TableMenu from './TableMenu';
 import { useState } from 'react';
@@ -9,24 +11,26 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import AddColumnDialog from './AddColumnDialog';
+import useStore from '../store';
 
 const TableHeader = ({
   data,
 }: {
   data: {
-    label?: string;
-    // parent: string,
-    fetchAndUpdateTables: () => void;
+    label: string; // the passed in label is the table name
   };
 }) => {
-  const [alertOpen, setAlertOpen] = React.useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedLabel, setEditedLabel] = useState(data.label);
+  const [alertOpen, setAlertOpen] = React.useState(false);    // state of the alert dialog for deleting a table
+  const [isEditing, setIsEditing] = useState(false);          // state of whether the table name is being edited
+  const [editedLabel, setEditedLabel] = useState(data.label); // stores the edited label while name is being edited
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
-  );
+  );                                                          // sets anchor element for expanded table menu
+  const fetchAndUpdateTableDetails = useStore(state => state.fetchAndUpdateTableDetails); // function on App-wide store to update table
+  const tables = useStore(state => state.tables);             // all tables from database
+  const setTables = useStore(state => state.setTables);       // function to set all tables from database
 
-  //click handlers for delete table dialogue
+  // click handlers for delete table dialogue. Some of these will be passed into TableMenu
   const handleAlertOpen = () => {
     setAlertOpen(true);
   };
@@ -36,11 +40,10 @@ const TableHeader = ({
   };
 
   const handleTableDelete = async () => {
-    console.log('deleting table:', editedLabel);
-    //delete table function
-    //need extra functionality to re render the node
+    // console.log('deleting table:', editedLabel);
     setAlertOpen(false);
 
+    // send fetch request to backend to delete table
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -56,19 +59,23 @@ const TableHeader = ({
       }),
     });
 
+    // get response from backend
     const final = await response.json();
     if (final.errors) {
       console.error(final.errors[0].message);
+      // alert user if there was an error
       alert(final.errors[0].message);
       throw new Error('Error deleting table');
-      //add a user alert
     } else {
-      // await data.fetchAndUpdateTables();
-      console.log(final);
+      // update the store on the front end to delete table
+      const updatedTables = tables.filter((table) => table.name !== editedLabel);
+      setTables(updatedTables);
+      fetchAndUpdateTableDetails(data.label);
+      // console.log(final);
     }
   };
 
-  //click handlers for pop up menu
+  // click handlers for expanding table menu
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -82,20 +89,24 @@ const TableHeader = ({
     handleMenuClose();
     setIsEditing(true);
     //use document.findElementByID to select input field and make focused or selected
-    console.log('Edit Table Name for:', data.label);
+    // console.log('Edit Table Name for:', data.label);
   };
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
     setEditedLabel(e.currentTarget.value);
   };
 
   const handleEditCancel = () => {
+    setEditedLabel(data.label);
     setIsEditing(false);
   };
 
+  // function to edit table name with fetch request to back end
   const handleEditSubmit = async () => {
+    // Sanitizes data
     setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
+    // console.log(editedLabel, data.label);
     const response = await fetch('/api/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -108,6 +119,7 @@ const TableHeader = ({
           }
         `,
         variables: { newName: editedLabel, oldName: data.label },
+
         //deleteColumnFromTable(tableName: ${data.parent}, columnName: ${data.label}): Table <-- if we want to get a string back instead of a table
       }),
     });
@@ -120,9 +132,10 @@ const TableHeader = ({
       // throw new Error("Error changing table name");
       //add a user alert
     } else {
-      data.label = editedLabel;
+      // data.label = editedLabel;
       setIsEditing(false);
-      console.log(final);
+      await fetchAndUpdateTableDetails(editedLabel, data.label);
+      // console.log(final);
     }
   };
 
@@ -140,7 +153,7 @@ const TableHeader = ({
 
   return (
     <Box
-      className='group-node'
+      className="group-node"
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -150,36 +163,52 @@ const TableHeader = ({
       }}
     >
       {isEditing ? (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
           <input
-            type='text'
+            type="text"
             value={editedLabel}
             onChange={handleInputChange}
             placeholder={data.label}
-            className='table-name-input'
+            className="table-name-input"
             autoFocus={true}
           />
           <div>
-          <IconButton aria-label='edit' size='small' onClick={handleEditSubmit}>
-            <Check fontSize='inherit' />
-          </IconButton>
-          <IconButton
-            aria-label='cancel'
-            size='small'
-            onClick={handleEditCancel}
-          >
-            <ClearIcon fontSize='inherit' />
-          </IconButton>
+            <IconButton
+              aria-label="edit"
+              size="small"
+              onClick={handleEditSubmit}
+            >
+              <Check fontSize="inherit" />
+            </IconButton>
+            <IconButton
+              aria-label="cancel"
+              size="small"
+              onClick={handleEditCancel}
+            >
+              <ClearIcon fontSize="inherit" />
+            </IconButton>
           </div>
         </Box>
       ) : (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-          <Typography variant='h6' noWrap sx={{ flexGrow: 1, maxWidth: 200}}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1, maxWidth: 200 }}>
             {editedLabel}
           </Typography>
 
           <TableMenu
-            tableData={data}
+
             handleEditTableName={handleEditTableName}
             anchorEl={anchorEl}
             handleClose={handleMenuClose}
@@ -194,10 +223,10 @@ const TableHeader = ({
       <Dialog
         open={alertOpen}
         onClose={() => setAlertOpen(false)}
-        aria-describedby='alert-dialog-description'
+        aria-describedby="alert-dialog-description"
       >
         <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
+          <DialogContentText id="alert-dialog-description">
             Are you sure you want to delete this table?
           </DialogContentText>
         </DialogContent>

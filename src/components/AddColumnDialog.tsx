@@ -4,25 +4,32 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import DataTypeSelector from './DataTypeSelector';
+import { AddColumnDialogProps } from '../vite-env';
+import { SelectChangeEvent } from '@mui/material';
+import useStore from '../store';
+import { TableState } from '../vite-env';
 
 export default function AddColumnDialog({
   tableName,
   handleAddColumnClose,
-  // handleAddColumnOpen,
   openColDialog,
-}) {
+}: AddColumnDialogProps) {
   const [columnName, setColumnName] = useState('');
   const [selectedDataType, setSelectedDataType] = useState('');
+  // const fetchTables = useStore((state: TableState) => state.fetchTables);
 
-  const handleColumnNameChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
+  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
+
+  const handleColumnNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setColumnName(event.currentTarget.value);
   };
 
-  const handleDataTypeChange = (event: SelectChangeEvent<HTMLSelectElement>) => {
-    console.log(event.target.value);
+  const handleDataTypeChange = (event: SelectChangeEvent<string>) => {
+    // console.log(event.target.value);
     setSelectedDataType(event.target.value);
   };
 
@@ -56,7 +63,8 @@ export default function AddColumnDialog({
       // throw new Error("Error changing table name");
       //add a user alert
     } else {
-      console.log(final);
+      fetchAndUpdateTableDetails(tableName);
+      // console.log(final);
     }
   };
 
@@ -65,12 +73,6 @@ export default function AddColumnDialog({
       <Dialog
         open={openColDialog}
         onClose={handleAddColumnClose}
-        PaperProps={{
-          component: 'form',
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-            handleSubmit;
-          },
-        }}
       >
         {/* <DialogTitle>Add Column</DialogTitle> */}
         <DialogContent>
@@ -78,14 +80,14 @@ export default function AddColumnDialog({
           <TextField
             autoFocus
             required
-            margin='dense'
-            id='columnName'
-            name='columnName'
-            label='columnName'
-            type='text'
-            // fullWidth
-            variant='standard'
+            margin="dense"
+            id="columnName"
+            name="columnName"
+            label="Column Name"
+            type="text"
+            variant="standard"
             onChange={handleColumnNameChange}
+            fullWidth
           />
           <DataTypeSelector
             handleDataTypeChange={handleDataTypeChange}

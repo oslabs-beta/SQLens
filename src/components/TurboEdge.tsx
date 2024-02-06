@@ -1,4 +1,5 @@
-// import React from 'react';
+/**  This component renders a curved react flow "edge" (connecting line between nodes) */
+
 import { EdgeProps, getBezierPath } from 'reactflow';
 
 export default function CustomEdge({
@@ -16,7 +17,7 @@ export default function CustomEdge({
   const yEqual = sourceY === targetY;
 
   const [edgePath] = getBezierPath({
-    // we need this little hack in order to display the gradient for a straight line
+    // Conditionally calculate sourceX and sourceY to display the gradient for a straight line
     sourceX: xEqual ? sourceX + 0.0001 : sourceX,
     sourceY: yEqual ? sourceY + 0.0001 : sourceY,
     sourcePosition,
