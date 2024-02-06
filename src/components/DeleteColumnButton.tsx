@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import useStore from '../store';
-import { TableState } from '../vite-env';
+import { TableState, Table } from '../vite-env';
 
 const DeleteColumnButton = ({
   data,
@@ -14,14 +14,25 @@ const DeleteColumnButton = ({
   data: { label: string; parent: string };
 }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
+  const tables = useStore((state: TableState) => state.tables);
+  const setTables = useStore((state: TableState) => state.setTables);
   // const fetchTables = useStore((state: TableState) => state.fetchTables);
-  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
+  // const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
 
   //delete column function
   const deleteCol = async function () {
-
-      setAlertOpen(false);
-
+    const updatedTables: Table[] = tables.map((table) => {
+      if (table.name === data.parent) {
+        table.columns.forEach((column, index) => {
+          if (data.label === column) {
+            table.columns.splice(index, 1);
+          }
+        });
+      }
+      return table;
+    });
+    setTables(updatedTables);
+    setAlertOpen(false);
   };
 
   //click handlers
