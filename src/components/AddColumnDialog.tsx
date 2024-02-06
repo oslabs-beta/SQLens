@@ -9,7 +9,7 @@ import DataTypeSelector from './DataTypeSelector';
 import { AddColumnDialogProps } from '../vite-env';
 import { SelectChangeEvent } from '@mui/material';
 import useStore from '../store';
-import { TableState } from '../vite-env';
+import { TableState, Table } from '../vite-env';
 
 export default function AddColumnDialog({
   tableName,
@@ -18,9 +18,11 @@ export default function AddColumnDialog({
 }: AddColumnDialogProps) {
   const [columnName, setColumnName] = useState('');
   const [selectedDataType, setSelectedDataType] = useState('');
+  const tables = useStore((state: TableState) => state.tables);
+  const setTables = useStore((state: TableState) => state.setTables);
   // const fetchTables = useStore((state: TableState) => state.fetchTables);
 
-  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
+  // const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
 
   const handleColumnNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -36,56 +38,30 @@ export default function AddColumnDialog({
   const handleSaveClick = async () => {
     handleAddColumnClose();
     setColumnName(columnName.trim().replace(/[^A-Za-z0-9_]/g, '_'));
-    const response = await fetch('/api/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      // This mutation is used to change the table name in the database
-      // This is a graphQL query, not a SQL query
-      body: JSON.stringify({
-        query: `
-          mutation addColumnToTable($tableName: String!, $columnName: String!, $dataType: String!){
-            addColumnToTable( tableName: $tableName, columnName: $columnName, dataType: $dataType)
-          }
-        `,
-        //addColumnToTable(tableName: String!, columnName: String!, dataType: String!): String
-        variables: {
-          tableName: tableName,
-          columnName: columnName,
-          dataType: selectedDataType,
-        },
-      }),
+    const updatedTables: Table[] = tables.map((table) => {
+      if (table.name === tableName) {
+        table.columns.push(columnName);
+      }
+      return table;
     });
-
-    const final = await response.json();
-    if (final.errors) {
-      console.error(final.errors[0].message);
-      alert(final.errors[0].message);
-      // throw new Error("Error changing table name");
-      //add a user alert
-    } else {
-      fetchAndUpdateTableDetails(tableName);
-      // console.log(final);
-    }
+    setTables(updatedTables);
   };
 
   return (
     <React.Fragment>
-      <Dialog
-        open={openColDialog}
-        onClose={handleAddColumnClose}
-      >
+      <Dialog open={openColDialog} onClose={handleAddColumnClose}>
         {/* <DialogTitle>Add Column</DialogTitle> */}
         <DialogContent>
           <DialogTitle>Add Column and Data Type</DialogTitle>
           <TextField
             autoFocus
             required
-            margin="dense"
-            id="columnName"
-            name="columnName"
-            label="Column Name"
-            type="text"
-            variant="standard"
+            margin='dense'
+            id='columnName'
+            name='columnName'
+            label='Column Name'
+            type='text'
+            variant='standard'
             onChange={handleColumnNameChange}
             fullWidth
           />

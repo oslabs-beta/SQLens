@@ -19,29 +19,9 @@ const DeleteColumnButton = ({
 
   //delete column function
   const deleteCol = async function () {
-    const response = await fetch('/api/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      // This query is used to delete a column from a table
-      // This is a graphQL query, not a SQL query
-      body: JSON.stringify({
-        query: `
-          mutation deleteColumn($tableName: String!, $columnName: String!){
-            deleteColumn(tableName: $tableName, columnName: $columnName)
-          }
-        `,
-        variables: { columnName: data.label, tableName: data.parent },
-      }),
-    });
 
-    const final = await response.json();
-    if (final.errors) {
-      console.error(final.errors[0].message);
-      alert(final.errors[0].message);
-    } else {
-      await fetchAndUpdateTableDetails(data.parent);
       setAlertOpen(false);
-    }
+
   };
 
   //click handlers

@@ -19,7 +19,7 @@ const AddTable = ({
   const [editedLabel, setEditedLabel] = useState('');
 
   // useStore to interact with the application's global state, fetching functions and state slices.
-  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
+  // const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
   const tables = useStore((state: TableState) => state.tables);
   const setTables = useStore((state: TableState) => state.setTables);
 
@@ -45,36 +45,37 @@ const AddTable = ({
     setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
 
     // Sends mutation request to add the table
-    const response = await fetch('/api/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      // This query is used to change the name of a column
-      // This is a graphQL query, not a SQL query
-      body: JSON.stringify({
-        query: `
-          mutation addTable($tableName: String!){
-            addTable( tableName: $tableName)
-          }
+    // const response = await fetch('/api/graphql', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   // This query is used to change the name of a column
+    //   // This is a graphQL query, not a SQL query
+    //   body: JSON.stringify({
+    //     query: `
+    //       mutation addTable($tableName: String!){
+    //         addTable( tableName: $tableName)
+    //       }
 
-        `,
-        variables: {
-          tableName: editedLabel,
-        },
-      }),
-    });
+    //     `,
+    //     variables: {
+    //       tableName: editedLabel,
+    //     },
+    //   }),
+    // });
 
     // Process response and update global state
-    const final = await response.json();
-    if (final.errors) {
-      console.error(final.errors[0].message);
-      alert(final.errors[0].message);
-    } else {
+    // const final = await response.json();
+    // if (final.errors) {
+    //   console.error(final.errors[0].message);
+    //   alert(final.errors[0].message);
+    // } else {
       const newTable = { name: editedLabel, columns: [], foreignKeys: [] };
     setTables([...tables, newTable])
       setEditedLabel(data.label)
-      await fetchAndUpdateTableDetails(data.label);
+      // await fetchAndUpdateTableDetails(data.label);
     // console.log(final);
-    }
+    // }
+
   };
 
   // Render component, edit or view mode based on isEditing state

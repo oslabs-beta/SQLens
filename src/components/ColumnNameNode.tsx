@@ -1,4 +1,3 @@
-// import { memo } from 'react';
 import { Handle, Position } from 'reactflow';
 import { IconButton, Typography, Box } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,7 +6,7 @@ import { useState } from 'react';
 import { Check } from '@mui/icons-material';
 import ClearIcon from '@mui/icons-material/Clear';
 import useStore from '../store';
-import { TableState } from '../vite-env';
+import { TableState, Table } from '../vite-env';
 
 const ColumnNameNode = ({
   data,
@@ -16,7 +15,9 @@ const ColumnNameNode = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState(data.label);
-  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
+  const tables = useStore((state: TableState) => state.tables);
+  const setTables = useStore((state: TableState) => state.setTables);
+  // const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -34,33 +35,18 @@ const ColumnNameNode = ({
   const handleCheckClick = async () => {
     setIsEditing(false);
     setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
-    const response = await fetch('/api/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      // This query is used to change the name of a column
-      // This is a graphQL query, not a SQL query
-      body: JSON.stringify({
-        query: `
-          mutation editColumn($newColumnName: String!, $columnName: String!, $tableName: String!){
-            editColumn( newColumnName: $newColumnName, columnName: $columnName, tableName: $tableName)
-          }
-        `,
-        variables: {
-          newColumnName: editedLabel,
-          columnName: data.label,
-          tableName: data.parent,
-        },
-      }),
-    });
 
-    const final = await response.json();
-    if (final.errors) {
-      console.error(final.errors[0].message);
-      alert(final.errors[0].message);
-    } else {
-      await fetchAndUpdateTableDetails(data.parent);
-      // console.log(final);
-    }
+
+    const updatedTables: Table[] = tables.map((table) => {
+      if (table.name === data.parent) {
+        table.columns.map((column) =>
+        column === data.label ? editedLabel : column)
+      }
+      return table;
+    });
+    setTables(updatedTables);
+
+
   };
 
   return (

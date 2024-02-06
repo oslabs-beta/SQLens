@@ -1,5 +1,3 @@
-// import * as React from 'react';
-// import { Theme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -19,47 +17,11 @@ const MenuProps = {
 
 const dataTypes = ['bit(8)',
 'bool',
-'box',
-'bytea',
-'char(10)',
-'cidr',
-'circle',
 'date',
-'decimal (8, 2)',
-'float4',
-'float8',
-'inet',
-'int, int4',
-'int2',
-'int8',
-'interval (6)',
+'decimal',
+'int',
 'json',
-'jsonb',
-'line',
-'lseg',
-'macaddr',
-'macaddr8',
-'money',
-'path',
-'pg_lsn',
-'pg_snapshot',
-'point',
-'polygon',
-'serial2',
-'serial4',
-'serial8',
-'text',
-'time (3) without time zone',
-'timestamp (6) without time zone',
-'timestamptz',
-'timetz',
-'tsquery',
-'tsvector',
-'txid_snapshot',
-'uuid',
-'varbit(16)',
-'varchar (255)',
-'xml'];
+'varchar (255)'];
 
 
 

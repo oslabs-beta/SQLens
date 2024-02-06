@@ -10,7 +10,6 @@ import ColumnNameNode from './ColumnNameNode.tsx';
 import 'reactflow/dist/style.css';
 import generateEdges from './GenerateEdges.tsx';
 import generateNodes from './GenerateNodes.tsx';
-import NavBar from './NavBar.tsx';
 import useStore from '../store.ts';
 import 'reactflow/dist/base.css';
 import '../stylesheets/index.css';
@@ -66,7 +65,6 @@ const Flow = () => {
   const proOptions = { hideAttribution: true };
   return (
     <>
-      <NavBar />
       <div className="flow-container" data-testid="flow-container">
         <ReactFlow
           nodes={nodes}
