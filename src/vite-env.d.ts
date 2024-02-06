@@ -10,10 +10,12 @@ export interface FlowProps {
 
 export interface TableState {
   tables: Table[];
+  queries: string[];
   searchValue: string;
   databaseURI?: string;
   setSearchValue: (searchValue: string) => void;
   setTables: (tables: Table[]) => void;
+  setQueries: (queries: string[]) => void;
   fetchTables: () => Promise<void>;
   fetchAndUpdateTableDetails: (tableName: string, oldName?: string) => Promise<void>;
 }
