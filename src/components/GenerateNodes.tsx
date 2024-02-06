@@ -18,9 +18,9 @@ const generateNodes = (tables: Table[]): ExtendedNode[] => {
       // tIndex: number
     ): void => {
       //layout calcs
-      if (layoutY > 600) {
+      if (layoutY > 400) {
         layoutY = 0;
-        layoutX += 375;
+        layoutX += 450;
       }
 
       //create group node for each table

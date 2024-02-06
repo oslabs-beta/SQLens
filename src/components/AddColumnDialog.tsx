@@ -20,6 +20,9 @@ export default function AddColumnDialog({
   const [selectedDataType, setSelectedDataType] = useState('');
   const tables = useStore((state: TableState) => state.tables);
   const setTables = useStore((state: TableState) => state.setTables);
+  const selectedTable = tables.filter((table) => {
+    table.name === tableName;
+  })[0];
   // const fetchTables = useStore((state: TableState) => state.fetchTables);
 
   // const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
@@ -38,13 +41,18 @@ export default function AddColumnDialog({
   const handleSaveClick = async () => {
     handleAddColumnClose();
     setColumnName(columnName.trim().replace(/[^A-Za-z0-9_]/g, '_'));
-    const updatedTables: Table[] = tables.map((table) => {
-      if (table.name === tableName) {
-        table.columns.push(columnName);
-      }
-      return table;
-    });
-    setTables(updatedTables);
+    if (selectedTable.columns.includes(columnName)) {
+      alert('Please select a valid name');
+      return;
+    } else {
+      const updatedTables: Table[] = tables.map((table) => {
+        if (table.name === tableName) {
+          table.columns.push(columnName);
+        }
+        return table;
+      });
+      setTables(updatedTables);
+    }
   };
 
   return (

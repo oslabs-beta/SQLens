@@ -24,22 +24,6 @@ const starterTables: Table[] = [
     foreignKeys: [],
   },
   {
-    name: 'people_in_films',
-    columns: ['_id', 'name', 'species_id', 'homeworld_id'],
-    foreignKeys: [
-      {
-        columnName: 'species_id',
-        foreignTableName: 'species',
-        foreignColumnName: '_id',
-      },
-      {
-        columnName: 'homeworld_id',
-        foreignTableName: 'planets',
-        foreignColumnName: '_id',
-      },
-    ],
-  },
-  {
     name: 'planets_in_films',
     columns: ['_id','film_id', 'planet_id'],
     foreignKeys: [
@@ -77,7 +61,7 @@ const starterTables: Table[] = [
   },
   {
     name: 'people_in_films',
-    columns: ['_id', 'name', 'species_id', 'homeworld_id'],
+    columns: ['_id', 'name', 'homeworld_id',  'species_id'],
     foreignKeys: [
       {
         columnName: 'species_id',

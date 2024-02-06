@@ -32,7 +32,7 @@ body {
 .flow-container {
   display: flex;
   width: 100vw;
-  height: calc(100vh - 64px);
+  height: calc(100vh - 64px); /** THIS NEEDS TO BE CHANGED FOR SITE*/
 }
 
 .column-name-node {
