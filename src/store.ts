@@ -43,7 +43,7 @@ const useStore = create<TableState>((set, get) => ({
 
       // console.log(`table in store: ${tableName}`);
       // console.log('tables state in store: ', tables)
-      console.log('updatedTable: ', updatedTableDetails)
+      // console.log('updatedTable: ', updatedTableDetails)
     } catch (error) {
       console.error('Error fetching updated table details:', error);
     }

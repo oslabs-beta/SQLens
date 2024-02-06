@@ -35,7 +35,7 @@ const AddTable = ({
 
   // function to update state with the new label
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
     setEditedLabel(e.currentTarget.value);
   };
 
@@ -73,7 +73,7 @@ const AddTable = ({
     setTables([...tables, newTable])
       setEditedLabel(data.label)
       await fetchAndUpdateTableDetails(data.label);
-    console.log(final);
+    // console.log(final);
     }
   };
 

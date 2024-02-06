@@ -59,7 +59,7 @@ const ColumnNameNode = ({
       alert(final.errors[0].message);
     } else {
       await fetchAndUpdateTableDetails(data.parent);
-      console.log(final);
+      // console.log(final);
     }
   };
 

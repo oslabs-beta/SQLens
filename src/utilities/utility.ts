@@ -84,7 +84,7 @@
       console.error(final.errors);
       throw new Error('Error fetching table details');
     }
-    console.log(final.data)
+    // console.log(final.data)
     // console.log(final.data.getTableDetails)
     return final.data.getTableDetails;
   };

@@ -89,11 +89,11 @@ const TableHeader = ({
     handleMenuClose();
     setIsEditing(true);
     //use document.findElementByID to select input field and make focused or selected
-    console.log('Edit Table Name for:', data.label);
+    // console.log('Edit Table Name for:', data.label);
   };
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
     setEditedLabel(e.currentTarget.value);
   };
 
@@ -135,7 +135,7 @@ const TableHeader = ({
       // data.label = editedLabel;
       setIsEditing(false);
       await fetchAndUpdateTableDetails(editedLabel, data.label);
-      console.log(final);
+      // console.log(final);
     }
   };
 

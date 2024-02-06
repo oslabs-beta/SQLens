@@ -29,7 +29,7 @@ export default function AddColumnDialog({
   };
 
   const handleDataTypeChange = (event: SelectChangeEvent<string>) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setSelectedDataType(event.target.value);
   };
 
@@ -64,7 +64,7 @@ export default function AddColumnDialog({
       //add a user alert
     } else {
       fetchAndUpdateTableDetails(tableName);
-      console.log(final);
+      // console.log(final);
     }
   };
 

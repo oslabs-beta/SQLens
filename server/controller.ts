@@ -152,12 +152,12 @@ export const resolvers = {
       _: unknown,
       { tableName }: { tableName: string }
     ): Promise<TableData[]> => {
-      console.log(tableName);
+      // console.log(tableName);
       if (pool !== null) {
       try {
         const tableDataQuery = `SELECT * FROM ${tableName};`;
         const tableDataResult = await pool.query(tableDataQuery);
-        console.log(tableDataResult.rows);
+        // console.log(tableDataResult.rows);
 
         return tableDataResult.rows.map((row: Record<string, unknown>) => {
           const rowData: RowData[] = [];
@@ -243,7 +243,7 @@ export const resolvers = {
     ) => {
       if (pool !== null){
       try {
-        console.log(columnName, tableName);
+        // console.log(columnName, tableName);
         // SQL to delete a table
         const mutation = `ALTER TABLE ${tableName} DROP COLUMN ${columnName};`;
         await pool.query(mutation);
