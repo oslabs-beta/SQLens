@@ -1,62 +1,96 @@
-import { Table } from "../vite-env";
+import { Table } from '../vite-env';
 
 const starterTables: Table[] = [
-    {
-      name: 'planets',
-      columns: [
-        '_id',
-        'name',
-        'rotation_period',
-        'orbital_period',
-        'diameter',
-        'climate',
-        'gravity',
-        'terrain',
-        'surface_water',
-        'population',
-      ],
-      foreignKeys: [],
-    },
+  {
+    name: 'films',
+    columns: [
+      '_id',
+      'title',
+      'director',
+      'release_date',
+    ],
+    foreignKeys: [],
+  },
+  {
+    name: 'planets',
+    columns: [
+      '_id',
+      'name',
+      'gravity',
+      'terrain',
+      'surface_water',
+      'population',
+    ],
+    foreignKeys: [],
+  },
+  {
+    name: 'people_in_films',
+    columns: ['_id', 'name', 'species_id', 'homeworld_id'],
+    foreignKeys: [
+      {
+        columnName: 'species_id',
+        foreignTableName: 'species',
+        foreignColumnName: '_id',
+      },
+      {
+        columnName: 'homeworld_id',
+        foreignTableName: 'planets',
+        foreignColumnName: '_id',
+      },
+    ],
+  },
+  {
+    name: 'planets_in_films',
+    columns: ['_id','film_id', 'planet_id'],
+    foreignKeys: [
+      {
+        columnName: 'film_id',
+        foreignTableName: 'films',
+        foreignColumnName: '_id',
+      },
+      {
+        columnName: 'planet_id',
+        foreignTableName: 'planets',
+        foreignColumnName: '_id',
+      },
+    ],
+  },
+  {
+    name: 'species',
+    columns: [
+      '_id',
+      'name',
+      'classification',
+      'hair_colors',
+      'skin_colors',
+      'eye_colors',
+      'language',
+      'homeworld_id',
+    ],
+    foreignKeys: [
+      {
+        columnName: 'homeworld_id',
+        foreignTableName: 'planets',
+        foreignColumnName: '_id',
+      },
+    ],
+  },
+  {
+    name: 'people_in_films',
+    columns: ['_id', 'name', 'species_id', 'homeworld_id'],
+    foreignKeys: [
+      {
+        columnName: 'species_id',
+        foreignTableName: 'species',
+        foreignColumnName: '_id',
+      },
+      {
+        columnName: 'homeworld_id',
+        foreignTableName: 'planets',
+        foreignColumnName: '_id',
+      },
+    ],
+  },
+];
 
-    {
-      name: 'species',
-      columns: [
-        '_id',
-        'name',
-        'classification',
-        'average_height',
-        'average_lifespan',
-        'hair_colors',
-        'skin_colors',
-        'eye_colors',
-        'language',
-        'homeworld_id',
-      ],
-      foreignKeys: [
-        {
-          columnName: 'homeworld_id',
-          foreignTableName: 'planets',
-          foreignColumnName: '_id',
-        },
-      ],
-    },
-
-    {
-      name: 'people',
-      columns: ['_id', 'name', 'species_id', 'homeworld_id'],
-      foreignKeys: [
-        {
-          columnName: 'species_id',
-          foreignTableName: 'species',
-          foreignColumnName: '_id',
-        },
-        {
-          columnName: 'homeworld_id',
-          foreignTableName: 'planets',
-          foreignColumnName: '_id',
-        },
-      ],
-    },
-  ];
-
-  export default starterTables;
+export default starterTables;

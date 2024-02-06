@@ -12,7 +12,7 @@ import generateEdges from './GenerateEdges.tsx';
 import generateNodes from './GenerateNodes.tsx';
 import useStore from '../store.ts';
 import 'reactflow/dist/base.css';
-import '../stylesheets/index.css';
+import '../stylesheets/flowStyle.css';
 import TurboNode from './TurboNode.tsx';
 import TurboEdge from './TurboEdge.tsx';
 

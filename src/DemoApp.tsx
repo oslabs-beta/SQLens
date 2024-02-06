@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import './stylesheets/index.css';
+import './stylesheets/flowStyle.css';
 import Flow from './components/Flow';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import useStore from './store';
