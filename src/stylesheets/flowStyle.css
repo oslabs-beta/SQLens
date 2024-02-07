@@ -5,6 +5,8 @@
   src: local('Fira Mono'), url('../assets/FiraMono-Regular.ttf') format('ttf');
 }
 
+
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -32,7 +34,7 @@ body {
 .flow-container {
   display: flex;
   width: 100vw;
-  height: calc(100vh - 64px); /** THIS NEEDS TO BE CHANGED FOR SITE*/
+  height: calc(100vh - 64px);
 }
 
 .column-name-node {
@@ -64,7 +66,7 @@ body {
   border: 2px solid #2a8af6;
   border: 2px solid #e92a67;
   border-radius: 4px;
-  font-family: 'Fira Mono', monospace;
+  font-family: 'Fira mono';
 }
 
 /* EVERYTHING BELOW  HERE IS THE PREFERRED STYLES, redundant styles from above can be removed ABOVE*/
@@ -73,8 +75,7 @@ body {
   --bg-color: rgb(17, 17, 17);
   --text-color: rgb(243, 244, 246);
   --node-border-radius: 10px;
-  --node-box-shadow: 10px 0 15px rgba(42, 138, 246, 0.3),
-    -10px 0 15px rgba(233, 42, 103, 0.3);
+  --node-box-shadow: 10px 0 15px rgba(42, 138, 246, 0.3), -10px 0 15px rgba(233, 42, 103, 0.3);
   background-color: var(--bg-color);
   color: var(--text-color);
 }
