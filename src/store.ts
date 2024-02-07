@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { TableState }  from './vite-env';
 
 
-const useStore = create<TableState>((set, get) => ({
+const useStore = create<TableState>((set) => ({
   // Table state that will be used to store the tables
   tables: [],
   setTables: (tables) => set({ tables }),

@@ -35,7 +35,7 @@ const ColumnNameNode = ({
 
   const handleCheckClick = async () => {
     const selectedTable = tables.filter((table) => table.name === data.parent)[0];
-    if (selectedTable.columns.includes(editedLabel) || editedLabel.match(/[^A-Za-z0-9_]/g)) {
+    if (selectedTable.columns.includes(editedLabel) || editedLabel.match(/[^A-Za-z0-9_]/g) || editedLavel.length === 0) {
       alert(`Please select a valid name. \n\nNames may include underscores, but must not include spaces or other special characters. \n\nNames must be unique.`);
     } else {
       setIsEditing(false);
@@ -48,7 +48,7 @@ const ColumnNameNode = ({
       });
       setTables(updatedTables);
       setTables(updatedTables);
-      const query = `ALTER TABLE ${data.parent} 
+      const query = `ALTER TABLE ${data.parent}
             RENAME COLUMN ${data.label} to ${editedLabel};`;
       setQueries([...queries, query]);
       data.label = editedLabel;

@@ -53,14 +53,14 @@ const Flow = () => {
 
       const updatedNodes = newNodes.map(newNode => {
 
-        const existingNode = nodes.find(n => n.id === newNode.id && !newNode.id.includes('-column-'));
+        const existingNode = nodes.find(n => n.id === newNode.id && !newNode.id.includes('-column-') && newNode.id !== 'add-table-node');
         return existingNode ? { ...newNode, position: existingNode.position } : newNode;
       });
 
       setNodes(updatedNodes);
       setEdges(newEdges);
     }
-  }, [tables, setNodes, setEdges]);
+  }, [tables, setNodes, setEdges, nodes]);
 
   const proOptions = { hideAttribution: true };
   return (

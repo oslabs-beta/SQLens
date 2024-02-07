@@ -36,7 +36,7 @@ export default function AddColumnDialog({
 
   const handleSaveClick = async () => {
     const selectedTable = tables.filter((table) => table.name === tableName)[0];
-    if (selectedTable.columns.includes(columnName) || columnName.match(/[^A-Za-z0-9_]/g)) {
+    if (selectedTable.columns.includes(columnName) || columnName.match(/[^A-Za-z0-9_]/g) || columnName.length === 0) {
       alert(`Please select a valid name. \n\nNames may include underscores, but must not include spaces or other special characters. \n\nNames must be unique.`);
     } else {
       handleAddColumnClose();

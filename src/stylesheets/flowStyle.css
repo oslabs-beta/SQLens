@@ -64,7 +64,7 @@ body {
   border: 2px solid #2a8af6;
   border: 2px solid #e92a67;
   border-radius: 4px;
-  font-family: 'Fira mono';
+  font-family: 'Fira Mono', monospace;
 }
 
 /* EVERYTHING BELOW  HERE IS THE PREFERRED STYLES, redundant styles from above can be removed ABOVE*/
@@ -73,7 +73,8 @@ body {
   --bg-color: rgb(17, 17, 17);
   --text-color: rgb(243, 244, 246);
   --node-border-radius: 10px;
-  --node-box-shadow: 10px 0 15px rgba(42, 138, 246, 0.3), -10px 0 15px rgba(233, 42, 103, 0.3);
+  --node-box-shadow: 10px 0 15px rgba(42, 138, 246, 0.3),
+    -10px 0 15px rgba(233, 42, 103, 0.3);
   background-color: var(--bg-color);
   color: var(--text-color);
 }

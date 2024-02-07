@@ -44,11 +44,10 @@ const AddTable = ({
   // finalize the addition of the table, sending a request to the backend and updating the global state.
   const handleCheckClick = async () => {
     const tableNames = tables.map(table => table.name)
-    if (tableNames.includes(editedLabel) || editedLabel.match(/[^A-Za-z0-9_]/g)) {
+    if (tableNames.includes(editedLabel) || editedLabel.match(/[^A-Za-z0-9_]/g) || editedLabel.length === 0) {
       alert(`Please select a valid name. \n\nNames may include underscores, but must not include spaces or other special characters. \n\nNames must be unique.`);
     } else {
       setIsEditing(false);
-      setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
       const newTable = { name: editedLabel, columns: [], foreignKeys: [] };
       setTables([...tables, newTable]);
       const query = 	`CREATE TABLE ${editedLabel} ( );`;
