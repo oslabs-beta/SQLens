@@ -49,7 +49,7 @@ const TableHeader = ({
     const updatedTables = tables.filter((table) => table.name !== data.label);
     setTables(updatedTables);
     const query = `DROP TABLE ${data.label};`;
-      setQueries([...queries, query]);
+    setQueries([...queries, query]);
   };
 
   // click handlers for expanding table menu
@@ -80,7 +80,9 @@ const TableHeader = ({
   // function to edit table name with fetch request to back end
   const handleEditSubmit = async () => {
     const tableNames = tables.map((table) => table.name);
-    if (
+    if (editedLabel === data.label) {
+      setIsEditing(false);
+    } else if (
       tableNames.includes(editedLabel) ||
       editedLabel.match(/[^A-Za-z0-9_]/g)
     ) {
