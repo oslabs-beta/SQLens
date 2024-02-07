@@ -1,4 +1,4 @@
-import { useCallback, useEffect} from 'react';
+import { useCallback, useEffect } from 'react';
 import ReactFlow, {
   addEdge,
   Edge,
@@ -37,7 +37,6 @@ const Flow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
-
   const tables = useStore((state) => state.tables);
 
   const onConnect = useCallback(
@@ -51,21 +50,27 @@ const Flow = () => {
       const newNodes = generateNodes(tables);
       const newEdges = generateEdges(tables);
 
-      const updatedNodes = newNodes.map(newNode => {
-
-        const existingNode = nodes.find(n => n.id === newNode.id && !newNode.id.includes('-column-') && newNode.id !== 'add-table-node');
-        return existingNode ? { ...newNode, position: existingNode.position } : newNode;
+      const updatedNodes = newNodes.map((newNode) => {
+        const existingNode = nodes.find(
+          (n) =>
+            n.id === newNode.id &&
+            !newNode.id.includes('-column-') &&
+            newNode.id !== 'add-table-node'
+        );
+        return existingNode
+          ? { ...newNode, position: existingNode.position }
+          : newNode;
       });
 
       setNodes(updatedNodes);
       setEdges(newEdges);
     }
-  }, [tables, setNodes, setEdges, nodes]);
+  }, [tables, setNodes, setEdges]);
 
   const proOptions = { hideAttribution: true };
   return (
     <>
-      <div className="flow-container" data-testid="flow-container">
+      <div className='flow-container' data-testid='flow-container'>
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -80,31 +85,30 @@ const Flow = () => {
           deleteKeyCode={null}
           proOptions={proOptions}
         >
-
           {/* <Controls showInteractive={false} /> */}
           <svg>
             <defs>
-              <linearGradient id="edge-gradient">
-                <stop offset="0%" stopColor="#ae53ba" />
-                <stop offset="100%" stopColor="#2a8af6" />
+              <linearGradient id='edge-gradient'>
+                <stop offset='0%' stopColor='#ae53ba' />
+                <stop offset='100%' stopColor='#2a8af6' />
               </linearGradient>
 
               <marker
-                id="edge-circle"
-                viewBox="-5 -5 10 10"
-                refX="0"
-                refY="0"
-                markerUnits="strokeWidth"
-                markerWidth="10"
-                markerHeight="10"
-                orient="auto"
+                id='edge-circle'
+                viewBox='-5 -5 10 10'
+                refX='0'
+                refY='0'
+                markerUnits='strokeWidth'
+                markerWidth='10'
+                markerHeight='10'
+                orient='auto'
               >
                 <circle
-                  stroke="#2a8af6"
-                  strokeOpacity="0.75"
-                  r="2"
-                  cx="0"
-                  cy="0"
+                  stroke='#2a8af6'
+                  strokeOpacity='0.75'
+                  r='2'
+                  cx='0'
+                  cy='0'
                 />
               </marker>
             </defs>
