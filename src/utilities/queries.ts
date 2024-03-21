@@ -71,3 +71,9 @@ export const DELETE_COLUMN = gql`
     deleteColumn(tableName: $tableName, columnName: $columnName)
   }
 `;
+
+export const ADD_TABLE_MUTATION = gql`
+mutation AddTable($tableName: String!) {
+  addTable(tableName: $tableName)
+}
+`;
