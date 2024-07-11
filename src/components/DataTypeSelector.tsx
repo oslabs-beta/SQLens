@@ -29,8 +29,6 @@ export default function DataTypeSelector({
   handleDataTypeChange,
   selectedDataType,
 }: DataTypeSelectorProps) {
-  //   const theme = useTheme();
-  // const [selectedDataType, setSelectedDataType] = React.useState<string[]>([]); //moved to parent
 
   return (
     <div>
