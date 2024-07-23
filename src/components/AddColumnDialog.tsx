@@ -73,7 +73,7 @@ export default function AddColumnDialog({
           tableName: tableName,
           columnName: columnName,
           dataType: selectedDataType,
-          fkTable: fkTable,
+          fkTable: fkTable?.name || "",
           fkColumn: fkColumn,
         },
       }),
@@ -133,6 +133,7 @@ export default function AddColumnDialog({
           <DataTypeSelector
             handleDataTypeChange={handleDataTypeChange}
             selectedDataType={selectedDataType}
+            disabled={hasForeignKey}
           />
           {/* Checkbox and label */}
           <FormControlLabel

@@ -7,6 +7,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 interface DataTypeSelectorProps {
   handleDataTypeChange: (event: SelectChangeEvent<string>) => void;
   selectedDataType: string;
+  disabled: boolean;
 }
 
 const ITEM_HEIGHT = 48;
@@ -32,8 +33,9 @@ const dataTypes = ['bit(8)',
 'float4',
 'float8',
 'inet',
-'int, int4',
+'int',
 'int2',
+'int4',
 'int8',
 'interval (6)',
 'json',
@@ -67,6 +69,7 @@ const dataTypes = ['bit(8)',
 export default function DataTypeSelector({
   handleDataTypeChange,
   selectedDataType,
+  disabled
 }: DataTypeSelectorProps) {
 
   return (
@@ -79,6 +82,7 @@ export default function DataTypeSelector({
           input={<OutlinedInput />}
           MenuProps={MenuProps}
           inputProps={{ 'aria-label': 'Without label' }}
+          disabled={disabled}
         >
           <MenuItem disabled value=''>
             <em>Select Data Type</em>

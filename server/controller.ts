@@ -197,7 +197,7 @@ export const resolvers = {
           // SQL to add a column to a table, adjust data type as needed
           let mutation = `ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${dataType};`;
           if (fkTable.length && fkColumn.length) {
-            mutation += ` REFERENCES ${fkTable}(${fkColumn})`;
+            mutation += `ALTER TABLE ${tableName} ADD CONSTRAINT fk_${columnName} FOREIGN KEY (${columnName}) REFERENCES ${fkTable}(${fkColumn})`;
           }
           await pool.query(mutation);
           await appendMigration(mutation);
