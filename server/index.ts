@@ -12,7 +12,6 @@ import fs from 'fs';
 import cors from 'cors';
 
 dotenv.config();
-git
 export let pool: pkg.Pool | null = null;
 
 const initializePool = (uri: string) => {
@@ -32,7 +31,7 @@ if (!process.env['VITE']) {
 async function startServer() {
   await server.start();
   // server.applyMiddleware({ app, path: '/api/graphql' });
-  app.use('/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware(server));
+  app.use('/api/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware(server));
 
   app.get('/api/test', (_: Request, res: Response) => {
     res.json({ greeting: 'Hello' });
