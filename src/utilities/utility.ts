@@ -1,5 +1,3 @@
-// import { getTables } from '../App';
-
 
 
   export const getTables = async function () {
@@ -24,7 +22,7 @@
         `,
       }),
     });
-  
+
     const final = await response.json();
     if (final.errors) {
       console.error(final.errors);
@@ -78,7 +76,7 @@
         variables: { tableName },
       }),
     });
-  
+
     const final = await response.json();
     if (final.errors) {
       console.error(final.errors);
@@ -91,7 +89,7 @@
 
 
   // export const handleSubmit = async () => {
-  //   const { databaseURI } = get(); 
+  //   const { databaseURI } = get();
   //   try {
   //     const response = await fetch('/api/setDatabaseUri', {
   //       method: 'POST',
@@ -100,7 +98,7 @@
   //     });
   //     const data = await response.json();
   //     if (response.ok && data.message === 'Database connection updated successfully') {
-  //       await fetchTables(set); 
+  //       await fetchTables(set);
   //     } else {
   //       console.error(data.error || 'Failed to update database URI');
   //     }
@@ -108,8 +106,3 @@
   //     console.error('Error:', error);
   //   }
   // };
-
-
-
-
- 

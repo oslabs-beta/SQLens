@@ -61,6 +61,7 @@ const Flow = () => {
       setNodes(updatedNodes);
       setEdges(newEdges);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tables, setNodes, setEdges]);
 
   const proOptions = { hideAttribution: true };

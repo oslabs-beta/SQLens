@@ -6,8 +6,15 @@ import Popover from '@mui/material/Popover';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MenuItem from '@mui/material/MenuItem';
-import { TableMenuProps } from '../vite-env';
 
+interface TableMenuProps {
+  handleAddColumnOpen: () => void;
+  handleAlertOpen: () => void;
+  handleEditTableName: () => void;
+  anchorEl: HTMLButtonElement | null;
+  handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleClose: () => void;
+}
 
 export default function TableMenu({ handleAddColumnOpen, handleAlertOpen, handleEditTableName, anchorEl, handleClick, handleClose }: TableMenuProps) {
 

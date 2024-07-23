@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.2",
+    "@apollo/server": "^4.10.5",
     "@apollo/utils.fetcher": "^3.1.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",

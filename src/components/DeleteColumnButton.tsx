@@ -1,12 +1,12 @@
-import { IconButton, Button } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import React from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import useStore from '../store';
-import { TableState } from '../vite-env';
+import { IconButton, Button } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import React from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import useStore from "../store";
+import { TableState } from "../../global_types/types";
 
 const DeleteColumnButton = ({
   data,
@@ -15,13 +15,15 @@ const DeleteColumnButton = ({
 }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
   // const fetchTables = useStore((state: TableState) => state.fetchTables);
-  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
+  const fetchAndUpdateTableDetails = useStore(
+    (state: TableState) => state.fetchAndUpdateTableDetails
+  );
 
   //delete column function
   const deleteCol = async function () {
-    const response = await fetch('/api/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch("/api/graphql", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       // This query is used to delete a column from a table
       // This is a graphQL query, not a SQL query
       body: JSON.stringify({
@@ -57,18 +59,18 @@ const DeleteColumnButton = ({
 
   return (
     <>
-      <IconButton aria-label='delete' size='small' onClick={handleAlertOpen}>
-        <DeleteIcon fontSize='inherit' />
+      <IconButton aria-label="delete" size="small" onClick={handleAlertOpen}>
+        <DeleteIcon fontSize="inherit" />
       </IconButton>
 
       {/** dialog for alert */}
       <Dialog
         open={alertOpen}
         onClose={() => setAlertOpen(false)}
-        aria-describedby='alert-dialog-description'
+        aria-describedby="alert-dialog-description"
       >
         <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
+          <DialogContentText id="alert-dialog-description">
             Are you sure you want to delete this column?
           </DialogContentText>
         </DialogContent>
@@ -83,7 +85,7 @@ const DeleteColumnButton = ({
   );
 };
 
-DeleteColumnButton.displayName = 'DeleteColumnButton';
+DeleteColumnButton.displayName = "DeleteColumnButton";
 
 export default DeleteColumnButton;
 // export default memo(CustomNode);

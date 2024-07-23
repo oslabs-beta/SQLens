@@ -20,15 +20,22 @@ const TableHeader = ({
     label: string; // the passed in label is the table name
   };
 }) => {
-  const [alertOpen, setAlertOpen] = React.useState(false);    // state of the alert dialog for deleting a table
-  const [isEditing, setIsEditing] = useState(false);          // state of whether the table name is being edited
-  const [editedLabel, setEditedLabel] = useState(data.label); // stores the edited label while name is being edited
+  // state of the alert dialog for deleting a table
+  const [alertOpen, setAlertOpen] = React.useState(false);
+   // state of whether the table name is being edited
+  const [isEditing, setIsEditing] = useState(false);
+  // stores the edited label while name is being edited
+  const [editedLabel, setEditedLabel] = useState(data.label);
+  // sets anchor element for expanded table menu
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
-  );                                                          // sets anchor element for expanded table menu
-  const fetchAndUpdateTableDetails = useStore(state => state.fetchAndUpdateTableDetails); // function on App-wide store to update table
-  const tables = useStore(state => state.tables);             // all tables from database
-  const setTables = useStore(state => state.setTables);       // function to set all tables from database
+  );
+  // function on App-wide store to update table
+  const fetchAndUpdateTableDetails = useStore(state => state.fetchAndUpdateTableDetails);
+  // all tables from database
+  const tables = useStore(state => state.tables);
+  // function to set all tables from database
+  const setTables = useStore(state => state.setTables);
 
   // click handlers for delete table dialogue. Some of these will be passed into TableMenu
   const handleAlertOpen = () => {

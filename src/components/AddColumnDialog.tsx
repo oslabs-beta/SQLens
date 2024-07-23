@@ -1,26 +1,34 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import DataTypeSelector from './DataTypeSelector';
-import { AddColumnDialogProps } from '../vite-env';
-import { SelectChangeEvent } from '@mui/material';
-import useStore from '../store';
-import { TableState } from '../vite-env';
+import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import DataTypeSelector from "./DataTypeSelector";
+import { SelectChangeEvent } from "@mui/material";
+import useStore from "../store";
+import { TableState } from "../../global_types/types";
+
+export interface AddColumnDialogProps {
+  tableName: string;
+  openColDialog: boolean;
+  handleAddColumnClose: () => void;
+  handleAddColumnOpen: () => void;
+}
 
 export default function AddColumnDialog({
   tableName,
   handleAddColumnClose,
   openColDialog,
 }: AddColumnDialogProps) {
-  const [columnName, setColumnName] = useState('');
-  const [selectedDataType, setSelectedDataType] = useState('');
+  const [columnName, setColumnName] = useState("");
+  const [selectedDataType, setSelectedDataType] = useState("");
   // const fetchTables = useStore((state: TableState) => state.fetchTables);
 
-  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
+  const fetchAndUpdateTableDetails = useStore(
+    (state: TableState) => state.fetchAndUpdateTableDetails
+  );
 
   const handleColumnNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -35,10 +43,10 @@ export default function AddColumnDialog({
 
   const handleSaveClick = async () => {
     handleAddColumnClose();
-    setColumnName(columnName.trim().replace(/[^A-Za-z0-9_]/g, '_'));
-    const response = await fetch('/api/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    setColumnName(columnName.trim().replace(/[^A-Za-z0-9_]/g, "_"));
+    const response = await fetch("/api/graphql", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       // This mutation is used to change the table name in the database
       // This is a graphQL query, not a SQL query
       body: JSON.stringify({
@@ -70,10 +78,7 @@ export default function AddColumnDialog({
 
   return (
     <React.Fragment>
-      <Dialog
-        open={openColDialog}
-        onClose={handleAddColumnClose}
-      >
+      <Dialog open={openColDialog} onClose={handleAddColumnClose}>
         {/* <DialogTitle>Add Column</DialogTitle> */}
         <DialogContent>
           <DialogTitle>Add Column and Data Type</DialogTitle>

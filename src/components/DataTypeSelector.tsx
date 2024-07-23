@@ -1,10 +1,13 @@
-// import * as React from 'react';
-// import { Theme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { DataTypeSelectorProps } from '../vite-env';
+import { SelectChangeEvent } from '@mui/material/Select';
+
+interface DataTypeSelectorProps {
+  handleDataTypeChange: (event: SelectChangeEvent<string>) => void;
+  selectedDataType: string;
+}
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -60,8 +63,6 @@ const dataTypes = ['bit(8)',
 'varbit(16)',
 'varchar (255)',
 'xml'];
-
-
 
 export default function DataTypeSelector({
   handleDataTypeChange,

@@ -1,13 +1,13 @@
 // import { memo } from 'react';
-import { Handle, Position } from 'reactflow';
-import { IconButton, Typography, Box } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteColumnButton from './DeleteColumnButton';
-import { useState } from 'react';
-import { Check } from '@mui/icons-material';
-import ClearIcon from '@mui/icons-material/Clear';
-import useStore from '../store';
-import { TableState } from '../vite-env';
+import { Handle, Position } from "reactflow";
+import { IconButton, Typography, Box } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteColumnButton from "./DeleteColumnButton";
+import { useState } from "react";
+import { Check } from "@mui/icons-material";
+import ClearIcon from "@mui/icons-material/Clear";
+import useStore from "../store";
+import { TableState } from "../../global_types/types";
 
 const ColumnNameNode = ({
   data,
@@ -16,7 +16,9 @@ const ColumnNameNode = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedLabel, setEditedLabel] = useState(data.label);
-  const fetchAndUpdateTableDetails = useStore((state: TableState) => state.fetchAndUpdateTableDetails);
+  const fetchAndUpdateTableDetails = useStore(
+    (state: TableState) => state.fetchAndUpdateTableDetails
+  );
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -33,10 +35,10 @@ const ColumnNameNode = ({
 
   const handleCheckClick = async () => {
     setIsEditing(false);
-    setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, '_'));
-    const response = await fetch('/api/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, "_"));
+    const response = await fetch("/api/graphql", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       // This query is used to change the name of a column
       // This is a graphQL query, not a SQL query
       body: JSON.stringify({
@@ -84,24 +86,24 @@ const ColumnNameNode = ({
         </Typography>
       )}
 
-        {/* If editing: render check button to save; Otherwise render the edit button*/}
-        {isEditing ? (
+      {/* If editing: render check button to save; Otherwise render the edit button*/}
+      {isEditing ? (
         <Box sx={{ minWidth: 56 }}>
-          <IconButton aria-label='edit' size='small' onClick={handleCheckClick}>
-            <Check fontSize='inherit' />
+          <IconButton aria-label="edit" size="small" onClick={handleCheckClick}>
+            <Check fontSize="inherit" />
           </IconButton>
           <IconButton
-            aria-label='cancel'
-            size='small'
+            aria-label="cancel"
+            size="small"
             onClick={handleEditCancel}
           >
-            <ClearIcon fontSize='inherit' />
+            <ClearIcon fontSize="inherit" />
           </IconButton>
         </Box>
       ) : (
         <Box sx={{ minWidth: 56 }}>
-          <IconButton aria-label='edit' size='small' onClick={handleEditClick}>
-            <EditIcon fontSize='inherit' />
+          <IconButton aria-label="edit" size="small" onClick={handleEditClick}>
+            <EditIcon fontSize="inherit" />
           </IconButton>
           <DeleteColumnButton data={data} />
         </Box>
@@ -110,6 +112,6 @@ const ColumnNameNode = ({
   );
 };
 
-ColumnNameNode.displayName = 'ColumnNameNode';
+ColumnNameNode.displayName = "ColumnNameNode";
 
 export default ColumnNameNode;
