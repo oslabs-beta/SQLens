@@ -87,6 +87,39 @@
     return final.data.getTableDetails;
   };
 
+  export const mutateColumnName = async (tableName: string, columnName: string, newColumnName: string) => {
+    try {
+      const response = await fetch("/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: `
+            mutation editColumn($newColumnName: String!, $columnName: String!, $tableName: String!) {
+              editColumn(newColumnName: $newColumnName, columnName: $columnName, tableName: $tableName)
+            }
+          `,
+          variables: {
+            newColumnName: newColumnName,
+            columnName,
+            tableName,
+          },
+        }),
+      });
+
+      const final = await response.json();
+      if (final.errors) {
+        console.error(final.errors[0].message);
+        alert(final.errors[0].message);
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      console.error("Error updating column name:", error);
+      return false;
+    }
+  };
+
 
   // export const handleSubmit = async () => {
   //   const { databaseURI } = get();

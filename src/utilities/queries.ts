@@ -45,11 +45,15 @@ export const ADD_COLUMN_TO_TABLE = gql`
     $tableName: String!
     $columnName: String!
     $dataType: String!
+    $fkTable: String
+    $fkColumn: String
   ) {
     addColumnToTable(
       tableName: $tableName
       columnName: $columnName
       dataType: $dataType
+      fkTable: $fkTable
+      fkColumn: $fkColumn
     )
   }
 `;

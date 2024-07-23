@@ -26,7 +26,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    addColumnToTable(tableName: String!, columnName: String!, dataType: String!): String
+    addColumnToTable(tableName: String!, columnName: String!, dataType: String!, fkTable: String, fkColumn: String): String
     editTableName(oldName: String!, newName: String!): String
     deleteTable(tableName: String!): String
     deleteColumn(tableName: String!, columnName: String!): String

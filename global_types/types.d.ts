@@ -10,6 +10,11 @@ export interface TableState {
     tableName: string,
     oldName?: string
   ) => Promise<void>;
+  updateColumnName: (
+    tableName: string,
+    columnName: string,
+    newColumnName: string
+  ) => Promise<void>;
 }
 
 export interface ForeignKey {

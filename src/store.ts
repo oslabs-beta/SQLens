@@ -1,19 +1,6 @@
 import { create } from "zustand";
-import { getTables, getTableDetails } from "./utilities/utility.ts";
+import { getTables, getTableDetails, mutateColumnName } from "./utilities/utility.ts";
 import { TableState } from "../global_types/types";
-
-// interface TableState {
-//   tables: Table[];
-//   searchValue: string;
-//   databaseURI?: string;
-//   setSearchValue: (searchValue: string) => void;
-//   setTables: (tables: Table[]) => void;
-//   fetchTables: () => Promise<void>;
-//   fetchAndUpdateTableDetails: (
-//     tableName: string,
-//     oldName?: string
-//   ) => Promise<void>;
-// }
 
 const useStore = create<TableState>((set, get) => ({
   // Table state that will be used to store the tables
@@ -61,6 +48,14 @@ const useStore = create<TableState>((set, get) => ({
       console.error("Error fetching updated table details:", error);
     }
   },
+
+  updateColumnName: async (tableName: string, columnName: string, newColumnName: string) => {
+    const success = await mutateColumnName(tableName, columnName, newColumnName);
+    if (success) {
+      await get().fetchAndUpdateTableDetails(tableName);
+    }
+  },
+
 }));
 
 export default useStore;

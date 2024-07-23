@@ -1,5 +1,4 @@
 import express, { Response, Request } from 'express';
-// import { ApolloServer } from 'apollo-server-express';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { resolvers } from './controller';
