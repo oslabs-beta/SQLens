@@ -1,5 +1,11 @@
 import { create } from "zustand";
-import { getTables, getTableDetails, mutateColumnName } from "./utilities/utility.ts";
+import {
+  getTables,
+  getTableDetails,
+  mutateColumnName,
+  mutateNewColumn,
+  mutateFetch,
+} from "./utilities/utility.ts";
 import { TableState } from "../global_types/types";
 
 const useStore = create<TableState>((set, get) => ({
@@ -49,13 +55,68 @@ const useStore = create<TableState>((set, get) => ({
     }
   },
 
-  updateColumnName: async (tableName: string, columnName: string, newColumnName: string) => {
-    const success = await mutateColumnName(tableName, columnName, newColumnName);
+  updateColumnName: async (
+    tableName: string,
+    columnName: string,
+    newColumnName: string
+  ) => {
+    const query = `
+      mutation editColumn($newColumnName: String!, $columnName: String!, $tableName: String!) {
+        editColumn(newColumnName: $newColumnName, columnName: $columnName, tableName: $tableName)
+      }
+    `;
+    const variables = {
+      tableName,
+      columnName,
+      newColumnName
+    };
+    const errMsg = "Error updating column";
+    const success = await mutateFetch(query, variables, errMsg);
     if (success) {
       await get().fetchAndUpdateTableDetails(tableName);
     }
   },
 
+  addColumn: async (
+    tableName: string,
+    columnName: string,
+    dataType: string,
+    refTable: string,
+    refColumn: string
+  ) => {
+    const query = `
+      mutation addColumnToTable($tableName: String!, $columnName: String!, $dataType: String!, $refTable: String, $refColumn: String){
+        addColumnToTable( tableName: $tableName, columnName: $columnName, dataType: $dataType, refTable: $refTable, refColumn: $refColumn)
+      }`;
+    const variables = {
+      tableName,
+      columnName,
+      dataType,
+      refTable,
+      refColumn,
+    };
+    const errMsg = "Error adding column";
+    const success = await mutateFetch(query, variables, errMsg);
+    if (success) {
+      await get().fetchAndUpdateTableDetails(tableName);
+    }
+  },
+
+  addTable: async (tableName: string) => {
+    const query = `
+      mutation addTable($tableName: String!){
+        addTable( tableName: $tableName)
+      }
+      `;
+    const variables = { tableName: tableName };
+    const errMsg = "Error adding table";
+    const success = await mutateFetch(query, variables, errMsg);
+    if (success) {
+      const newTable = { name: tableName, columns: [], foreignKeys: [] };
+      set({ tables: get().tables.concat(newTable) });
+      await get().fetchAndUpdateTableDetails(tableName);
+    }
+  },
 }));
 
 export default useStore;

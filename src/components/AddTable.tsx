@@ -6,6 +6,7 @@ import { ImPlus } from "react-icons/im";
 import ClearIcon from "@mui/icons-material/Clear";
 import useStore from "../store";
 import { TableState } from "../../global_types/types";
+// import e from "express";
 
 const AddTable = ({
   data,
@@ -19,11 +20,7 @@ const AddTable = ({
   const [editedLabel, setEditedLabel] = useState("");
 
   // useStore to interact with the application's global state, fetching functions and state slices.
-  const fetchAndUpdateTableDetails = useStore(
-    (state: TableState) => state.fetchAndUpdateTableDetails
-  );
-  const tables = useStore((state: TableState) => state.tables);
-  const setTables = useStore((state: TableState) => state.setTables);
+  const addTable = useStore((state: TableState) => state.addTable);
 
   //function to initiate the editing mode
   const handleEditClick = () => {
@@ -45,38 +42,8 @@ const AddTable = ({
   const handleCheckClick = async () => {
     setIsEditing(false);
     setEditedLabel(editedLabel.trim().replace(/[^A-Za-z0-9_]/g, "_"));
-
-    // Sends mutation request to add the table
-    const response = await fetch("/api/graphql", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      // This query is used to change the name of a column
-      // This is a graphQL query, not a SQL query
-      body: JSON.stringify({
-        query: `
-          mutation addTable($tableName: String!){
-            addTable( tableName: $tableName)
-          }
-
-        `,
-        variables: {
-          tableName: editedLabel,
-        },
-      }),
-    });
-
-    // Process response and update global state
-    const final = await response.json();
-    if (final.errors) {
-      console.error(final.errors[0].message);
-      alert(final.errors[0].message);
-    } else {
-      const newTable = { name: editedLabel, columns: [], foreignKeys: [] };
-      setTables([...tables, newTable]);
-      setEditedLabel(data.label);
-      await fetchAndUpdateTableDetails(data.label);
-      // console.log(final);
-    }
+    await addTable(editedLabel);
+    setEditedLabel(data.label); // reset the edited label to "Add new table"
   };
 
   // Render component, edit or view mode based on isEditing state

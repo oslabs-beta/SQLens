@@ -188,16 +188,16 @@ export const resolvers = {
         tableName,
         columnName,
         dataType,
-        fkTable,
-        fkColumn,
-      }: { tableName: string; columnName: string; dataType: string; fkTable: string; fkColumn: string }
+        refTable,
+        refColumn,
+      }: { tableName: string; columnName: string; dataType: string; refTable: string; refColumn: string }
     ) => {
       if (pool !== null) {
         try {
           // SQL to add a column to a table, adjust data type as needed
           let mutation = `ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${dataType};`;
-          if (fkTable.length && fkColumn.length) {
-            mutation += `ALTER TABLE ${tableName} ADD CONSTRAINT fk_${columnName} FOREIGN KEY (${columnName}) REFERENCES ${fkTable}(${fkColumn})`;
+          if (refTable.length && refColumn.length) {
+            mutation += `ALTER TABLE ${tableName} ADD CONSTRAINT fk_${columnName} FOREIGN KEY (${columnName}) REFERENCES ${refTable}(${refColumn})`;
           }
           await pool.query(mutation);
           await appendMigration(mutation);

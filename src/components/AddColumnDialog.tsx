@@ -40,9 +40,7 @@ export default function AddColumnDialog({
   // const queries = useStore((state: TableState) => state.queries);
   // const setQueries = useStore((state: TableState) => state.setQueries);
 
-  const fetchAndUpdateTableDetails = useStore(
-    (state: TableState) => state.fetchAndUpdateTableDetails
-  );
+  const addColumn = useStore((state: TableState) => state.addColumn);
 
   const handleColumnNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -51,44 +49,13 @@ export default function AddColumnDialog({
   };
 
   const handleDataTypeChange = (event: SelectChangeEvent<string>) => {
-    // console.log(event.target.value);
     setSelectedDataType(event.target.value);
   };
 
   const handleSaveClick = async () => {
     handleAddColumnClose();
     setColumnName(columnName.trim().replace(/[^A-Za-z0-9_]/g, "_"));
-
-    const response = await fetch("/api/graphql", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      // This mutation is used to change the table name in the database
-      // This is a graphQL query, not a SQL query
-      body: JSON.stringify({
-        query:`
-          mutation addColumnToTable($tableName: String!, $columnName: String!, $dataType: String!, $fkTable: String, $fkColumn: String){
-            addColumnToTable( tableName: $tableName, columnName: $columnName, dataType: $dataType, fkTable: $fkTable, fkColumn: $fkColumn)
-          }`,
-        variables: {
-          tableName: tableName,
-          columnName: columnName,
-          dataType: selectedDataType,
-          fkTable: fkTable?.name || "",
-          fkColumn: fkColumn,
-        },
-      }),
-    });
-
-    const final = await response.json();
-    if (final.errors) {
-      console.error(final.errors[0].message);
-      alert(final.errors[0].message);
-      // throw new Error("Error changing table name");
-      //add a user alert
-    } else {
-      fetchAndUpdateTableDetails(tableName);
-      // console.log(final);
-    }
+    await addColumn(tableName, columnName, selectedDataType, fkTable?.name || "", fkColumn);
   };
 
   const handleCheckboxClick = () => {
@@ -102,7 +69,7 @@ export default function AddColumnDialog({
       if (table.name === event.target.value) {
         setFkTable(table);
         setColumns(table.columns);
-        console.log("selected table: ", table);
+        // console.log("selected table: ", table);
       }
     });
   };
@@ -133,7 +100,7 @@ export default function AddColumnDialog({
           <DataTypeSelector
             handleDataTypeChange={handleDataTypeChange}
             selectedDataType={selectedDataType}
-            disabled={hasForeignKey}
+            // disabled={hasForeignKey}
           />
           {/* Checkbox and label */}
           <FormControlLabel

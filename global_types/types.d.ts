@@ -15,6 +15,14 @@ export interface TableState {
     columnName: string,
     newColumnName: string
   ) => Promise<void>;
+  addColumn: (
+    tableName: string,
+    columnName: string,
+    dataType: string,
+    refTable: string,
+    refColumn: string
+  ) => Promise<void>;
+  addTable: (tableName: string) => Promise<void>;
 }
 
 export interface ForeignKey {
