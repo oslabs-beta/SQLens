@@ -1,4 +1,3 @@
-
 export interface TableState {
   tables: Table[];
   searchValue: string;
@@ -14,7 +13,7 @@ export interface TableState {
     tableName: string,
     columnName: string,
     newColumnName: string
-  ) => Promise<void>;
+  ) => Promise<boolean>;
   addColumn: (
     tableName: string,
     columnName: string,
@@ -23,6 +22,9 @@ export interface TableState {
     refColumn: string
   ) => Promise<void>;
   addTable: (tableName: string) => Promise<void>;
+  deleteColumn: (tableName: string, columnName: string) => Promise<void>;
+  deleteTable: (tableName: string) => Promise<void>;
+  editTable: (tableName: string, newTableName: string) => Promise<boolean>;
 }
 
 export interface ForeignKey {

@@ -6,7 +6,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import useStore from "../store";
-import { TableState } from "../../global_types/types";
 
 const DeleteColumnButton = ({
   data,
@@ -14,36 +13,11 @@ const DeleteColumnButton = ({
   data: { label: string; parent: string };
 }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
-  // const fetchTables = useStore((state: TableState) => state.fetchTables);
-  const fetchAndUpdateTableDetails = useStore(
-    (state: TableState) => state.fetchAndUpdateTableDetails
-  );
+  const deleteColumn = useStore((state) => state.deleteColumn);
 
-  //delete column function
   const deleteCol = async function () {
-    const response = await fetch("/api/graphql", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      // This query is used to delete a column from a table
-      // This is a graphQL query, not a SQL query
-      body: JSON.stringify({
-        query: `
-          mutation deleteColumn($tableName: String!, $columnName: String!){
-            deleteColumn(tableName: $tableName, columnName: $columnName)
-          }
-        `,
-        variables: { columnName: data.label, tableName: data.parent },
-      }),
-    });
-
-    const final = await response.json();
-    if (final.errors) {
-      console.error(final.errors[0].message);
-      alert(final.errors[0].message);
-    } else {
-      await fetchAndUpdateTableDetails(data.parent);
-      setAlertOpen(false);
-    }
+    await deleteColumn(data.parent, data.label);
+    setAlertOpen(false);
   };
 
   //click handlers

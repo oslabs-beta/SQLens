@@ -1,5 +1,7 @@
 import { pool } from "./index";
 import { promises as fsPromises } from "fs";
+import { RowData, TableData, Table } from "../global_types/types";
+
 let migration_file = "./public/migration_log.txt";
 if (!process.env["VITE"]) {
   migration_file = "./dist/migration_log.txt"; //route need to be changed for production vs dev mode
@@ -9,8 +11,6 @@ const appendMigration = async (query: string): Promise<void> => {
   await fsPromises.appendFile(migration_file, query + "\n");
   return;
 };
-import { RowData, TableData, Table } from "../global_types/types";
-// The interface for data structure Jenny was talking about to make this valid TypeScript
 
 export const resolvers = {
   Query: {

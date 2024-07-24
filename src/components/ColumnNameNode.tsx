@@ -30,15 +30,25 @@ const ColumnNameNode = ({
   };
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    // console.log(e.target.value);
     setEditedLabel(e.currentTarget.value);
   };
 
   const handleCheckClick = async () => {
-    setIsEditing(false);
+    if (editedLabel === data.label) {
+      setIsEditing(false);
+      return;
+    }
     const sanitizedLabel = editedLabel.trim().replace(/[^A-Za-z0-9_]/g, "_");
-    setEditedLabel(sanitizedLabel);
-    await updateColumnName(data.parent, data.label, sanitizedLabel);
+    const res = await updateColumnName(data.parent, data.label, sanitizedLabel);
+    if (res) {
+      setEditedLabel(sanitizedLabel);
+      setIsEditing(false);
+    } else {
+      console.error("Error updating column name");
+      setEditedLabel(data.label);
+      setIsEditing(true);
+    }
+
   };
 
   return (

@@ -104,6 +104,7 @@ export const mutateFetch = async (
       alert(final.errors[0].message);
       return false;
     } else {
+      // console.log(final.data);
       return true;
     }
   } catch (error) {
