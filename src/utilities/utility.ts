@@ -78,8 +78,6 @@ export const getTableDetails = async function (tableName: string) {
     console.error(final.errors);
     throw new Error("Error fetching table details");
   }
-  // console.log(final.data)
-  // console.log(final.data.getTableDetails)
   return final.data.getTableDetails;
 };
 
@@ -104,7 +102,6 @@ export const mutateFetch = async (
       alert(final.errors[0].message);
       return false;
     } else {
-      // console.log(final.data);
       return true;
     }
   } catch (error) {

@@ -7,7 +7,6 @@ interface ExtendedNode extends ReactFlowNode {
 }
 
 const generateNodes = (tables: Table[]): ExtendedNode[] => {
-  // console.log('tables', tables)
   const nodes: ExtendedNode[] = [];
   let layoutX: number = 0;
   let layoutY: number = 0;
@@ -21,9 +20,8 @@ const generateNodes = (tables: Table[]): ExtendedNode[] => {
 
     //create group node for each table
     const groupNode: ExtendedNode = {
-      id: `table-${table.name}`, //tables[index][name]
+      id: `table-${table.name}`,
       type: "turbo",
-      // type: 'input',
       data: {
         label: table.name,
       },
@@ -59,7 +57,6 @@ const generateNodes = (tables: Table[]): ExtendedNode[] => {
             height: 40,
           },
         };
-        // console.log(column);
         nodes.push(columnNode);
         y += 40;
       }
@@ -80,7 +77,6 @@ const generateNodes = (tables: Table[]): ExtendedNode[] => {
     },
   };
   nodes.push(addTable);
-  // console.log('nodes generated');
   return nodes;
 };
 

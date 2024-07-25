@@ -29,7 +29,6 @@ if (!process.env['VITE']) {
 
 async function startServer() {
   await server.start();
-  // server.applyMiddleware({ app, path: '/api/graphql' });
   app.use('/api/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware(server));
 
   app.get('/api/test', (_: Request, res: Response) => {
@@ -54,7 +53,6 @@ async function startServer() {
 
   // Conditional Express static file serving and application start
   if (!process.env['VITE']) {
-    // console.log('Serving static files and starting Express server.');
     const frontendFiles = process.cwd() + '/dist';
     app.use(express.static(frontendFiles));
     app.get('/*', (_: Request, res: Response) => {

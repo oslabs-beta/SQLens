@@ -63,11 +63,9 @@ const TableHeader = ({
     handleMenuClose();
     setIsEditing(true);
     //use document.findElementByID to select input field and make focused or selected
-    // console.log('Edit Table Name for:', data.label);
   };
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    // console.log(e.currentTarget.value);
     setEditedLabel(e.currentTarget.value);
   };
 
@@ -197,5 +195,3 @@ const handleEditSubmit = async () => {
 };
 
 export default TableHeader;
-
-//

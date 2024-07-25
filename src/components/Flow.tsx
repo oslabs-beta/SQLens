@@ -48,7 +48,6 @@ const Flow = () => {
 
   useEffect(() => {
     if (tables.length > 0) {
-      // console.log('regenerating tables: ', tables)
       const newNodes = generateNodes(tables);
       const newEdges = generateEdges(tables);
 

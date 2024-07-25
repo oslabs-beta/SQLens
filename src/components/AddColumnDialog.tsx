@@ -36,9 +36,6 @@ export default function AddColumnDialog({
   const [columns, setColumns] = useState<string[]>([]);
   const [fkColumn, setFkColumn] = useState("");
   const tables = useStore((state: TableState) => state.tables);
-  // const setTables = useStore((state: TableState) => state.setTables);
-  // const queries = useStore((state: TableState) => state.queries);
-  // const setQueries = useStore((state: TableState) => state.setQueries);
 
   const addColumn = useStore((state: TableState) => state.addColumn);
 
@@ -69,7 +66,6 @@ export default function AddColumnDialog({
       if (table.name === event.target.value) {
         setFkTable(table);
         setColumns(table.columns);
-        // console.log("selected table: ", table);
       }
     });
   };
@@ -100,7 +96,7 @@ export default function AddColumnDialog({
           <DataTypeSelector
             handleDataTypeChange={handleDataTypeChange}
             selectedDataType={selectedDataType}
-            // disabled={hasForeignKey}
+            // disabled={hasForeignKey} for future development where dataType is retrieved from the database and not from the user.
           />
           {/* Checkbox and label */}
           <FormControlLabel

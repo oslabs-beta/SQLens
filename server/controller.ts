@@ -152,12 +152,10 @@ export const resolvers = {
       _: unknown,
       { tableName }: { tableName: string }
     ): Promise<TableData[]> => {
-      // console.log(tableName);
       if (pool !== null) {
         try {
           const tableDataQuery = `SELECT * FROM ${tableName};`;
           const tableDataResult = await pool.query(tableDataQuery);
-          // console.log(tableDataResult.rows);
 
           return tableDataResult.rows.map((row: Record<string, unknown>) => {
             const rowData: RowData[] = [];
@@ -204,7 +202,6 @@ export const resolvers = {
           return `Column ${columnName} added to ${tableName} successfully.`;
         } catch (err) {
           console.error("Error in addColumnToTable resolver: ", err);
-          // throw new Error('Server error');
           return err;
         }
       }
@@ -223,7 +220,6 @@ export const resolvers = {
           return `Table name changed from ${oldName} to ${newName} successfully.`;
         } catch (err) {
           console.error("Error in editTableName resolver: ", err);
-          // throw new Error('Server error');
           return err;
         }
       }
@@ -239,7 +235,6 @@ export const resolvers = {
           return `Table ${tableName} deleted successfully.`;
         } catch (err) {
           console.error("Error in deleteTable resolver: ", err);
-          // throw new Error('Server error');
           return err;
         }
       }
@@ -250,7 +245,6 @@ export const resolvers = {
     ) => {
       if (pool !== null) {
         try {
-          // console.log(columnName, tableName);
           // SQL to delete a table
           const mutation = `ALTER TABLE ${tableName} DROP COLUMN ${columnName};`;
           await pool.query(mutation);
@@ -258,7 +252,6 @@ export const resolvers = {
           return `Column ${columnName} deleted successfully from ${tableName}.`;
         } catch (err) {
           console.error("Error in deleteColumn resolver: ", err);
-          // throw new Error('Server error');
           return err;
         }
       }
@@ -281,7 +274,6 @@ export const resolvers = {
           return `Column name changed to${newColumnName} from ${columnName} on ${tableName}.`;
         } catch (err) {
           console.error("Error in editColumn resolver: ", err);
-          // throw new Error('Server error');
           return err;
         }
       }
@@ -297,7 +289,6 @@ export const resolvers = {
           return `Table named ${tableName} created.`;
         } catch (err) {
           console.error("Error in addTable resolver: ", err);
-          // throw new Error('Server error');
           return err;
         }
       }

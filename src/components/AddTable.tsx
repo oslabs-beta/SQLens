@@ -34,7 +34,6 @@ const AddTable = ({
 
   // function to update state with the new label
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    // console.log(e.currentTarget.value);
     setEditedLabel(e.currentTarget.value);
   };
 

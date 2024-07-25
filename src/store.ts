@@ -143,7 +143,6 @@ const useStore = create<TableState>((set, get) => ({
     const errMsg = "Error editing table name";
     const success = await mutateFetch(query, variables, errMsg);
     if (success) {
-      console.log('successfully mutated db')
       await get().fetchAndUpdateTableDetails(oldName, newName);
       return true;
     }
