@@ -30,6 +30,6 @@
     "server/typeDefs.ts",
     "__tests__/App.test.tsx",
     "__tests__/Text.test.tsx"
-  ],
+, "global_types/types.d.ts"  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

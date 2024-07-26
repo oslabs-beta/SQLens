@@ -1,5 +1,6 @@
 import express, { Response, Request } from 'express';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
 import { resolvers } from './controller';
 import { typeDefs } from './typeDefs';
 import pkg from 'pg';
@@ -7,16 +8,16 @@ const { Pool } = pkg;
 import dotenv from 'dotenv';
 import open from 'open';
 import fs from 'fs';
+import cors from 'cors';
 
 dotenv.config();
-
 export let pool: pkg.Pool | null = null;
 
 const initializePool = (uri: string) => {
   pool = new Pool({ connectionString: uri });
 };
 
-export const app: any = express();
+export const app = express();
 app.use(express.json());
 
 const server = new ApolloServer({ typeDefs, resolvers });
@@ -28,7 +29,7 @@ if (!process.env['VITE']) {
 
 async function startServer() {
   await server.start();
-  server.applyMiddleware({ app, path: '/api/graphql' });
+  app.use('/api/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware(server));
 
   app.get('/api/test', (_: Request, res: Response) => {
     res.json({ greeting: 'Hello' });
@@ -52,7 +53,6 @@ async function startServer() {
 
   // Conditional Express static file serving and application start
   if (!process.env['VITE']) {
-    // console.log('Serving static files and starting Express server.');
     const frontendFiles = process.cwd() + '/dist';
     app.use(express.static(frontendFiles));
     app.get('/*', (_: Request, res: Response) => {

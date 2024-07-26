@@ -48,7 +48,6 @@ const Flow = () => {
 
   useEffect(() => {
     if (tables.length > 0) {
-      // console.log('regenerating tables: ', tables)
       const newNodes = generateNodes(tables);
       const newEdges = generateEdges(tables);
 
@@ -61,6 +60,7 @@ const Flow = () => {
       setNodes(updatedNodes);
       setEdges(newEdges);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tables, setNodes, setEdges]);
 
   const proOptions = { hideAttribution: true };

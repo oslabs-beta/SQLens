@@ -1,10 +1,14 @@
-// import * as React from 'react';
-// import { Theme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { DataTypeSelectorProps } from '../vite-env';
+import { SelectChangeEvent } from '@mui/material/Select';
+
+interface DataTypeSelectorProps {
+  handleDataTypeChange: (event: SelectChangeEvent<string>) => void;
+  selectedDataType: string;
+  // disabled: boolean;
+}
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -29,8 +33,9 @@ const dataTypes = ['bit(8)',
 'float4',
 'float8',
 'inet',
-'int, int4',
+'int',
 'int2',
+'int4',
 'int8',
 'interval (6)',
 'json',
@@ -61,14 +66,11 @@ const dataTypes = ['bit(8)',
 'varchar (255)',
 'xml'];
 
-
-
 export default function DataTypeSelector({
   handleDataTypeChange,
   selectedDataType,
+  // disabled
 }: DataTypeSelectorProps) {
-  //   const theme = useTheme();
-  // const [selectedDataType, setSelectedDataType] = React.useState<string[]>([]); //moved to parent
 
   return (
     <div>
@@ -80,6 +82,7 @@ export default function DataTypeSelector({
           input={<OutlinedInput />}
           MenuProps={MenuProps}
           inputProps={{ 'aria-label': 'Without label' }}
+          // disabled={disabled}
         >
           <MenuItem disabled value=''>
             <em>Select Data Type</em>
